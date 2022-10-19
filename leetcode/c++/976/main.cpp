@@ -11,11 +11,14 @@ int main(){
   vector<int> vect2{1,2,1};
   vector<int> vect3{0,0,0};
   vector<int> vect4{3,2,3,4};
-  
-  cout << "expectation: 5  --- output:" <<s.largestPerimeter(vect1) << endl;
-  cout << "expectation: 0  --- output:" <<s.largestPerimeter(vect2) << endl;
-  cout << "expectation: 0  --- output:" <<s.largestPerimeter(vect3) << endl;
-  cout << "expectation: 8  --- output:" <<s.largestPerimeter(vect4) << endl;
+  cout << "expectation: 5  --- output:"<<endl;
+  s.largestPerimeter(vect1);
+  cout << "expectation: 0  --- output:" <<  endl;
+  s.largestPerimeter(vect2);
+  cout << "expectation: 0  --- output:" <<  endl;
+    s.largestPerimeter(vect3);
+    cout << "expectation: 10  --- output:" <<  endl;
+  s.largestPerimeter(vect4);
   return 0;
   
 }
