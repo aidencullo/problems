@@ -1,10 +1,9 @@
-// 976.h
-#ifndef FILE_H // include guard
-#define FILE_H
+#ifndef SOLUTION_H
+#define SOLUTION_H
 
 class Solution {
 public:
-  int largestPerimeter(std::vector<int>&);
+  int execute(std::string);
 };
 
-#endif /* FILE_H */
+#endif

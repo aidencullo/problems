@@ -1,24 +1,24 @@
 #include <iostream>
-#include <vector>
-#include "file.h"
+#include <string>
+#include "solution.h"
 using namespace std;
 
 int main(){
 
   cout << "Testing...." << endl;
   Solution s;
-  vector<int> vect1{2,1,2};
-  vector<int> vect2{1,2,1};
-  vector<int> vect3{0,0,0};
-  vector<int> vect4{3,2,3,4};
-  cout << "expectation: 5  --- output:"<<endl;
-  s.largestPerimeter(vect1);
-  cout << "expectation: 0  --- output:" <<  endl;
-  s.largestPerimeter(vect2);
-  cout << "expectation: 0  --- output:" <<  endl;
-    s.largestPerimeter(vect3);
-    cout << "expectation: 10  --- output:" <<  endl;
-  s.largestPerimeter(vect4);
+  string input1 = "abcabcbb";
+  string input2 = "bbbbb";
+  string input3 = "pwwkew";
+  string input4 = "abcdefghij";
+  cout << "expectation: 3  --- output:"<<endl;
+  s.execute(vect1);
+  cout << "expectation: 1  --- output:" <<  endl;
+  s.execute(vect2);
+  cout << "expectation: 3  --- output:" <<  endl;
+  s.execute(vect3);
+  cout << "expectation: 10  --- output:" <<  endl;
+  s.execute(vect4);
   return 0;
   
 }

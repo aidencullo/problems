@@ -1,5 +1,5 @@
 target	:= output
-objs	:= main.o file.o
+objs	:= main.o solution.o
 
 CPP	:= g++ -std=c++17
 CFLGAS	:= -Wall -Werror
