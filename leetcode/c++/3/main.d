@@ -1,1 +1,1 @@
-main.o: main.cpp file.h
+main.o: main.cpp solution.h

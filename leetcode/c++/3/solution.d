@@ -1,1 +1,1 @@
-file.o: file.cpp file.h
+solution.o: solution.cpp solution.h

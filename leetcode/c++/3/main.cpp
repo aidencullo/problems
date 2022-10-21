@@ -12,13 +12,13 @@ int main(){
   string input3 = "pwwkew";
   string input4 = "abcdefghij";
   cout << "expectation: 3  --- output:"<<endl;
-  s.execute(vect1);
+  s.execute(input1);
   cout << "expectation: 1  --- output:" <<  endl;
-  s.execute(vect2);
+  s.execute(input2);
   cout << "expectation: 3  --- output:" <<  endl;
-  s.execute(vect3);
+  s.execute(input3);
   cout << "expectation: 10  --- output:" <<  endl;
-  s.execute(vect4);
+  s.execute(input4);
   return 0;
   
 }
