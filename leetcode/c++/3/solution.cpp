@@ -4,20 +4,19 @@
 using namespace std;
 
 int Solution::execute(string input) {
-  string substr;
-  for(auto c : input){
-    int i = 0;
-    int included = 0;
-    while(i < substr.size()){
-      if(c == substr[i]){
-	included = 1;
-	break;
-      }
-      i++;
+  string str;
+  int ind = 0;
+  int max = 0;
+  for(char c : input){
+    ind  = str.find(c);
+    if (ind == std::string::npos) {
+      str = str + c;
+    } else {
+      str = str.substr(ind+1) + c;
     }
-    if(included == 0){
-      substr = substr + c;
+    if(str.size() > max){
+      max = str.size();
     }
   }
-  return substr.size();
+  return max;
 };
