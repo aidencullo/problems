@@ -6,25 +6,21 @@
 int execute(int in) {
   long input = in;
   int sign=1;
-  int num[10]={0};
   int i;
   long result=0;
-  long result_addition=0;
+  int digit = 0;
   if(input < 0){
     sign = -1;
     input = input*-1;
   }
   for(i=0; i < 10 && input > 0; i++){
-    num[i] = input - (input/10)*10;
+    result = result * 10;
+    digit = input - (input/10)*10;
+    result = result + digit;
     input  = input / 10;
-  }
-  i = i-1;
-  for(int j=0; j < i+1; j++){
-    result_addition = num[j]*pow(10, (i-j));
-    if(result + result_addition >= INT_MAX){
+    if(result >= INT_MAX){
       return 0;
     }
-    result = result + result_addition;
   }
   return result * sign;
 };
