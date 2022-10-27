@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
   printf("expectation: 21  --- output: %d\n", execute(input3));
   printf("expectation: 0  --- output: %d\n", execute(input4));
   printf("expectation: -2143847412  --- output: %d\n", execute(input5));
-  return 0;
-  
-}
 
+  return 0;
+
+}
