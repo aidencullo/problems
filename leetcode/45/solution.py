@@ -1,18 +1,19 @@
 import sys
 
 min_glob = sys.maxsize
-hash_map = []
+min_local = sys.maxsize
+
 def jump(nums: list[int]) -> int:
-    if :
-        return min_global
-    min_glob
+    min_local=sys.maxsize
     if len(nums) == 1:
-        return min_global = min_local
+        return 0
     for x in range(nums[0]):
         if x + 1 < len(nums):
-            new_min = jump(nums[x+1:], min_local + 1)
-            if new_min < min_global:
-                min_global = min_new
+            min_new = 1 + jump(nums[x+1:])
+            if min_new < min_local:
+                min_local = min_new
+    if min_local > min_global - 2:
+        return sys.maxsize
     return min_global
 
 def test(input, output):
