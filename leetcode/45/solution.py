@@ -10,8 +10,7 @@ def jump(nums: list[int]) -> int:
     fin=0
     for i in range(l):
         hash_map[i]=[]
-        # reverse iterate -- much faster
-        for x in range(1, nums[i] + 1):
+        for x in reversed(range(1, nums[i] + 1)):
             if x + i < l-1:
                 hash_map[i].append(x+i)
             else:
