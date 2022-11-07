@@ -12,8 +12,8 @@ def test(input, output):
         print("input ", input)
         print("FAILED: Expected: %d, Given: %d" % (output, result))
 
-def test_suite():
-    with open('tests.txt','r') as file:
+def test_suite(file):
+    with open(file,'r') as file:
         for line in file:
             words=line.split()
             arg1=json.loads(words[0])
