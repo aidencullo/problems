@@ -1,16 +1,17 @@
 import sys
 
 class Solution:
-    def jump(self, nums: list[int]) -> int:
-        nlen = len(nums)
-        end = nums[0]
-        max_reach = nums[0]
-        jump = 1
-        if nlen == 1:
+    def coinChange(self, coins: list[int], amount: int) -> int:
+        # base case
+        if amount == 0:
             return 0
-        for i in range(1, nlen-1):
-            max_reach = max(max_reach, i+nums[i])
-            if i == end:
-                jump = jump + 1
-                end = max_reach
-        return jump
+        m = sys.maxsize
+        for x in coins:
+            if amount >= x:
+                result = 1 + self.coinChange(coins, amount - x)
+                if result != 0:
+                    m = min(m, result)
+        if sys.maxsize == m:
+            return -1
+        else:
+            return m

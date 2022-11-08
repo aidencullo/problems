@@ -2,14 +2,12 @@ import time
 import json
 from solution import Solution
 
-def test(input, output):
+def test(input1, input2, output):
     s = Solution()
-    result = s.jump(input)
-    if result == output:
-        print("input ", input)
-        print("SUCCESS")
-    else:
-        print("input ", input)
+    result = s.coinChange(input1, input2)
+# only print if failed
+    if result != output:
+        print("input ", input1)
         print("FAILED: Expected: %d, Given: %d" % (output, result))
 
 def test_suite(file):
@@ -18,7 +16,8 @@ def test_suite(file):
             words=line.split()
             arg1=json.loads(words[0])
             arg2=int(words[1])
+            arg3=int(words[2])
             start = time.time()
-            test(arg1, arg2)
+            test(arg1, arg2, arg3)
             end = time.time()
             print("Time: ",end - start)
