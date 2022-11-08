@@ -5,9 +5,10 @@ from solution import Solution
 def test(input1, input2, output):
     s = Solution()
     result = s.coinChange(input1, input2)
-# only print if failed
+    # only print if failed
     if result != output:
-        print("input ", input1)
+        print("array ", input1)
+        print("amt: ", input2)
         print("FAILED: Expected: %d, Given: %d" % (output, result))
 
 def test_suite(file):
