@@ -1,4 +1,3 @@
-package mainpkg // potentially unnecessary
 import testpkg.TestSuite
     
 class General {
