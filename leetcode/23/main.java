@@ -1,4 +1,4 @@
-import testpkg.TestSuite
+import testpkg.TestSuite;
     
 class General {
     public static void main(String[] args) {
