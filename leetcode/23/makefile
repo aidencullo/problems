@@ -12,6 +12,7 @@ CLASSES = \
         ListNode.java \
         TestSuite.java \
         Solution.java \
+	ReadFile.java \
         Main.java 
 
 default: classes
