@@ -155,7 +155,8 @@ public class QueueFromStack {
 	qfs.pop();
 	System.out.println("4 == " + qfs.peek());
 	qfs.push(100);
-	System.out.println("4 == " + qfs.peek());
+	qfs.pop();
+	System.out.println("100 == " + qfs.peek());
 	qfs.popAll();
 	System.out.println(qfs.peek());
 	System.out.println("true == " + qfs.isEmpty());
