@@ -35,4 +35,9 @@
     <delete dir="${build}"/>
     <delete dir="${dist}"/>
   </target>
+
+<target name="mainTarget" depends="compile">
+    <description>Main target</description>
+  </target>
+  
 </project>
