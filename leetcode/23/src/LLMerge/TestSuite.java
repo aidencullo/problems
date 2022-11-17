@@ -17,6 +17,11 @@ public class TestSuite {
 	testFile = fileName;
     }
 
+    public void runTests(){
+
+	initialize();
+
+    }
 
     private int [][] stringToArrayArray(String str){
 	return new int [1][];
@@ -27,12 +32,14 @@ public class TestSuite {
     }
     
     private void run(String input, String expected){
+
+	initialize();
 	// converting input into an array of ListNodes
 	int [][] inputs = stringToArrayArray(input);
 	// expected combined linked lisk
 	int [] output = stringToArray(expected);
 	for(int i = 0; i < inputs.length; i++){
-	    test(inputs[i]);
+	    //	    test(inputs[i]);
 	}
     }
     
@@ -51,7 +58,7 @@ public class TestSuite {
 	}
 	//	inputs = ReadFile.read(testFile);
 	// test input
-	run("", "");
+	//	run("", "");
     }
     
     
