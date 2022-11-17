@@ -7,10 +7,7 @@
 * 
 */
 
-package testpkg;
-
-import scanpkg.ReadFile;
-import solpkg.Solution;
+package LLMerge;
 
 public class TestSuite {
 
@@ -20,6 +17,15 @@ public class TestSuite {
 	testFile = fileName;
     }
 
+
+    private int [][] stringToArrayArray(String str){
+	return new int [1][];
+    }
+    
+    private int [] stringToArray(String str){
+	return new int [1];
+    }
+    
     private void run(String input, String expected){
 	// converting input into an array of ListNodes
 	int [][] inputs = stringToArrayArray(input);
@@ -38,19 +44,17 @@ public class TestSuite {
 	}
 	//reading test input, inputs variable should be string array of size 2
 	String [] inputs = new String [2];
-	inputs = ReadFile.read(testFile);
+	try  {
+	    ReadFile.read(testFile);
+	} catch(Exception e) {
+	    System.out.println("File not read properly");
+	}
+	//	inputs = ReadFile.read(testFile);
 	// test input
-	run(input[0], input[1]);
+	run("", "");
     }
     
     
     private void test(int[] intArray){}
     
-    private int [][] stringToArrayArray(String str){
-	return new int [1][];
-    }
-    
-    private int [] stringtoArray(String str){
-	return new int [1];
-    }
 }

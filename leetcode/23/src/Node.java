@@ -1,4 +1,4 @@
-package nodepkg;
+package LLMerge;
 
 public class Node {
     int val;
