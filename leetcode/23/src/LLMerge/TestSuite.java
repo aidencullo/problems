@@ -1,4 +1,4 @@
-/**
+/*
 * Class Name: TESTSUITE
 * TestSuite runs tests on my main solution algorithm 
 * To do:
@@ -9,59 +9,67 @@
 
 package LLMerge;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 public class TestSuite {
 
     private String testFile;
+    ArrayList<TestCase> tests;
+    
     
     public TestSuite(String fileName){
 	testFile = fileName;
+	tests= new ArrayList<TestCase>();
+    }
+
+    private String run(int [][] input){
+	return "";
+    }
+
+    private void runTest(TestCase ts){
+
+	ts.print();
+	int [] outputArray = run(ts.input);
+	String outputString = ts.arrayToString(outputArray);
+	if(outputString == ts.answer){
+	    ts.fail();
+	} else {
+	    ts.succeed();
+	}		
+	
     }
 
     public void runTests(){
 
 	initialize();
-
-    }
-
-    private int [][] stringToArrayArray(String str){
-	return new int [1][];
-    }
-    
-    private int [] stringToArray(String str){
-	return new int [1];
-    }
-    
-    private void run(String input, String expected){
-
-	initialize();
-	// converting input into an array of ListNodes
-	int [][] inputs = stringToArrayArray(input);
-	// expected combined linked lisk
-	int [] output = stringToArray(expected);
-	for(int i = 0; i < inputs.length; i++){
-	    //	    test(inputs[i]);
+	for(Iterator<TestCase> iter = list.iterator(); iter.hasNext(); iter++){
+	    runTest(iter.next());
 	}
+
     }
-    
-    private void initialize(){
+
+    private void readFile(){
+
 	// checking that test file was provided
 	if(testFile == ""){
 	    System.out.println("No test file provided");
 	    return;
 	}
 	//reading test input, inputs variable should be string array of size 2
-	String [] inputs = new String [2];
+	String input;
 	try  {
-	    ReadFile.read(testFile);
+	    input = ReadFile.read(testFile);
 	} catch(Exception e) {
 	    System.out.println("File not read properly");
 	}
-	//	inputs = ReadFile.read(testFile);
-	// test input
-	//	run("", "");
     }
-    
-    
-    private void test(int[] intArray){}
-    
+
+    private void initialize(){
+
+	readFile();
+	setTestCases();
+	
+    }
+        
 }
