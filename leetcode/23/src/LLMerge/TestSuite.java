@@ -1,4 +1,5 @@
-/*
+/**
+*
 * Class Name: TESTSUITE
 * TestSuite runs tests on my main solution algorithm 
 * To do:
@@ -23,53 +24,66 @@ public class TestSuite {
 	tests= new ArrayList<TestCase>();
     }
 
-    private String run(int [][] input){
-	return "";
+    protected int[] run(int [][] input){
+	return new int[]{1,2};
     }
 
-    private void runTest(TestCase ts){
+    protected void runTest(TestCase tc){
 
-	ts.print();
-	int [] outputArray = run(ts.input);
-	String outputString = ts.arrayToString(outputArray);
-	if(outputString == ts.answer){
-	    ts.fail();
+	tc.print();
+	if(compare(run(tc.input), tc.answer)){
+	    tc.fail();
 	} else {
-	    ts.succeed();
+	    tc.success();
 	}		
 	
     }
 
+    protected boolean compare(int [] array1, int [] array2){
+	if(array1.length != array2.length){
+	    return false;
+	}
+	for(int i = 0; i < array1.length; i++){
+	    if(array1[i] != array2[i]){
+		return false;
+	    }
+	}
+	return true;
+    }	    
+
     public void runTests(){
 
 	initialize();
-	for(Iterator<TestCase> iter = list.iterator(); iter.hasNext(); iter++){
+	Iterator<TestCase> iter = tests.iterator();
+	while(iter.hasNext()){
 	    runTest(iter.next());
 	}
 
     }
 
-    private void readFile(){
+    protected ArrayList<String> readFile(){
 
 	// checking that test file was provided
 	if(testFile == ""){
 	    System.out.println("No test file provided");
-	    return;
 	}
 	//reading test input, inputs variable should be string array of size 2
-	String input;
+	ArrayList<String> inputStrings = new ArrayList<String>();
 	try  {
-	    input = ReadFile.read(testFile);
+	    inputStrings = ReadFile.read(testFile);
 	} catch(Exception e) {
 	    System.out.println("File not read properly");
 	}
+	return inputStrings;
     }
 
-    private void initialize(){
-
-	readFile();
-	setTestCases();
-	
+    protected void initialize(){
+	setTestCases(readFile());
     }
-        
+
+    protected void setTestCases(ArrayList<String> strs){
+	for(int i = 0; i < strs.size(); i++){
+	    tests.add(new TestCase(strs.get(i)));
+	}
+    }
 }
