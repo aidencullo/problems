@@ -6,7 +6,3 @@ public class LinkedList {
     int len = 0;
 
 }
-
-
-
-

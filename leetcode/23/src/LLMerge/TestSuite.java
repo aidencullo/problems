@@ -1,13 +1,3 @@
-/**
-*
-* Class Name: TESTSUITE
-* TestSuite runs tests on my main solution algorithm 
-* To do:
-*     - Implement test function
-*     - Implement string to array conversion functions
-* 
-*/
-
 package LLMerge;
 
 import java.util.ArrayList;
@@ -25,7 +15,9 @@ public class TestSuite {
     }
 
     protected int[] run(int [][] input){
-	return new int[]{1,2};
+	Algorithm alg = new Algorithm();
+	alg.mergeAll(input);
+	return new int []{1};
     }
 
     protected void runTest(TestCase tc){

@@ -17,11 +17,18 @@ public class TestCase {
     }
 
     protected int [][] stringToDoubleArray(String str){
-	return new int [1][];
+	String[] singleArrays = str.substring(1, str.length()-2).split(",");
+	int [][] arrayOfArrays = new int [singleArrays.length][];
+	for(int i = 0; i < arrayOfArrays.length; i++){
+	    arrayOfArrays[i] = stringToArray(singleArrays[i]);
+	}
     }
     
     protected int [] stringToArray(String str){
-	return new int [1];
+	String[] stringArray = str.replaceAll("\\[", "").replaceAll("]", "").split(",");
+	int [] arrayOfInts = new int [stringArray.length];
+	for(int i = 0; i < arrayOfInts.length; i++){
+	    arrayOfInts[i] = \\parseint
     }
 
     protected String arrayToString(int [] array){
@@ -40,4 +47,17 @@ public class TestCase {
     protected void print(){
 	System.out.println("Input: " + inputStr + " Expected Output: " + outputStr);
     }
+
+    protected void printArray(int [] array){
+	for(int i = 0; i < array.length; i++){
+	    System.out.println(array[i]);
+	}
+    }
+
+    protected void printDoubleArray(int [][] doubleArray){
+	for(int i = 0; i < doubleArray.length; i++){
+	    printArray(doubleArray[i]);
+	}
+    }
+
 }	
