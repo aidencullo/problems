@@ -6,6 +6,7 @@ public class TestCase {
     int [] answer;
     String inputStr;
     String outputStr;
+    ListNode [] listOfList;
 
     public TestCase(String raw){
 	String [] strInput = raw.split(" ");
@@ -13,7 +14,7 @@ public class TestCase {
 	outputStr = strInput[1];
 	input = stringToDoubleArray(strInput[0]);
 	answer = stringToArray(strInput[1]);
-
+	listOfList = arraytoListOfLists(input);
     }
 
     protected int [][] stringToDoubleArray(String str){
@@ -22,17 +23,16 @@ public class TestCase {
 	for(int i = 0; i < arrayOfArrays.length; i++){
 	    arrayOfArrays[i] = stringToArray(singleArrays[i]);
 	}
+	return arrayOfArrays;
     }
     
     protected int [] stringToArray(String str){
 	String[] stringArray = str.replaceAll("\\[", "").replaceAll("]", "").split(",");
 	int [] arrayOfInts = new int [stringArray.length];
 	for(int i = 0; i < arrayOfInts.length; i++){
-	    arrayOfInts[i] = \\parseint
-    }
-
-    protected String arrayToString(int [] array){
-	return "";
+	    arrayOfInts[i] = Integer.parseInt(stringArray[i]);
+	}
+	return arrayOfInts;
     }
 
     protected void success(){
@@ -60,4 +60,17 @@ public class TestCase {
 	}
     }
 
+    protected ListNode [] arrayToListOfLists(int [][] array){
+	ListNode [] listOfLists = new [array.length] ListNode();
+	for(int i = 0; i < array.length; i++){
+	    listOfLists[i] = arrayToList(array[i]);
+	}
+    }
+
+    protected ListNode arrayToList(int [] array){
+	ListNode node = new ListNode(array[array.length-1]);
+	for(int i = array.length-2; i >= 0; i--){
+	    ListNode list = new ListNode(array[i], node
+	    
+	    
 }	
