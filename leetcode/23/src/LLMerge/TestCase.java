@@ -6,7 +6,8 @@ public class TestCase {
     int [] answer;
     String inputStr;
     String outputStr;
-    ListNode [] listOfList;
+    ListNode answerList;
+    ListNode [] inputListOfLists;
 
     public TestCase(String raw){
 	String [] strInput = raw.split(" ");
@@ -14,7 +15,9 @@ public class TestCase {
 	outputStr = strInput[1];
 	input = stringToDoubleArray(strInput[0]);
 	answer = stringToArray(strInput[1]);
-	listOfList = arraytoListOfLists(input);
+	answerList = arraytoList(answer);
+	inputList = arraytoListOfLists(input);
+	System.out.println("Creating TestCase object");
     }
 
     protected int [][] stringToDoubleArray(String str){
@@ -65,12 +68,23 @@ public class TestCase {
 	for(int i = 0; i < array.length; i++){
 	    listOfLists[i] = arrayToList(array[i]);
 	}
+	return listOfLists;
     }
 
     protected ListNode arrayToList(int [] array){
 	ListNode node = new ListNode(array[array.length-1]);
 	for(int i = array.length-2; i >= 0; i--){
-	    ListNode list = new ListNode(array[i], node
-	    
-	    
+	    node = new ListNode(array[i], node);
+	}
+	return node;
+    }
+
+    protected void printList(){
+	System.out.println("Printing ListNodes...");
+	ListNode n = this.inputListOfLists;
+	while(n != null){
+	    System.out.println(n.val);
+	    n = n.next;
+	}
+    }
 }	

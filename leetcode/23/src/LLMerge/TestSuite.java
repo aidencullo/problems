@@ -1,4 +1,4 @@
-ackage LLMerge;
+package LLMerge;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,32 +14,31 @@ public class TestSuite {
 	tests= new ArrayList<TestCase>();
     }
 
-    protected int[] run(int [][] input){
+    protected ListNode run(ListNode [] input){
 	Algorithm alg = new Algorithm();
-	alg.mergeAll(input);
-	return new int []{1};
+	return alg.mergeAll(input);
     }
 
     protected void runTest(TestCase tc){
-
 	tc.print();
-	if(compare(run(tc.input), tc.answer)){
+	if(compare(run(tc.inputListofLists), tc.answerList)){
 	    tc.fail();
 	} else {
 	    tc.success();
-	}		
-	
+	}	
     }
 
-    protected boolean compare(int [] array1, int [] array2){
-	if(array1.length != array2.length){
-	    return false;
-	}
-	for(int i = 0; i < array1.length; i++){
-	    if(array1[i] != array2[i]){
+    protected boolean compare(ListNode l1, ListNode l2){
+	while(l1 != null){
+	    if(l2 == null)
 		return false;
-	    }
+	    if(l1.val != l2.val)
+		return false;
+	    l1 = l1.next;
+	    l2 = l2.next;
 	}
+	if(l2 != null)
+	    return false;
 	return true;
     }	    
 
