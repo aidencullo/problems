@@ -3,14 +3,17 @@ package LLMerge;
 class Algorithm {
 
     protected ListNode mergeAll(ListNode [] input){
-	ListNode merged;
-	for(int i = 0; i < input.length; i++){
-	    merged = merge(merged, input[i+1]);
+	if(input.length == 0){
+	    return null;
+	}
+	ListNode merged = input[0];
+	for(int i = 1; i < input.length; i++){
+	    merged = merge(merged, input[i]);
 	}
 	return merged;
     }
 
-    protected void merge(ListNode base, ListNode extra){
+    protected ListNode merge(ListNode base, ListNode extra){
 	if(base == null){
 	    return extra;
 	}
@@ -23,10 +26,10 @@ class Algorithm {
 
 	if(base.val <= extra.val){
 	    merged = base;
-	    base = base.next;
+	    base = ifNext(base);
 	} else {
 	    merged = extra;
-	    extra = extra.next;
+	    extra = ifNext(extra);
 	}
 
 	// we keep track of front to return the merged list later
@@ -36,22 +39,29 @@ class Algorithm {
 	    // now we just add the smallest next element in base or extra and increment on the list where we took the value
 	    if(base.val <= extra.val){
 		merged.next = base;
-		merged = merged.next;
-		base = base.next;
+		merged = ifNext(merged);
+		base = ifNext(base);
 	    } else {
 		merged.next = extra;
-		merged = merged.next;
-		extra = extra.next;
+		merged = ifNext(merged);
+		extra = ifNext(extra);
 	    }
 	}
 
 	// there could be more elements en either the base or extra list (but not both)
-	if(base.next != null){
-	    merge.next = base;
-	} else if(extra.next != null){
-	    merge.next = extra;
+	if(base != null){
+	    merged.next = base;
+	} else if(extra != null){
+	    merged.next = extra;
 	}
 	
 	return start;
+    }
+
+    private ListNode ifNext(ListNode ln){
+	if(ln.next == null){
+	    return null;
+	}
+	return ln.next;
     }
 }

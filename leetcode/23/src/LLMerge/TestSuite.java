@@ -21,10 +21,11 @@ public class TestSuite {
 
     protected void runTest(TestCase tc){
 	tc.print();
-	if(compare(run(tc.inputListofLists), tc.answerList)){
-	    tc.fail();
-	} else {
+	tc.outputList = run(tc.inputListOfLists);
+	if(compare(tc.outputList, tc.answerList)){
 	    tc.success();
+	} else {
+	    tc.fail();
 	}	
     }
 

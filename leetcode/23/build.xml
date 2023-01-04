@@ -13,7 +13,8 @@
     </target>
     
     <target name="compile">  
-        <javac includeantruntime="false" srcdir="${src}" destdir = "${build}"/>  
+        <javac includeantruntime="false" srcdir="${src}" destdir =
+	       "${build}" debug="on"/>   
     </target>
     
 </project>  

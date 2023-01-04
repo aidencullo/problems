@@ -4,20 +4,21 @@ public class TestCase {
 
     int [][] input;
     int [] answer;
-    String inputStr;
-    String outputStr;
+    String inputString;
+    String answerString;
     ListNode answerList;
     ListNode [] inputListOfLists;
+    ListNode outputList;
 
     public TestCase(String raw){
 	String [] strInput = raw.split(" ");
-	inputStr = strInput[0];
-	outputStr = strInput[1];
+	inputString = strInput[0];
+	answerString = strInput[1];
 	input = stringToDoubleArray(strInput[0]);
 	answer = stringToArray(strInput[1]);
-	answerList = arraytoList(answer);
-	inputList = arraytoListOfLists(input);
-	System.out.println("Creating TestCase object");
+	answerList = arrayToList(answer);
+	inputListOfLists = arrayToListOfLists(input);
+	System.out.println("Creating TestCase object" + inputString);
     }
 
     protected int [][] stringToDoubleArray(String str){
@@ -44,17 +45,26 @@ public class TestCase {
 
     protected void fail(){
 	System.out.println("Fail");
+	printList(outputList);
+	printList(answerList);
     }
 
-
     protected void print(){
-	System.out.println("Input: " + inputStr + " Expected Output: " + outputStr);
+	System.out.println("Input: " + inputString + " Expected Output: " + answerString);
     }
 
     protected void printArray(int [] array){
 	for(int i = 0; i < array.length; i++){
 	    System.out.println(array[i]);
 	}
+    }
+
+    protected void printList(ListNode list){
+	while(list != null){
+	    System.out.print(list.val + " -> ");
+	    list = list.next;
+	}
+	System.out.println();
     }
 
     protected void printDoubleArray(int [][] doubleArray){
@@ -64,7 +74,7 @@ public class TestCase {
     }
 
     protected ListNode [] arrayToListOfLists(int [][] array){
-	ListNode [] listOfLists = new [array.length] ListNode();
+	ListNode [] listOfLists = new ListNode [array.length];
 	for(int i = 0; i < array.length; i++){
 	    listOfLists[i] = arrayToList(array[i]);
 	}
@@ -79,12 +89,4 @@ public class TestCase {
 	return node;
     }
 
-    protected void printList(){
-	System.out.println("Printing ListNodes...");
-	ListNode n = this.inputListOfLists;
-	while(n != null){
-	    System.out.println(n.val);
-	    n = n.next;
-	}
-    }
 }	
