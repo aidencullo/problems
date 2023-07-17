@@ -1,6 +1,4 @@
-# todo
-#
-# sort
+import functools
 
 def getSubsets(array):
     if len(array) == 0:
@@ -36,6 +34,17 @@ def helper(array):
                 results.append(sub_item)
     return results
 
-subsets([1,2,3])
-subsetsAlternative([1,2,3])
+def compareList(list_a, list_b):
+    if len(list_b) == len(list_a):
+        for index in range(len(list_a)):
+            if list_a[index] == list_b[index]:
+                continue
+            else:
+                return list_a[index] - list_b[index]
+    else:
+        return len(list_a) - len(list_b)
+
+result = subsets([1,2,3])
+result = sorted(result, key=functools.cmp_to_key(compareList))
+print(result)
 # [] [1] [2] [3] [1, 2, 3] [1, 2] [1, 3] [2, 3]
