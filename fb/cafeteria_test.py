@@ -1,8 +1,10 @@
+from typing import List
+
 import pytest
 
 from cafeteria import getMaxAdditionalDinersCount, getMaxDiners
 
-test_data_getMaxDiners = [
+test_data_getMaxDiners: List[tuple[int, int, int, int]] = [
     (1, 3, 1, 2),
     (1, 10, 1, 5),
     (1, 100, 1, 50),
@@ -19,7 +21,8 @@ test_data_getMaxDiners = [
     (100, 50, 100, 0),
 ]
 
-test_data_getMaxAdditionalDinersCount = [
+test_data_getMaxAdditionalDinersCount: List[tuple[int, int, int,
+                                                  List[int], int]] = [
     (1, 1, 0, [], 1),
     (1, 2, 0, [], 1),
     (1, 10, 0, [], 1),
