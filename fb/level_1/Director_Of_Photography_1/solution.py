@@ -20,7 +20,9 @@ def explore(running_photo, remaining, running_distance, X, Y):
   return photos
 
 def is_artistic_photo(current_photo, running_distance, X, Y):
-  return (is_photo(current_photo) and is_artistic(running_distance, X, Y))
+  return (is_photo(current_photo)
+          and (is_artistic(running_distance, X, Y)
+               or len(current_photo) == 1))
 
 
 def is_photo(current):
