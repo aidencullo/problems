@@ -1,7 +1,8 @@
 from itertools import permutations
 
-s = 'abc'
-B = 'dadabcab'
+s = 'abbc'
+B = 'cbabadcbbabbcbabaabccbabc'
+
 size = len(s)
 count = 0
 
@@ -15,4 +16,4 @@ for index, el in enumerate(B[:-(size-1)]):
     if B[index: index + size] in hash_map:
         count += 1
 
-print(f'{count==3}')
+print(f'{count==7}')
