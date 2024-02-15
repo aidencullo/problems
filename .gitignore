@@ -1,3 +1,4 @@
-/fb/.venv/
+.venv/
 */flycheck_cafeteria.py
 pytest.ini
+play.py

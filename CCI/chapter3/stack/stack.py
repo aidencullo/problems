@@ -1,8 +1,13 @@
+from collections import deque
+
 class Stack:
 
     def __init__(self):
-        self.items = []
-    
+        self.items = deque()
+
+    def __repr__(self):
+        return repr(self.items)
+
     def pop(self):
         return self.items.pop()
 
@@ -27,96 +32,113 @@ def fixture():
     return Stack()
     return Mock()
 
+NUMBERS_INPUT = [
+    (1,),
+    (0,),
+    (10000,),
+    (-1,),
+]
+
+
+
+## PUSH
 
 @pytest.mark.parametrize(
     ('test_input'),
-    [
-        (4,),
-        (5,),
-        (0,),
-        (10000,),
-        (-1,),
-    ],
+    NUMBERS_INPUT,
 )
 def test_push_once(test_input, stack_mock):
     stack_mock.push(test_input)
     assert test_input == stack_mock.pop()
 
+
 @pytest.mark.parametrize(
     ('test_input'),
-    [
-        (4,),
-        (5,),
-        (0,),
-        (10000,),
-        (-1,),
-    ],
+    NUMBERS_INPUT,
 )
 def test_push_multiple(test_input, stack_mock):
     stack_mock.push(test_input)
-    stack_mock.push(test_input)
-    stack_mock.push(test_input)
-    stack_mock.push(test_input)
-    stack_mock.push(test_input)
-    assert test_input == stack_mock.pop()
-    assert test_input == stack_mock.pop()
+    stack_mock.push(test_input * 2)
+    assert test_input * 2 == stack_mock.pop()
     assert test_input == stack_mock.pop()
 
-def test_pop_on_empty():
-    stack = Stack()
+## POP
+
+def test_pop_on_empty(stack_mock):
     with pytest.raises(IndexError):
-        stack.pop()
+        stack_mock.pop()
 
 
 @pytest.mark.parametrize(
     ('test_input'),
-    [
-        (4,),
-        (5,),
-        (0,),
-        (10000,),
-        (-1,),
-    ],
+    NUMBERS_INPUT,
+)
+def test_pop_on_full(test_input, stack_mock):
+    stack_mock.push(test_input)
+    assert test_input == stack_mock.pop()
+
+@pytest.mark.parametrize(
+    ('test_input'),
+    NUMBERS_INPUT,
+)
+def test_pop_on_multiple_pushes(test_input, stack_mock):
+    stack_mock.push(test_input * 3)
+    stack_mock.push(test_input)
+    stack_mock.pop()
+    assert test_input * 3 == stack_mock.pop()
+
+
+
+
+## PEEK
+
+@pytest.mark.parametrize(
+    ('test_input'),
+    NUMBERS_INPUT,
 )
 def test_peek_on_fully(test_input, stack_mock):
     stack_mock.push(test_input)
     assert test_input == stack_mock.peek()
     assert test_input == stack_mock.peek()
- 
+    
+
 @pytest.mark.parametrize(
     ('test_input'),
-    [
-        (4,),
-        (5,),
-        (0,),
-        (10000,),
-        (-1,),
-    ],
+    NUMBERS_INPUT,
 )
 def test_peek_on_multiple_pops(test_input, stack_mock):
     stack_mock.push(test_input * 3)
     stack_mock.push(test_input)
-    assert test_input == stack_mock.peek()
     stack_mock.pop()
     assert test_input * 3 == stack_mock.peek()
 
-def test_peek_on_empty():
-    stack = Stack()
+
+def test_peek_on_empty(stack_mock):
     with pytest.raises(Exception):
-        stack.peek()
+        stack_mock.peek()
+
+
+
+## IS_EMPTY
+
+def test_is_empty():
+    assert stack_mock.isEmpty()
+
 
 @pytest.mark.parametrize(
     ('test_input'),
-    [
-        (4,),
-        (0,),
-        (10000,),
-    ],
+    NUMBERS_INPUT,
 )
 def test_is_empty(test_input, stack_mock):
-    assert stack_mock.isEmpty()
     stack_mock.push(test_input)
     assert not stack_mock.isEmpty()
+
+
+@pytest.mark.parametrize(
+    ('test_input'),
+    NUMBERS_INPUT,
+)
+def test_is_empty(test_input, stack_mock):
+    stack_mock.push(test_input)
     stack_mock.pop()
-    assert stack_mock.isEmpty()
     assert stack_mock.isEmpty()
