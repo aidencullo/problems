@@ -9,22 +9,26 @@ isempty - O(1) time
 class MyQueue:
 
     def __init__(self):
-        self.main = Stack()
-        self.helper = Stack()
+        self.left = Stack()
+        self.right = Stack()
 
     def push(self, x: int) -> None:
-        migrate(self.main, self.helper)
-        self.main.push(x)
-        migrate(self.helper, self.main)
+        self.left.push(x)
         
     def pop(self) -> int:
-        return self.main.pop()
+        if self.right:
+            return self.right.pop()
+        migrate(self.left, self.right)
+        return self.right.pop()
 
     def peek(self) -> int:
-        return self.main.peek()
+        if self.right:
+            return self.right.peek()
+        migrate(self.left, self.right)
+        return self.right.peek()
 
     def isEmpty(self) -> bool:
-        return self.main.isEmpty()
+        return self.left.isEmpty() and self.right.isEmpty()
 
 def migrate(src, target):
     while src:
