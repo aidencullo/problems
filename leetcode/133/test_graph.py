@@ -1,16 +1,33 @@
 import pytest
 
 from solution import Solution
-from graph import buildGraph, compareGraphsId, compareGraphsValue
+from graph import buildGraph, compareGraphIds, compareGraphValues
 
 def testBuildGraph():
     # Act
-    edges = [[2,4],[1,3],[2,4],[1,3]]
+    edges = [[1,2],[2,3],[3,4],[4,1]]
 
     # Act
-    root = buildGraph(edges)
+    nodes = buildGraph(edges)
 
     # Assert
-    assert root.val == 2
-    for neighbor in root.neighbors:
-        assert neighbor.val in [4]
+    for node in nodes:
+        for neighbor in node.neighbors:
+            assert neighbor in nodes
+
+
+def testCompareGraphValues():
+    # Act
+    edges = [[1,2],[2,3],[3,4],[4,1]]
+
+    # Act
+    nodes = list(buildGraph(edges))
+    root = nodes[0]
+    nodes2 = list(buildGraph(edges))
+    root2 = nodes2[0]
+
+    # Assert
+    assert compareGraphValues(root, root)
+    assert compareGraphValues(root, root2)
+    assert compareGraphIds(root, root)
+    assert not compareGraphIds(root, root2)

@@ -1,3 +1,5 @@
+import copy
+
 """
 # Definition for a Node.
 class Node:
@@ -7,6 +9,21 @@ class Node:
 """
 
 from typing import Optional
+
+
 class Solution:
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
-        pass
+        if node is None:
+            return None
+        graph = []
+        findGraph(node, graph)
+        newGraph = copy.deepcopy(graph)
+        return newGraph[0]
+
+
+def findGraph(n, g):
+    if n in g:
+        return
+    g.append(n)
+    for nb in n.neighbors:
+        findGraph(nb, g)

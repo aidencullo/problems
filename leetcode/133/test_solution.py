@@ -1,23 +1,18 @@
 import pytest
 
 from solution import Solution
-from graph import buildGraph, compareGraphsId, compareGraphsValue
+from graph import buildGraph, compareGraphIds, compareGraphValues
 
-@pytest.mark.skip
-@pytest.mark.parametrize(
-    ('test_input', 'expected'),
-    [
-        ([[2,4],[1,3],[2,4],[1,3]], None),
-    ],
-)
-def testSolution(test_input, expected):
-    # Arrange
-    s = Solution()
+@pytest.fixture(params=[
+    [[1,2],[2,3],[3,4],[4,1],],
+    [[1,2],[2,3],[3,4],],
+    [[1,2],],
+])
+def test_input(request):
+    g = buildGraph(request.param)
+    return g[0] if g else None
 
-    # Act
-    g = buildGraph(test_input)
-    actual = s.cloneGraph(g)
-
-    # Assert
-    assert not compareGraphsId(actual, g)
-    assert compareGraphsValue(actual, g)
+def testSolution(test_input):
+    actual = Solution().cloneGraph(test_input)
+    assert not compareGraphIds(actual, test_input)
+    assert compareGraphValues(actual, test_input)
