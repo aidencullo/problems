@@ -8,8 +8,9 @@ from solution import Solution
         ((2,), 2),
         ((3,), 3),
         ((1,), 1),
-        ((0,), 0),
         ((4,), 5),
+        ((5,), 8),
+        ((10,), 89),
     ]
 )
 def testSolution(test_input, expected):
