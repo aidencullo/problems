@@ -1,13 +1,10 @@
-from collections import defaultdict
+from functools import cache
+
 
 class Solution:
 
-    stairs = defaultdict(int)
-    
+    @cache
     def climbStairs(self, n: int) -> int:
         if n < 3:
             return n
-        if self.stairs[n]:
-            return self.stairs[n]
-        self.stairs[n] = self.climbStairs(n - 1) + self.climbStairs(n - 2)
-        return self.stairs[n]
+        return self.climbStairs(n - 1) + self.climbStairs(n - 2)
