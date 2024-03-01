@@ -54,3 +54,26 @@ class Solution:
                 current = interval
         results.append(current)
         return results
+
+
+## Solution 3
+"""
+from neetcode
+"""
+from typing import List
+
+# O(nlogn) time and O(n) space
+class Solution:
+    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        intervals.append(newInterval)
+        intervals.sort()
+        result = [intervals[0]]
+        
+        for start, end in intervals:
+            last_end = result[-1][1]
+            
+            if start <= last_end:
+                result[-1][1] = max(last_end, end)
+            else:
+                result.append([start, end])
+        return result
