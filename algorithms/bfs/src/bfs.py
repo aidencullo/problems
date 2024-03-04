@@ -2,20 +2,20 @@ from collections import deque
 
 from node import Node
 
-def bfs(node: Node):
+def bfs(root: Node):
     visited = []
     q = deque()
 
-    def bfs_helper(node: Node):
-        q.append(node)
+    def bfs_helper(root: Node):
+        visited.append(root)
+        q.append(root)
 
         while q:
             current = q.popleft()
-            if current not in visited:
-                visited.append(current)
             for neighbor in current.neighbors:
                 if neighbor not in visited:
                     q.append(neighbor)
-    bfs_helper(node)
+                    visited.append(neighbor)
+    bfs_helper(root)
     return [node.val for node in visited]
     
