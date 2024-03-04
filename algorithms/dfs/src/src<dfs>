@@ -1,0 +1,7 @@
+  /Users/aiden/Github/problem_solutions/algorithms/dfs/src:
+  -rw-r--r--  1 aiden  staff  483 Mar  4 14:51 #bfs.py#
+  drwxr-xr-x  6 aiden  staff  192 Mar  4 14:51 .
+  lrwxr-xr-x  1 aiden  staff   36 Mar  4 14:49 .#bfs.py -> aiden@aidens-MacBook-Pro.local.20767
+  drwxr-xr-x  9 aiden  staff  288 Mar  4 14:51 ..
+  drwxr-xr-x  3 aiden  staff   96 Mar  4 14:49 __pycache__
+  -rw-r--r--  1 aiden  staff  483 Mar  4 13:26 dfs.py
