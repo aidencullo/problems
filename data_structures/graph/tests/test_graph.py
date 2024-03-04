@@ -35,3 +35,28 @@ class TestGraph:
     def test_get_neighbors_invalid_vertex(self, graph):
         with pytest.raises(KeyError):
             graph.get_neighbors('D')
+
+
+@pytest.mark.nodegraph
+class TestNodegraph:
+
+    @pytest.fixture
+    def adjacency_list(self):
+        return {
+            1: [2,],
+            2: [3,],
+            3: [1,],
+        }
+
+    @pytest.fixture
+    def node_graph(self, adjacency_list):
+        return NodeGraph(adjacency_list)
+
+    def test_create_from_dict(self, adjacency_list):
+        ng = NodeGraph(adjacency_list)
+        assert 1 in ng._vertices
+        assert 2 in ng._vertices
+        assert 3 in ng._vertices
+    
+    def test_get_root(self, node_graph):
+        assert node_graph.get_root().val == 1

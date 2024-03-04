@@ -1,2 +1,0 @@
-def bfs(node):
-    pass
