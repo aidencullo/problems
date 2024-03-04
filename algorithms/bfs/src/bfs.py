@@ -18,4 +18,3 @@ def bfs(root: Node):
                     visited.append(neighbor)
     bfs_helper(root)
     return [node.val for node in visited]
-    

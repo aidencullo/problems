@@ -1,7 +1,7 @@
 import pytest
-from src.bfs import bfs
+
+from src.dfs import dfs
 from graph import NodeGraph
-from node import Node
 
 
 test_data = [
@@ -20,30 +20,29 @@ test_data = [
         2: [4, 3, 1],
         3: [1, 2, 4],
         4: [2, 3, 1],
-    }, [1, 2, 3, 4], id="complete"),
+    }, [1, 2, 4, 3], id="complete"),
     pytest.param({
         1: [2, 3],
         2: [4],
         3: [],
         4: [],
-    }, [1, 2, 3, 4], id="simple"),
+    }, [1, 2, 4, 3], id="simple"),
     pytest.param({
         1: [2, 3],
         2: [4, 5],
         3: [],
         4: [],
         5: [],
-    }, [1, 2, 3, 4, 5], id="tree"),
+    }, [1, 2, 4, 5, 3], id="tree"),
 ]
 
 
-@pytest.mark.bfs
-class TestBFS:
+class TestDFS:
 
     @pytest.mark.parametrize(
         ('test_input', 'expected'),
         test_data,
     )
-    def test_bfs(self, test_input, expected):
+    def test_dfs(self, test_input, expected):
         ng = NodeGraph(test_input)
-        assert bfs(ng.get_root()) == expected
+        assert dfs(ng.get_root()) == expected
