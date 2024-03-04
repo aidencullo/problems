@@ -7,10 +7,14 @@ class TestNode:
 
     @pytest.fixture
     def node(self, ):
-        n = Node(1, Node(2), Node(3))
+        n = Node(1)
+        l = Node(2)
+        r = Node(3)
+        n.add_edge(l)
+        n.add_edge(r)
         return n
 
-    def test_vals(self, node):
+    def test_node_with_two_edges(self, node):
         assert node.val == 1
-        assert node.left.val == 2
-        assert node.right.val == 3
+        for edge in node.edges:
+            assert edge.val in [2, 3]

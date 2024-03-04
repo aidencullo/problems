@@ -1,13 +1,13 @@
 import pytest
 
-from src.graph import Graph
+from src.graph import Graph, NodeGraph
 
 @pytest.mark.graph
 class TestGraph:
 
-    @pytest.fixture
-    def graph(self, ):
-        g = Graph()
+    @pytest.fixture(scope="module", params=[Graph, NodeGraph])
+    def graph(self, request):
+        g = request.param()
         g.add_vertex('A')
         g.add_vertex('B')
         g.add_vertex('C')
@@ -16,13 +16,13 @@ class TestGraph:
         return g
 
     def test_add_vertex(self, graph):
-        assert 'A' in graph.vertices
-        assert 'B' in graph.vertices
-        assert 'C' in graph.vertices
+        assert 'A' in graph._vertices
+        assert 'B' in graph._vertices
+        assert 'C' in graph._vertices
 
     def test_add_edge(self, graph):
-        assert 'B' in graph.vertices['A']
-        assert 'C' in graph.vertices['B']
+        assert 'B' in graph.get_neighbors('A')
+        assert 'C' in graph.get_neighbors('B')
 
     def test_get_neighbors(self, graph):
         assert graph.get_neighbors('A') == ['B']
