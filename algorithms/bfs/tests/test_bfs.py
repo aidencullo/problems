@@ -1,7 +1,7 @@
 import pytest
+
 from src.bfs import bfs
 from graph import NodeGraph
-from node import Node
 
 
 test_data = [
@@ -37,7 +37,6 @@ test_data = [
 ]
 
 
-@pytest.mark.bfs
 class TestBFS:
 
     @pytest.mark.parametrize(
