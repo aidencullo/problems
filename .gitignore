@@ -2,3 +2,4 @@
 */flycheck_cafeteria.py
 pytest.ini
 play.py
+**/venv/
