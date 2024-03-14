@@ -1,5 +1,6 @@
-from collections import deque
-import math
+# Solution 1
+
+from collections import deque, defaultdict
 from typing import Optional, List, Tuple
 
 # Definition for a binary tree node.
@@ -16,22 +17,12 @@ class Solution:
             return []
         q = deque()
         q.append((root, 0))
-        self.result = []
-
-        while q:
+        levels_dict = defaultdict(list)
+        while q: # O(n)
             node, level = q.popleft()
-            self.add_to_list(node, level)
+            levels_dict[level].append(node.val)
             if node.left:
                 q.append((node.left, level + 1))
             if node.right:
                 q.append((node.right, level + 1))
-        return self.result
-
-
-    def add_to_list(self, node, level):
-        val = node.val
-        if len(self.result) - 1 == level:
-            self.result[level].append(val)
-        else:
-            self.result.append([])
-            self.result[level].append(val)
+        return list(levels_dict.values()) # O(n)
