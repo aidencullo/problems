@@ -1,3 +1,5 @@
+# O(m * n) time and space
+
 from typing import Optional, List, Tuple
 from collections import deque
 
@@ -6,34 +8,24 @@ class Solution:
         q = deque()
         m = len(grid)
         n = len(grid[0])
-        visited = []
-        to_rot = 0
+        fresh = 0
+        
         for i in range(m):
             for j in range(n):
                 if grid[i][j] == 2:
                     q.append((i, j))
-                    visited.append((i, j))
-                    to_rot = -1
-        while q:
-            to_rot +=1
-            qlen = len(q)
-            for _ in range(qlen):
-                i, j = q.popleft()
-                grid[i][j] = 0
-                if 0 <= i + 1 < m and 0 <= j < n and (i + 1, j) not in visited and grid[i + 1][j]:
-                    q.append((i + 1, j))
-                    visited.append((i + 1, j))
-                if 0 <= i - 1 < m and 0 <= j < n and (i - 1, j) not in visited and grid[i - 1][j]:
-                    q.append((i - 1, j))
-                    visited.append((i - 1, j))
-                if 0 <= i < m and 0 <= j + 1 < n and (i, j + 1) not in visited and grid[i][j + 1]:
-                    q.append((i, j + 1))
-                    visited.append((i, j + 1))
-                if 0 <= i < m and 0 <= j - 1 < n and (i, j - 1) not in visited and grid[i][j - 1]:
-                    q.append((i, j - 1))
-                    visited.append((i, j - 1))
-        for i in range(m):
-            for j in range(n):
                 if grid[i][j] == 1:
-                    return -1
-        return to_rot
+                    fresh += 1
+        
+        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+        to_rot = 0
+        while q and fresh > 0:
+            to_rot +=1
+            for _ in range(len(q)):
+                r, c = q.popleft()
+                for dr, dc in directions:
+                    if 0 <= r + dr < m and 0 <= c + dc < n and grid[r + dr][c + dc] == 1:
+                        grid[r + dr][c + dc] = 2
+                        q.append((r + dr, c + dc))
+                        fresh -= 1
+        return to_rot if not fresh else -1
