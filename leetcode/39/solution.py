@@ -2,30 +2,15 @@ from typing import Optional, List, Tuple
 
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
-        def combinationSumHelper(candidates, target):            
-            if target == 0:
-                return 0
+        def subCombSum(target):
             if target < 0:
-                return -1
+                return []
             results = []
             for candidate in candidates:
-                subCombinationSum = combinationSumHelper(candidates,
-                                                         target - candidate)
-
-
-
-                if subCombinationSum == 0:
-                    results.append([candidate])
-                    continue
-                if subCombinationSum == -1:
-                    continue
-                for comb in subCombinationSum:
-                    results.append([candidate, *comb])
-                    
-
-
-
-
-            return results if results else -1
-        results = combinationSumHelper(candidates, target)
-        return results if results != -1 else []
+                if target == candidate:
+                    results.append((candidate,))
+                subComb = subCombSum(target - candidate)
+                for comb in subComb:
+                    results.append((candidate, *comb))
+            return list(list(result) for result in set(tuple(sorted(result)) for result in results))
+        return subCombSum(target)
