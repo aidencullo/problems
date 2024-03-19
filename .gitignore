@@ -3,3 +3,4 @@
 pytest.ini
 play.py
 **/venv/
+/leetcode/39/__pycache__/
