@@ -9,4 +9,5 @@ from solution import Solution
     ]
 )
 def testSolution(test_input, expected):
+    expected = sorted(expected)
     assert Solution().subsets(*test_input) == expected

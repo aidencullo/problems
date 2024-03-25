@@ -10,5 +10,5 @@ class Solution:
             subsets_helper(running, index + 1)
         res = []
         subsets_helper([], 0)
-        res.sort(key=lambda x: len(x))
+        res.sort()
         return res
