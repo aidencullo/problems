@@ -9,5 +9,8 @@ from solution import Solution
     ]
 )
 def testSolution(test_input, expected):
-    expected = sorted(expected)
-    assert Solution().subsets(*test_input) == expected
+    actual = Solution().subsets(*test_input)
+    for i in actual:
+        assert any(set(i) == set(j) for j in expected)
+    for i in expected:
+        assert any(set(i) == set(j) for j in actual)

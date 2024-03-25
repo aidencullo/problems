@@ -2,13 +2,12 @@ from typing import List
 
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
-        def subsets_helper(running, index) -> List[List[int]]:
+        def subsets_helper(index, running) -> None:
             if index == len(nums):
-                res.append(running)
+                self.res.append(running)
                 return
-            subsets_helper(running + [nums[index]], index + 1)
-            subsets_helper(running, index + 1)
-        res = []
-        subsets_helper([], 0)
-        res.sort()
-        return res
+            subsets_helper(index + 1, running)
+            subsets_helper(index + 1, [nums[index]] + running)
+        self.res = []
+        subsets_helper(0, [])
+        return self.res
