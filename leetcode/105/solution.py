@@ -46,8 +46,17 @@ class Solution:
                 return None
             root = TreeNode(preorder[p_start])
             root_index = hashmap[preorder[p_start]]
-            root.left = buildTreeHelper(p_start + 1, p_start + 1 + (root_index-i_start) - 1, i_start, root_index-1)
-            root.right = buildTreeHelper(p_start + 1 + (root_index-i_start), p_end, root_index+1, i_end)
+            left_subtree_size = root_index - i_start
+            new_p_start_l = p_start + 1
+            new_p_end_l = p_start + left_subtree_size
+            new_p_start_r = p_start + left_subtree_size + 1
+            new_p_end_r = p_end
+            new_i_start_l = i_start
+            new_i_end_l = root_index - 1
+            new_i_start_r = root_index + 1
+            new_i_end_r = i_end
+            root.left = buildTreeHelper(new_p_start_l, new_p_end_l, new_i_start_l, new_i_end_l)
+            root.right = buildTreeHelper(new_p_start_r, new_p_end_r, new_i_start_r, new_i_end_r)
             return root
         hashmap = {val: i for i, val in enumerate(inorder)}
         return buildTreeHelper(0, len(preorder) - 1, 0, len(inorder) - 1)
