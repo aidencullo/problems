@@ -1,22 +1,18 @@
 class Solution:
-
     def longestPalindrome(self, s: str) -> str:
-        pal = ""
-        for x in range(len(s)):
-            current = self.check_pals(s[x:])
-            pal = current if len(current) > len(pal) else pal
-        return pal
-
-    def check_pals(self, s):
-        bld = ""
-        for c in s:
-            bld += c
-            if self.is_palindrome(bld):
-                pal = bld
-        return pal
-
-    def is_palindrome(self, s):
-        for x in range(len(s)//2):
-            if s[x] != s[len(s)-1-x]:
-                return False
-        return True
+        longest = ""
+        for i, _ in enumerate(s):
+            j = k = i
+            while j >= 0 and k < len(s) and s[j] == s[k]:
+                if k - j + 1 > len(longest):
+                    longest = s[j:k + 1]
+                j -= 1
+                k += 1
+            j = i
+            k = i + 1
+            while j >= 0 and k < len(s) and s[j] == s[k]:
+                if k - j + 1 > len(longest):
+                    longest = s[j:k + 1]
+                j -= 1
+                k += 1
+        return longest
