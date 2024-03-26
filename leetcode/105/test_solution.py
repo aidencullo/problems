@@ -6,6 +6,7 @@ from solution import TreeNode
 @pytest.mark.parametrize(
     ('test_input', 'expected'),
     [
+        (([3,9,10,11,20,15,7], [10,9,11,3,15,20,7]), TreeNode(3, TreeNode(9, TreeNode(10), TreeNode(11)), TreeNode(20, TreeNode(15), TreeNode(7)))),
         (([3,9,20,15,7], [9,3,15,20,7]), TreeNode(3, TreeNode(9), TreeNode(20, TreeNode(15), TreeNode(7)))),
         (([1,2], [2,1]), TreeNode(1, TreeNode(2), None)),
     ]
