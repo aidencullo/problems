@@ -1,27 +1,29 @@
 from typing import List
 from collections import defaultdict
+from collections import deque
 
 class Solution:
     def findMinHeightTrees(self, n: int, edges: List[List[int]]) -> List[int]:
-        def height(node): # O(V + E)
-            def dfs(node):
-                if node in seen:
-                    return 0
-                seen.append(node)
-                return max((dfs(c) for c in graph[node])) + 1
-            seen.append(node)
-            return max((dfs(c) for c in graph[node]))
         if n == 1:
             return [0]
-
         graph = defaultdict(list)
-        for v1, v2 in edges: # O(E)
+        for v1, v2 in edges:
             graph[v1].append(v2)
             graph[v2].append(v1)
-        heights = {}
-        seen = []
-        for node in graph: # O(V)
-            heights[node] = height(node)
-            seen.clear()
-        min_height = min(heights.values()) # O(V)
-        return [node for node in heights if heights[node] == min_height] # O(V)
+        q = deque()
+        degrees = {node: len(graph[node]) for node in graph}
+        for node in graph:
+            if degrees[node] == 1:
+                q.append(node)
+        while len(graph) > 2:
+            qlen = len(q)
+            for _ in range(qlen):
+                leaf = q.popleft()
+                for parent in graph[leaf]:
+                    degrees[parent] -= 1
+                    graph[parent].remove(leaf)
+                    if degrees[parent] == 1:
+                        q.append(parent)
+                del graph[leaf]
+                del degrees[leaf]
+        return list(graph.keys())
