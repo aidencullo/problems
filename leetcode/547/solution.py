@@ -1,5 +1,5 @@
-# time: O(V^2 + V + E)
-# space: O(V + E)
+# time: O(n^2)
+# space: O(n)
 
 from collections import defaultdict
 from typing import List
@@ -7,21 +7,16 @@ from typing import List
 
 class Solution:
     def findCircleNum(self, isConnected: List[List[int]]) -> int:
-        def dfs(node):
-            if not node in seen:
-                seen.add(node)
-                for neighbor in graph[node]:
+        def dfs(node): 
+            visited.add(node)
+            for neighbor, connected in enumerate(isConnected[node]):
+                if connected and neighbor not in visited:
                     dfs(neighbor)
-        graph = defaultdict(set)
-        for u, neighbors in enumerate(isConnected):
-            for v, connected in enumerate(neighbors):
-                if connected:
-                    graph[u].add(v)
-                    graph[v].add(u)
-        seen = set()
+
+        visited = set()
         provinces = 0
-        for vertex in graph:
-            if not vertex in seen:
-                dfs(vertex)
+        for i in range(len(isConnected)):
+            if i not in visited:
                 provinces += 1
+                dfs(i)
         return provinces
