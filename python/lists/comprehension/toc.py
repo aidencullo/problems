@@ -3,8 +3,8 @@
 """
 1. list comprehension w conditional
 2. extend with list comprehension
-# implement append
-# implement insert
+3. append with list comprehension
+4. insert with list comprehension
 # implement remove
 # implement map
 # implement reduce
