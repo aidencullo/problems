@@ -1,22 +1,40 @@
-# time: O(n^2)
-# space: O(n)
-
-from collections import defaultdict
 from typing import List
 
+class UnionFind:
 
+    def __init__(self, n: int):
+        self.rank = [1] * n
+        self.parent = list(range(n))
+
+    # O(logV)
+    def union(self, u: int, v: int) -> None:
+        u_rep = self.find(u)
+        v_rep = self.find(v)
+        if  u_rep == v_rep:
+            return
+        if self.rank[u_rep] < self.rank[v_rep]:
+            self.rank[v_rep] += self.rank[u_rep]
+            self.parent[u_rep] = v_rep
+        else:
+            self.rank[u_rep] += self.rank[v_rep]
+            self.parent[v_rep] = u_rep
+
+    # O(logV)
+    def find(self, u: int) -> int:
+        if self.parent[u] != u:
+            self.parent[u] = self.find(self.parent[u])
+        return self.parent[u]
+
+# O(V^2 * logV)
 class Solution:
     def findCircleNum(self, isConnected: List[List[int]]) -> int:
-        def dfs(node): 
-            visited.add(node)
-            for neighbor, connected in enumerate(isConnected[node]):
-                if connected and neighbor not in visited:
-                    dfs(neighbor)
-
-        visited = set()
-        provinces = 0
-        for i in range(len(isConnected)):
-            if i not in visited:
-                provinces += 1
-                dfs(i)
-        return provinces
+        n = len(isConnected)
+        uf = UnionFind(n)
+        for u in range(n):
+            for v in range(n):
+                if u != v and isConnected[u][v]:
+                    uf.union(u, v)
+        parents = set()
+        for u in range(n):
+            parents.add(uf.find(u))
+        return len(parents)
