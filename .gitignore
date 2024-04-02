@@ -4,3 +4,4 @@ pytest.ini
 play.py
 **/venv/
 **/__pycache__/
+/data_structures/ADT/queue/.#priority_queue.py
