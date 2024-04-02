@@ -1,16 +1,17 @@
 """Table of Contents"""
 
 """
-1. list comprehension w conditional
-2. extend with list comprehension
-3. append with list comprehension
-4. insert with list comprehension
-# implement remove
-# implement map
-# implement reduce
-# implement filter
-# implement len
-# build a nested list
+1. list with conditional
+2. extend
+3. append
+4. build a nested list
+5. remove duplicates from list
+# insert
+# remove
+# map
+# reduce
+# filter
+# len
 # any
 # all
 """
