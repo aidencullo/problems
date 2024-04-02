@@ -6,6 +6,9 @@ from solution import Solution
     ('test_input', 'expected'),
     [
         ((["A","A","A","B","B","B"], 2), 8),
+        ((["A","A","A","B","B","B"], 0), 6),        
+        ((["A","C","A","B","D","B"], 1), 6),
+        ((["A","A","A", "B","B","B"], 3), 10),
     ]
 )
 def testSolution(test_input, expected):
