@@ -6,7 +6,7 @@
 3. append
 4. build a nested list
 5. remove duplicates from list
-# insert
+6. insert
 # remove
 # map
 # reduce
