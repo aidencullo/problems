@@ -2,23 +2,15 @@
 # space: O(1)
 
 from typing import List
-from collections import Counter, deque
-import heapq
 
 class Solution:
     def leastInterval(self, tasks: List[str], n: int) -> int:
-        task_counter = Counter(tasks)
-        max_heap = [-cnt for cnt in task_counter.values()]
-        heapq.heapify(max_heap)
-
-        q = deque()
-        t = 0
-        while q or max_heap:
-            t += 1
-            if q and q[0][1] < t:
-                heapq.heappush(max_heap, q.popleft()[0])
-            if max_heap:
-                count = 1 + heapq.heappop(max_heap)
-                if count:
-                    q.append((count, t + n))
-        return t
+        task_count = [0] * 26
+        for task in tasks:
+            task_count[ord(task) - ord('A')] += 1
+        task_count.sort()
+        max_val = task_count[-1] - 1
+        idle_slots = max_val * n
+        for i in range(24, -1, -1):
+            idle_slots -= min(task_count[i], max_val)
+        return max(idle_slots, 0) + sum(task_count)
