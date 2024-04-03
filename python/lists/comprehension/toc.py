@@ -7,7 +7,7 @@
 4. build a nested list
 5. remove duplicates from list
 6. insert
-# remove
+7. remove
 # map
 # reduce
 # filter
