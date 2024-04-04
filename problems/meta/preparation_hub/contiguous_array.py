@@ -6,30 +6,35 @@ import math
 
 
 def count_subarrays(arr):
+    print(f'{arr=}')
     n = len(arr)
-    sub_arr = [0] * n
-  # Write your code here
-    for i in range(n):
-        for j in range(i, -1, -1):
-            if arr[j] > arr[i]:
-                break
-            sub_arr[i] += 1
-        for j in range(i+1, n):
-            if arr[j] > arr[i]:
-                break
-            sub_arr[i] += 1
-    return sub_arr
-            
-        
-  
+    stack = []
+    L = [0] * n
+    for i, el in enumerate(arr):
+        while stack and arr[stack[-1]] < el:
+            stack.pop()
+        prev_largest = -1
+        if stack:
+            prev_largest = stack[-1]
+        L[i] += i - prev_largest
+        stack.append(i)
 
 
+    stack = []
+    R = [0] * n
+    arr = list(reversed(arr))
+    for i, el in enumerate(arr):
+        while stack and arr[stack[-1]] < el:
+            stack.pop()
+        prev_largest = -1
+        if stack:
+            prev_largest = stack[-1]
+        R[i] += i - prev_largest
+        stack.append(i)
 
-
-
-
-
-
+    R = list(reversed(R))
+    G = [L[i] + R[i] - 1 for i, _ in enumerate(arr)]
+    return G
 
 # These are the tests we use to determine if the solution is correct.
 # You can add your own at the bottom.
