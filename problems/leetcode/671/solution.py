@@ -1,4 +1,4 @@
-# time: O(n)
+# Time: O(n) for timsort
 # space: O(n)
 
 import math
@@ -12,17 +12,16 @@ class TreeNode:
         self.right = right
 class Solution:
     def findSecondMinimumValue(self, root: Optional[TreeNode]) -> int:
-        def dfs(node):
-            if not node.left:
-                return math.inf
-            l = node.left.val
-            r = node.right.val
-            if node.val == node.left.val:
-                l = dfs(node.left)
-            if node.val == node.right.val:
-                r = dfs(node.right)
-            return min(l, r)
-        second_min = dfs(root)
-        if second_min == math.inf:
+        self.vals = set()
+        stack = [root]
+        while stack:
+            node = stack.pop()
+            self.vals.add(node.val)
+            if node.left:
+                stack.append(node.left)
+            if node.right:
+                stack.append(node.right)
+
+        if len(self.vals) == 1:
             return -1
-        return second_min
+        return sorted(list(self.vals))[1]
