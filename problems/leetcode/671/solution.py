@@ -1,4 +1,4 @@
-# Time: O(n) for timsort
+# Time: O(log(n))
 # space: O(n)
 
 import math
