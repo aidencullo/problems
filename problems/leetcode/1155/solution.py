@@ -10,9 +10,9 @@ class Solution:
 
         for _ in range(n):
             new_dp = [0] * (target + 1)
-            for j in range(1, target + 1):
-                for l in range(1, min(k + 1, j + 1)):
-                    new_dp[j] += dp[j - l]
+            for total in range(1, target + 1):
+                for l in range(1, min(k + 1, total + 1)):
+                    new_dp[total] += dp[total - l]
             dp = new_dp
 
-        return dp[-1] % MOD
+        return dp[target] % MOD

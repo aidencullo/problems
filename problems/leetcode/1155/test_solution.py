@@ -6,6 +6,7 @@ from solution import Solution
     ((2, 6, 7), 6),
     ((2, 5, 10), 1),
     ((1, 2, 3), 0),
+    ((30, 30, 500), 222616187),
 ])
 def test_solution(test_input, expected):
     assert Solution().numRollsToTarget(*test_input) == expected
