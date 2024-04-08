@@ -6,19 +6,13 @@ import math
 
 class Solution:
     def minSubArrayLen(self, target: int, nums: List[int]) -> int:
-        if sum(nums) < target:
-            return 0
-        running = 0
-        min_len = math.inf
-        lower = 0
+        running_sum = 0
+        min_len = float('inf')
+        left = 0
         for index, num in enumerate(nums):
-            running += num
-
-            if running >= target:
-                min_len = min(min_len, index-lower+1)
-            while running >= target:
-                running -= nums[lower]
-                lower += 1
-                if running >= target:
-                    min_len = min(min_len, index-lower+1)
-        return min_len
+            running_sum += num
+            while running_sum >= target:
+                min_len = min(min_len, index-left+1)
+                running_sum -= nums[left]
+                left += 1
+        return min_len if min_len != float('inf') else 0
