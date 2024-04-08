@@ -21,8 +21,8 @@ class Solution:
 
 # brute force
 
-# time: O(n^3)
-# space: O(n)
+# time: O(n^2)
+# space: O(1)
 
 from typing import List
 import math
@@ -30,8 +30,10 @@ import math
 class Solution:
     def minSubArrayLen(self, target: int, nums: List[int]) -> int:
         min_len = math.inf
-        for left, __ in enumerate(nums):
-            for right, __ in enumerate(nums):
-                if sum(nums[left: right+1]) >= target:
+        for left in range(len(nums)):
+            running_sum = 0
+            for right in range(left, len(nums)):
+                running_sum += nums[right]
+                if running_sum >= target:
                     min_len = min(min_len, right-left+1)
         return min_len if min_len <= len(nums) else 0
