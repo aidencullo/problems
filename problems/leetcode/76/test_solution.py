@@ -8,6 +8,7 @@ from solution import Solution
     (("a", "b"), ""),
     (("aa", "aa"), "aa"),
     (("aaaaaaaaaaaabbbbbcdd", "abcdd"), "abbbbbcdd"),
+    (("ab", "a"), "a"),
 ])
 def test_solution(test_input, expected):
     sol = Solution()
