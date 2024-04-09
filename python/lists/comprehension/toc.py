@@ -8,8 +8,7 @@
 5. remove duplicates from list
 6. insert
 7. remove
-# map
-# reduce
+8. map
 # filter
 # len
 # any
