@@ -92,3 +92,30 @@ class Solution:
                 max_r = max(max_r, heights[r])
                 r -= 1
         return water
+
+
+
+
+
+
+
+# brute force
+
+# time O(n^2)
+# space O(1)
+
+from typing import List
+
+class Solution:
+
+    def trap(self, heights: List[int]) -> int:
+        water = 0
+        for i in range(len(heights)):
+            max_l = 0
+            max_r = 0
+            for j in range(i+1, len(heights)):
+                max_r = max(max_r, heights[j])
+            for j in range(i-1, -1, -1):
+                max_l = max(max_l, heights[j])
+            water += max(0, min(max_l, max_r) - heights[i])
+        return water
