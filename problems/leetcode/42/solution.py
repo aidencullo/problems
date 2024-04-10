@@ -62,3 +62,33 @@ class Solution:
             water += max(min(left[i], right[i]) - heights[i], 0)
 
         return water
+
+
+
+
+
+
+# two pointers
+
+# time O(n)
+# space O(1)
+
+from typing import List
+
+class Solution:
+
+    def trap(self, heights: List[int]) -> int:
+        max_l = max_r = 0
+        l = 0
+        r = len(heights) - 1
+        water = 0
+        while l <= r:
+            if max_l < max_r:
+                water += max(max_l - heights[l], 0)
+                max_l = max(max_l, heights[l])
+                l += 1
+            else:
+                water += max(max_r - heights[r], 0)
+                max_r = max(max_r, heights[r])
+                r -= 1
+        return water
