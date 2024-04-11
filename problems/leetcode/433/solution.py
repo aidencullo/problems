@@ -1,3 +1,5 @@
+# bfs
+
 # time O(m*n) m is the length of startGene, n is the length of bank
 # space O(n) n is the length of bank
 
@@ -24,3 +26,32 @@ class Solution:
                             q.append(newGene)
                             bank.remove(newGene)
         return -1
+
+
+# dfs
+
+# time O(m*n) m is the length of startGene, n is the length of bank
+# space O(n) n is the length of bank
+
+
+from typing import List
+from collections import deque
+
+class Solution:
+    def minMutation(self, startGene: str, endGene: str, bank: List[str]) -> int:
+
+        def dfs(gene, count):
+            if gene == endGene:
+                self.min_len = min(self.min_len, count)
+                return
+            for choice in choices:
+                for i in range(len(gene)):
+                    newGene = gene[:i] + choice + gene[i+1:]
+                    if newGene in bank:
+                        bank.remove(newGene)
+                        dfs(newGene, count + 1)
+        choices = 'ACGT'
+        bank = set(bank)
+        self.min_len = float('inf')
+        dfs(startGene, 0)
+        return self.min_len if self.min_len != float('inf') else -1
