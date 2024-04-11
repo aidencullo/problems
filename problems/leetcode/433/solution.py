@@ -50,6 +50,7 @@ class Solution:
                     if newGene in bank:
                         bank.remove(newGene)
                         dfs(newGene, count + 1)
+                        bank.add(newGene)
         choices = 'ACGT'
         bank = set(bank)
         self.min_len = float('inf')
