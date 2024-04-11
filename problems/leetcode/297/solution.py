@@ -101,14 +101,12 @@ class Codec:
         :rtype: TreeNode
         """
         data = self.extract_list(data)
-        self.i = 0
         def dfs():
-            if data[self.i] is None:
+            val = data.pop(0)
+            if val is None:
                 return None
-            node = TreeNode(data[self.i])
-            self.i += 1
+            node = TreeNode(val)
             node.left = dfs()
-            self.i += 1
             node.right = dfs()
             return node
         return dfs()
