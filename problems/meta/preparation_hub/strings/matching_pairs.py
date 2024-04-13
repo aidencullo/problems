@@ -7,7 +7,11 @@ import math
 
 def matching_pairs(s, t):
   # Write your code here
-  
+    if s == t:
+        return len(s) - 2
+    pairs = sum(s[i] == t[i] for i in range(len(t)))
+    for letter in t:
+        pass
   
 
 
