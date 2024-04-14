@@ -1,16 +1,23 @@
+# time: O(n^2)
+# space: O(n^2
+
 from typing import List
 
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
+        def twoSum(target, nums):
+            seen = set()
+            for i, num in enumerate(nums):
+                if i < len(nums) - 1 and nums[i] == nums[i+1]:
+                    seen.add(num)
+                    continue
+                if target - num in seen:
+                    res.append([-target, target-num, num])
+                seen.add(num)
         nums.sort()
         res = []
-        for i in range(len(nums)):
+        for i, num in enumerate(nums):
             if i > 0 and nums[i] == nums[i-1]:
                 continue
-            seen = set()
-            target = -nums[i]
-            for j in range(len(nums)-1, i, -1):
-                if target - nums[j] in seen:
-                    res.append([nums[i], nums[j], target-nums[j]])
-                seen.add(nums[j])
+            twoSum(-num, nums[i+1:])
         return res
