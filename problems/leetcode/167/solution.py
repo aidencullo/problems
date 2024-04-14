@@ -1,11 +1,13 @@
-from typing import Optional, List, Tuple
+# ttime: O(n)
+# space: O(1)
 
-# O(n) time O(1) space
+from typing import List
+
 class Solution:
     def twoSum(self, numbers: List[int], target: int) -> List[int]:
-        l, r = 0, len(numbers) - 1
-
-        while l < r:
+        l = 0
+        r = len(numbers) - 1
+        while True:
             if numbers[l] + numbers[r] < target:
                 l += 1
             elif numbers[l] + numbers[r] > target:
