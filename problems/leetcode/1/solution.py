@@ -1,33 +1,31 @@
-# # Solution 1
-# from typing import List
+# brute force
 
-# class Solution:
-#     def twoSum(self, nums: List[int], target: int) -> List[int]:        
-#         hash_map = {}
-#         for index, num in enumerate(nums):
-#             if target - num in hash_map:
-#                 return [hash_map[target - num], index]
-#             hash_map[num] = index
+# time complexity: O(n^2)
+# space complexity: O(1)
 
-
-
-# Solution 2
-from typing import Optional, List, Tuple
-import numpy as np
+from typing import List
 
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        sorted_idx = np.argsort(nums)
-        nums.sort()
+        for i in range(len(nums)):
+            for j in range(i+1, len(nums)):
+                if nums[i] + nums[j] == target:
+                    return [i, j]
 
-        l, r = 0, len(nums) - 1
 
-        while l < r:
-            if nums[l] + nums[r] == target:
-                return [sorted_idx[l], sorted_idx[r]]
 
-            if nums[l] + nums[r] > target:
-                r -= 1
 
-            if nums[l] + nums[r] < target:
-                l += 1
+# using hash table
+
+# time complexity: O(n)
+# space complexity: O(n)
+
+from typing import List
+
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        seen = {}
+        for i in range(len(nums)):
+            if target - nums[i] in seen:
+                return [seen[target - nums[i]], i]
+            seen[nums[i]] = i

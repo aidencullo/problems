@@ -10,8 +10,9 @@ def matching_pairs(s, t):
     if s == t:
         return len(s) - 2
     pairs = sum(s[i] == t[i] for i in range(len(t)))
-    for letter in t:
-        pass
+    for i in range(len(t)):
+        for j in range(i, len(t)):
+            pass
   
 
 
@@ -61,4 +62,9 @@ if __name__ == "__main__":
   check(expected_2, output_2)
 
   # Add your own test cases here
+
+  s_3, t_3 = "mno", "mno"
+  expected_3 = 3
+  output_3 = matching_pairs(s_3, t_3)
+  check(expected_3, output_3)
   
