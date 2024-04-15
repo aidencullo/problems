@@ -1,6 +1,3 @@
-# time O(n)
-# space O(n)
-
 import math
 from typing import Optional
 
@@ -14,11 +11,13 @@ class TreeNode:
 
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-        def valid(node: Optional[TreeNode], low: int, high: int) -> None:
+        def traverse_inorder(node: TreeNode):
             if not node:
-                return True
-            if node.val < low or node.val > high:
-                return False
-            return (valid(node.left, low, node.val-1)
-                    and valid(node.right, node.val+1, high))
-        return valid(root, -math.inf, math.inf)
+                return
+            traverse_inorder(node.left)
+            self.items.append(node.val)
+            traverse_inorder(node.right)
+        self.items = []
+        traverse_inorder(root)
+        return (self.items == sorted(self.items)
+                and len(self.items) == len(set(self.items)))
