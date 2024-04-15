@@ -11,11 +11,13 @@ class ListNode:
 
 class Solution:
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        runner = head
-        reverse_runner = ListNode(0)
-        while runner:
-            reverse_node = ListNode(runner.val)
-            reverse_node.next = reverse_runner.next
-            reverse_runner.next = reverse_node
+        stack = []
+        while head:
+            stack.append(head.val)
+            head = head.next
+        new_head = ListNode(0)
+        runner = new_head
+        while stack:
+            runner.next = ListNode(stack.pop())
             runner = runner.next
-        return reverse_runner.next
+        return new_head.next
