@@ -1,12 +1,11 @@
-# import pytest
+import pytest
 
-# from solution import Solution
+from solution import Solution
+from solution import TreeNode
 
-# @pytest.mark.parametrize(
-#     ('test_input', 'expected'),
-#     [
-#         (([1,2,3,4],), [24,12,8,6]),
-#     ]
-# )
-# def testSolution(test_input, expected):
-#     assert Solution().productExceptSelf(*test_input) == expected
+@pytest.mark.parametrize("test_input, expected", [
+    ((TreeNode(1, TreeNode(2), TreeNode(3)), TreeNode(1, TreeNode(2), TreeNode(3))), True),
+])
+def test_solution(test_input, expected):
+    sol = Solution()
+    assert sol.isSameTree(*test_input) == expected
