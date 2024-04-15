@@ -1,18 +1,20 @@
 import pytest
 
 from solution import Solution
+from solution import ListNode
 
-from ll import ListNode, list_to_ll, ll_to_list
+@pytest.mark.parametrize("test_input, expected", [
+    ((ListNode(1, ListNode(2, ListNode(3, ListNode(4, ListNode(5))))), ), ListNode(5, ListNode(4, ListNode(3, ListNode(2, ListNode(1)))))),
+])
+def test_solution(test_input, expected):
+    sol = Solution()
+    assert compare_LL(sol.reverseList(*test_input), expected)
 
-@pytest.mark.parametrize(
-    ('test_input', 'expected'),
-    [
-        (([1,2,3,4,5],), [5,4,3,2,1]),
-        (([1,2,3],), [3,2,1]),
-    ]
-)
-def testSolution(test_input, expected):
-    ll = list_to_ll(*test_input)
-    actual_ll = Solution().reverseList(ll)
-    actual_lst = ll_to_list(actual_ll)
-    assert actual_lst == expected
+def compare_LL(l1, l2):
+    if not l1 and not l2:
+        return True
+    if not l1 or not l2:
+        return False
+    if l1.val != l2.val:
+        return False
+    return compare_LL(l1.next, l2.next)

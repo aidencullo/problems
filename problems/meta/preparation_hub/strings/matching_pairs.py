@@ -7,22 +7,20 @@ import math
 
 def matching_pairs(s, t):
   # Write your code here
+    s = s.split()
+    t = t.split()
     if s == t:
         return len(s) - 2
-    pairs = sum(s[i] == t[i] for i in range(len(t)))
-    for i in range(len(t)):
-        for j in range(i, len(t)):
-            pass
-  
-
-
-
-
-
-
-
-
-
+    pairs = sum(x == y for x, y in zip(s, t))
+    for i, __ in enumerate(s):
+        for j, __ in enumerate(s):
+            if i != j:
+                local_pairs = sum(s[k] == t[k] for k in [i, j])
+                s[i], s[j] = s[j], s[i]
+                local_pairs_new = sum(s[k] == t[k] for k in [i, j])
+                pairs += local_pairs_new - local_pairs
+    return pairs
+        
 
 
 # These are the tests we use to determine if the solution is correct.
@@ -67,4 +65,16 @@ if __name__ == "__main__":
   expected_3 = 3
   output_3 = matching_pairs(s_3, t_3)
   check(expected_3, output_3)
+  
+
+  s_4, t_4 = "mnx", "mny"
+  expected_4 = 1
+  output_4 = matching_pairs(s_4, t_4)
+  check(expected_4, output_4)
+  
+
+  s_5, t_5 = "abcde", "aecde"
+  expected_5 = 4
+  output_5 = matching_pairs(s_5, t_5)
+  check(expected_5, output_5)
   
