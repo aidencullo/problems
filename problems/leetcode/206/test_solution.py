@@ -5,6 +5,7 @@ from solution import ListNode
 
 @pytest.mark.parametrize("test_input, expected", [
     ((ListNode(1, ListNode(2, ListNode(3, ListNode(4, ListNode(5))))), ), ListNode(5, ListNode(4, ListNode(3, ListNode(2, ListNode(1)))))),
+    ((None, ), None),
 ])
 def test_solution(test_input, expected):
     sol = Solution()
