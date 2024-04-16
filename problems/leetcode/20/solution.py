@@ -18,9 +18,7 @@ class Solution:
         ))
         for symbol in s:
             if symbol in closing:
-                if not stack:
-                    return False
-                if stack.pop() != symbol:
+                if not stack or stack.pop() != symbol:
                     return False
             else:
                 stack.append(opposite[symbol])
