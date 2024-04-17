@@ -10,6 +10,7 @@ from solution import Solution
     (("bb",), "bb"),
     (("ccc",), "ccc"),
     (("cccc",), "cccc"),
+    (("a",), "a"),
 ])
 def test_solution(test_input, expected):
     solution = Solution()
