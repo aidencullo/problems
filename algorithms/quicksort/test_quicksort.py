@@ -1,6 +1,6 @@
 import pytest
 
-from src.quicksort import quicksort
+from quicksort import quicksort
 
 
 test_data = [
