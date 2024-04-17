@@ -12,17 +12,12 @@ class Solution:
         while len(heap) > 1:
             val1, key1 = heapq.heappop(heap)
             val2, key2 = heapq.heappop(heap)
-            res += key1
-            res += key2
-            val1 += 1
-            val2 += 1
-            if val1 != 0:
-                heapq.heappush(heap, (val1, key1))
-            if val2 != 0:
-                heapq.heappush(heap, (val2, key2))
-        if heap:
-            val1, key1 = heapq.heappop(heap)
-            if val1 < -1:
-                return ''
-            res += key1
+            res += key1 + key2
+            if val1+1 != 0:
+                heapq.heappush(heap, (val1+1, key1))
+            if val2+1 != 0:
+                heapq.heappush(heap, (val2+1, key2))
+        if heap[0][0] < -1:
+            return ''
+        res += heap[0][1]
         return res
