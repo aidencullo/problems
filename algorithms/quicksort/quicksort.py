@@ -3,7 +3,6 @@ from typing import List
 
 def quicksort(numbers: list[int]) -> List[int]:
     def sort(numbers: list[int], start, end):
-        print(start, end)
         if end <= start:
             return
         pivot_index = partition(numbers, start, end)
@@ -15,7 +14,6 @@ def quicksort(numbers: list[int]) -> List[int]:
 
 
 def partition(numbers: list[int], start: int, end: int):
-    print(numbers[start:end+1])
     pivot = numbers[start]
     l = start + 1
     r = l - 1
