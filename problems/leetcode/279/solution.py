@@ -20,3 +20,6 @@ class Solution:
                         return count
                     if current-sq > 0:
                         q.append(current-sq)
+
+
+# try DP solution
