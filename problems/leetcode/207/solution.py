@@ -1,24 +1,22 @@
-from typing import Optional, List, Tuple
-from collections import defaultdict
+from typing import List
 
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        course_dict = {i: [] for i in range(numCourses)}
-        for course, prereq in prerequisites:
-            course_dict[course].append(prereq)
+        def dfs(node: int):
+            if node in visited:
+                self.cycle = True
+                return
+            visited.add(node)
+            for neighbor in graph[node]:
+                dfs(neighbor)
+            graph[node] = set()
+            visited.remove(node)
 
-        visit_set = set()
-        def dfs(node):
-            if course_dict[node] == []:
-                return True
-            if node in visit_set:
-                return False
-            visit_set.add(node)
-            for nb in course_dict[node]:
-                if not dfs(nb): return False
-            visit_set.remove(node)
-            course_dict[node] = []
-            return True
-        for course in course_dict:
-            if not dfs(course): return False
-        return True
+        graph = dict((el, set()) for el in range(numCourses))
+        for course, prerequisite in prerequisites:
+            graph[course].add(prerequisite)
+        visited = set()
+        self.cycle = False
+        for node in graph:
+            dfs(node)
+        return not self.cycle
