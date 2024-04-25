@@ -11,5 +11,8 @@ class Solution:
                 return 0
             if row == len(obstacleGrid) - 1 and col == len(obstacleGrid[0]) - 1:
                 return 1
-            return get_paths(row + 1, col) + get_paths(row, col + 1)
+            if not (row, col) in self.memo:
+                self.memo[(row, col)] = get_paths(row + 1, col) + get_paths(row, col + 1)
+            return self.memo[(row, col)]
+        self.memo = {}
         return get_paths(0, 0)
