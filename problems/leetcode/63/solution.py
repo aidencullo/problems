@@ -1,22 +1,15 @@
-# time: O(n * m)
-# space: O(1)
-
 from typing import List
 
 class Solution:
     def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
-        n = len(obstacleGrid)
-        m = len(obstacleGrid[0])
-
-        for i in range(n):
-            for j in range(m):
-                if not obstacleGrid[i][j]:
-                    if i == 0 and j == 0:
-                        obstacleGrid[i][j] = 1
-                    if i != 0:
-                        obstacleGrid[i][j] += obstacleGrid[i - 1][j]
-                    if j != 0:
-                        obstacleGrid[i][j] += obstacleGrid[i][j - 1]
-                else:
-                    obstacleGrid[i][j] = 0
-        return obstacleGrid[-1][-1]
+        def get_paths(row, col):
+            if row == len(obstacleGrid):
+                return 0
+            if col == len(obstacleGrid[0]):
+                return 0
+            if obstacleGrid[row][col]:
+                return 0
+            if row == len(obstacleGrid) - 1 and col == len(obstacleGrid[0]) - 1:
+                return 1
+            return get_paths(row + 1, col) + get_paths(row, col + 1)
+        return get_paths(0, 0)
