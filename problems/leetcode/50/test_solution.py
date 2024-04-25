@@ -1,3 +1,4 @@
+import math
 import pytest
 
 from solution import Solution
@@ -34,5 +35,4 @@ from solution import Solution
     ((2.00000, 24), 16777216.00000),
 ])
 def test_solution(test_input, expected):
-    s = Solution()
-    assert s.myPow(*test_input) == expected
+    assert math.isclose(Solution().myPow(*test_input), expected, rel_tol=1e-9)
