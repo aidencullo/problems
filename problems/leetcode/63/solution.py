@@ -2,17 +2,18 @@ from typing import List
 
 class Solution:
     def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
-        def get_paths(row, col):
-            if row == len(obstacleGrid):
-                return 0
-            if col == len(obstacleGrid[0]):
-                return 0
-            if obstacleGrid[row][col]:
-                return 0
-            if row == len(obstacleGrid) - 1 and col == len(obstacleGrid[0]) - 1:
-                return 1
-            if not (row, col) in self.memo:
-                self.memo[(row, col)] = get_paths(row + 1, col) + get_paths(row, col + 1)
-            return self.memo[(row, col)]
-        self.memo = {}
-        return get_paths(0, 0)
+        rows = len(obstacleGrid)
+        cols = len(obstacleGrid[0])
+        dp = [[0] * cols for __ in range(rows)]
+        dp[0][0] = 1
+
+        for col in range(cols):
+            for row in range(rows):
+                if obstacleGrid[row][col] == 1:
+                    dp[row][col] = 0
+                    continue
+                if col > 0:
+                    dp[row][col] += dp[row][col - 1]
+                if row > 0:
+                    dp[row][col] += dp[row - 1][col]
+        return dp[rows - 1][cols - 1]
