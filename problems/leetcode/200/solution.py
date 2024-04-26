@@ -1,28 +1,29 @@
-# Solution 1
-# O(m * n) time
-
 from typing import Optional, List, Tuple
 
 
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
+        rows = len(grid)
+        cols = len(grid[0])
+        visited = set()
+        directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+        def dfs(row,  col):
+            if row < 0 or row >= rows or col < 0 or col >= cols:
+                return
+            if (row, col) in visited:
+                return
+            visited.add((row, col))
+            for dr, dc in directions:
+                dfs(row + dr, col + dc)
 
-        def dfs(i, j):
-            if not 0 <= i < m or not 0 <= j < n:
-                return 0
-            if grid[i][j] != '1':
-                return 0
-            grid[i][j] = '*'            
-            dfs(i + 1, j)
-            dfs(i, j + 1)
-            dfs(i - 1, j)
-            dfs(i, j - 1)
-            return 1
-        
-        m = len(grid)
-        n = len(grid[0])
         islands = 0
-        for i, row in enumerate(grid):
-            for j, _ in enumerate(row):
-                islands += dfs(i, j)
+        for row in range(rows):
+            for col in range(cols):
+                if grid[row][col] == '0':
+                    visited.add((row, col))
+        for row in range(rows):
+            for col in range(cols):
+                if not (row, col) in visited:
+                    dfs(row, col)
+                    islands += 1
         return islands

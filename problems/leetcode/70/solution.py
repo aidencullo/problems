@@ -1,11 +1,8 @@
 class Solution:
-
-    def __init__(self):
-        self.memo = {}
-        
     def climbStairs(self, n: int) -> int:
-        if n <= 1:
-            return 1
-        if not n in self.memo:
-            self.memo[n] = self.climbStairs(n-1) + self.climbStairs(n-2)
-        return self.memo[n]
+        dp = []
+        dp.append(1)
+        dp.append(1)
+        for i in range(1, n):
+            dp.append(dp[-1] + dp[-2])
+        return dp[-1]
