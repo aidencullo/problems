@@ -1,12 +1,12 @@
 class Solution:
     def perfectSum(self, arr, n, sum):
-        dp = [1] + [0] * sum
+        dp = [[1] + [0] * sum for __ in range(n + 1)]
         for i in range(1, n + 1):
-            last_dp = dp[:]
             for j in range(sum + 1):
+                dp[i][j] = dp[i-1][j]
                 if arr[i-1] <= j:
-                    dp[j] += last_dp[j - arr[i-1]]
-        return dp[-1] % (10**9 + 7)
+                    dp[i][j] += dp[i-1][j - arr[i-1]]
+        return dp[-1][-1] % (10**9 + 7)
     
 
 
