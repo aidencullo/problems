@@ -4,18 +4,26 @@ from typing import Optional, List, Tuple
 
 class Solution:
     def evalRPN(self, tokens: List[str]) -> int:
+        tokens = tokens[::-1]
         stack = []
-        ops = {
-            '+' : operator.add,
-            '-' : operator.sub,
-            '/' : lambda x, y: int(x/y),
-            '*' : operator.mul,
-        }
-        for token in tokens:
-            if token in ops:
-                r = int(stack.pop())
-                l = int(stack.pop())
-                stack.append(ops[token](l, r))
+        while tokens:
+            symbol = tokens.pop()
+            try:
+                number = int(symbol)
+            except ValueError:
+                y = stack.pop()
+                x = stack.pop()
+                stack.append(operate(x, y, symbol))
             else:
-                stack.append(token)
-        return int(stack.pop())
+                stack.append(int(symbol))
+        return stack.pop()
+
+operators = {
+    '+': lambda x, y: x + y,
+    '-': lambda x, y: x - y,
+    '*': lambda x, y: x * y,
+    '/': lambda x, y: int( x / y),
+}
+    
+def operate(x, y, op):
+    return operators[op](x, y)
