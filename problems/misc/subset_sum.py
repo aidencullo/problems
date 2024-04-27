@@ -1,5 +1,5 @@
 class Solution:
-    def isSubsetSum (self, N, arr, sum):
+    def isSubsetSum(self, N, arr, sum):
         # code here
         dp = [[1] + [0] * sum for __ in range(N + 1)]
         for i in range(1, N+1):
