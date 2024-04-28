@@ -1,43 +1,79 @@
 from collections import defaultdict
+from typing import List
 
-# Definition for a Node.
 class Node:
     def __init__(self, val = 0, neighbors = None):
         self.val = val
         self.neighbors = neighbors if neighbors is not None else []
 
-def buildGraph(edges: list[list[int]]):
-    nodes_dict: dict[int, Node] = {}
-    for edge in edges:
-        for value in edge:
-            if value not in nodes_dict:
-                nodes_dict[value] = Node(value, list())
-    for value, neighbor in edges:
-        nodes_dict[value].neighbors.append(nodes_dict[neighbor])
-        nodes_dict[neighbor].neighbors.append(nodes_dict[value])
-    return list(nodes_dict.values())
+def buildGraph(edges: List[List[int]], N: int):
+    if not edges:
+        return None
+    def dfs(i):
+        if i in visited:
+            return nodes[i]
 
-def compareGraphIds(n1, n2, g1=None, g2=None):
-    compare = lambda x,y: x == y
-    return compareGraphs(n1, n2, g1, g2, compare)
+        visited.add(i)
+        for j in graph[i]:
+            nodes[i].neighbors.append(dfs(j))
+        return nodes[i]
 
-def compareGraphValues(n1, n2, g1=None, g2=None):
-    compare = lambda x,y: x.val == y.val
-    return compareGraphs(n1, n2, g1, g2, compare)
+    graph = build_raw_graph(edges)
+    visited = set()
+    nodes = {i: Node(i) for i in range(1, N + 1)}
+    head = dfs(1)
+    return head
 
-def compareGraphs(n1, n2, g1=None, g2=None, equal=lambda: True):
-    if n1 is None and n2 is None:
+
+def build_raw_graph(edges):
+    graph = defaultdict(list)
+    for src, dest in edges:
+        graph[src].append(dest)
+        graph[dest].append(src)
+    return graph
+
+
+def compareGraphByValue(graph_B: Node, graph_A: Node):
+    def compareGraphByValueHelper(graph_B: Node, graph_A: Node):
+        if not graph_A and not graph_B:
+            return True
+        if (graph_A, graph_B) in visited:
+            return True
+        visited.add((graph_A, graph_B))
+        if not compareNodes(graph_A, graph_B):
+            return False
+        for neighbor_B, neighbor_A in zip(graph_A.neighbors, graph_B.neighbors):
+            if not compareGraphByValueHelper(neighbor_A, neighbor_B):
+                return False
         return True
-    if n2 is None or n1 is None:
-        return False
-    if g1 is None:
-        g1 = []
-    if g2 is None:
-        g2 = []
-    if n1 in g1 and n2 in g2:
+    visited = set()
+    return compareGraphByValueHelper(graph_A, graph_B)
+
+
+def compareNodes(u, v):
+    if not u and not v:
         return True
-    if not equal(n1, n2):
+    if not u or not v:
         return False
-    g1.append(n1)
-    g2.append(n2)
-    return all(compareGraphValues(nb1, nb2, g1, g2) for nb1, nb2 in zip(n1.neighbors, n2.neighbors))
+    if u.val != v.val:
+        return False
+    if len(u.neighbors) != len(v.neighbors):
+        return False
+    return True
+
+
+def compareGraphById(graph_B: Node, graph_A: Node):
+    def compareGraphByIdHelper(graph_B: Node, graph_A: Node):
+        if not graph_A and not graph_B:
+            return True
+        if (graph_A, graph_B) in visited:
+            return True
+        visited.add((graph_A, graph_B))
+        if graph_A != graph_B:
+            return False
+        for neighbor_B, neighbor_A in zip(graph_A.neighbors, graph_B.neighbors):
+            if not compareGraphByIdHelper(neighbor_A, neighbor_B):
+                return False
+        return True
+    visited = set()
+    return compareGraphByIdHelper(graph_A, graph_B)

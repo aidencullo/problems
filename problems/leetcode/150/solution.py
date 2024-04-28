@@ -4,10 +4,8 @@ from typing import Optional, List, Tuple
 
 class Solution:
     def evalRPN(self, tokens: List[str]) -> int:
-        tokens = tokens[::-1]
         stack = []
-        while tokens:
-            symbol = tokens.pop()
+        for symbol in tokens:
             try:
                 number = int(symbol)
             except ValueError:
