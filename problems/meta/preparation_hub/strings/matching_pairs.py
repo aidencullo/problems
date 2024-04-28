@@ -7,19 +7,16 @@ import math
 
 def matching_pairs(s, t):
   # Write your code here
-    s = s.split()
-    t = t.split()
-    if s == t:
-        return len(s) - 2
-    pairs = sum(x == y for x, y in zip(s, t))
-    for i, __ in enumerate(s):
-        for j, __ in enumerate(s):
-            if i != j:
-                local_pairs = sum(s[k] == t[k] for k in [i, j])
-                s[i], s[j] = s[j], s[i]
-                local_pairs_new = sum(s[k] == t[k] for k in [i, j])
-                pairs += local_pairs_new - local_pairs
-    return pairs
+    s = list(s)
+    t = list(t)
+    max_pairs = float('-inf')
+    for i in range(len(s)):
+        for j in range(i + 1, len(s)):
+            s[i], s[j] = s[j], s[i]
+            pairs = sum(x == y for x, y in zip(s, t))
+            s[i], s[j] = s[j], s[i]
+            max_pairs = max(max_pairs, pairs)            
+    return max_pairs
         
 
 
@@ -62,7 +59,7 @@ if __name__ == "__main__":
   # Add your own test cases here
 
   s_3, t_3 = "mno", "mno"
-  expected_3 = 3
+  expected_3 = 1
   output_3 = matching_pairs(s_3, t_3)
   check(expected_3, output_3)
   

@@ -3,19 +3,19 @@ Imagine you are writing code to swap the minimum and maximum element in an integ
 """
 
 def swap_min_max(arr):
-    min_el = float('inf')
-    max_el = float('-inf')
-    min_i = None
-    max_i = None
-    for i, el in enumerate(arr):
-        if el < min_el:
-            min_el = el
-            min_i = i
-        if el > max_el:
-            max_el = el
-            max_i = i
+    min_i =  get_min_index(arr)
+    max_i = get_max_index(arr)
     arr[max_i], arr[min_i] = arr[min_i], arr[max_i]
     return arr
+
+
+def get_min_index(arr):
+    return arr.index(min(arr))
+
+
+def get_max_index(arr):
+    return arr.index(max(arr))
+
 
 assert swap_min_max([1, 2, 3, 4, 5]) == [5, 2, 3, 4, 1]
 assert swap_min_max([5, 4, 3, 2, 1]) == [1, 4, 3, 2, 5]
