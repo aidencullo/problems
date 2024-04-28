@@ -15,7 +15,6 @@ class Solution:
             runner = runner.next
             self.insert_next(runner, removed)
             runner = runner.next
-        self.print(new_head)
         return new_head.next
 
     def remove_next(self, node) -> ListNode:
