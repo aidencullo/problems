@@ -1,22 +1,33 @@
 class Solution:
     def bToDLL(self, root):
-        def dfs(tail, node):
+        def dfs(node):
             if not node:
-                return tail
-            left_tail = dfs(tail, node.left)
-            middle_tail = insert(left_tail, node)
-            right_tail = dfs(middle_tail, node.right)
-            return right_tail
+                return None
 
-        def insert(tail, node):
-            node.left = tail
-            if tail:
-                tail.right = node
-            return node
+            l = dfs(node.left)
+            
+            if not l:
+                l = node
+            else:
+                insert_last(l, node)
 
-        tail = dfs(None, root)
-        head = tail
-        while head.left:
-            head = head.left
-        return head
- 
+            r = dfs(node.right)
+            insert_right(node, r)
+            return l
+
+        def insert_right(node, new_node):
+            node.right = new_node
+            if new_node:
+                new_node.left = node
+
+        def insert_last(node, new_node):
+            runner = traverse(node)
+            insert_right(runner, new_node)            
+
+        def traverse(node):
+            runner = node
+            while runner.right:
+                runner = runner.right
+            return runner
+
+        return dfs(root)

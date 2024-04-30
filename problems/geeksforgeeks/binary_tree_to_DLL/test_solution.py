@@ -4,6 +4,13 @@ from solution import Solution
 from tree import Node
 
 
+def test_leaf():
+    input_list = Node(1)
+    expected = build_dll([1])
+    result = Solution().bToDLL(input_list)
+    assert compare_linked_lists(result, expected)
+
+
 def test_simple_solution():
     input_list = Node(2, Node(1), Node(3))
     expected = build_dll([1, 2, 3])
