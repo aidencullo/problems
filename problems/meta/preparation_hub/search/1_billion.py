@@ -23,10 +23,10 @@ def getBillionUsersDay(growthRates):
     min_square = 0
     max_square = 0
     while True:
-        if sum(rate ** (i ** 2) for rate in growthRates) >= 1000000000:
-            max_square = i ** 2
+        if sum(rate ** (2 ** i) for rate in growthRates) >= 1000000000:
+            max_square = 2 ** i
             break
-        min_square = i ** 2
+        min_square = 2 ** i
         i += 1
     return binary_search(growthRates, min_square, max_square)
 
