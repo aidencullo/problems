@@ -1,21 +1,18 @@
 class Solution:
     def decodeString(self, s: str) -> str:
-        res = ''
         stack = []
-        numbers = []
         num = 0
         string = ''
         for symbol in s:
             if symbol == '[':
-                numbers.append(num)
-                num = 0
+                stack.append(num)
                 stack.append(string)
+                num = 0
                 string = ''
-            if symbol.isnumeric():
+            elif symbol == ']':
+                string = stack.pop() + stack.pop() * string
+            elif symbol.isnumeric():
                 num = num * 10 + int(symbol)
-            if symbol.isalpha():
+            else:
                 string += symbol
-            if symbol == ']':
-                string *= numbers.pop()
-                string = stack.pop() + string
         return ''.join(stack) + string
