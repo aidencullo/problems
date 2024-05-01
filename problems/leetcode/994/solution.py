@@ -1,31 +1,31 @@
-# O(m * n) time and space
-
-from typing import Optional, List, Tuple
+from typing import List
 from collections import deque
 
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
-        q = deque()
-        m = len(grid)
-        n = len(grid[0])
-        fresh = 0
-        
-        for i in range(m):
-            for j in range(n):
-                if grid[i][j] == 2:
-                    q.append((i, j))
+        n = len(grid)
+        m = len(grid[0])
+        directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+        oranges = 0
+        rotten = deque()
+        for i in range(n):
+            for j in range(m):
                 if grid[i][j] == 1:
-                    fresh += 1
-        
-        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
-        to_rot = 0
-        while q and fresh > 0:
-            to_rot +=1
-            for _ in range(len(q)):
-                r, c = q.popleft()
-                for dr, dc in directions:
-                    if 0 <= r + dr < m and 0 <= c + dc < n and grid[r + dr][c + dc] == 1:
-                        grid[r + dr][c + dc] = 2
-                        q.append((r + dr, c + dc))
-                        fresh -= 1
-        return to_rot if not fresh else -1
+                    oranges += 1
+                if grid[i][j] == 2:
+                    rotten.append((i, j, 0))
+
+        days = 0
+        while rotten:
+                num_rotten = len(rotten)
+                for __ in range(num_rotten):
+                    row, col, current_day = rotten.popleft()
+                    days = max(days, current_day)
+                    for dr, dc in directions:
+                        new_row = row + dr
+                        new_col = col + dc
+                        if 0 <= new_row < n and 0 <= new_col < m and grid[new_row][new_col] == 1:
+                            grid[new_row][new_col] = 2
+                            rotten.append((new_row, new_col, current_day + 1))
+                            oranges -= 1
+        return days if oranges == 0 else -1
