@@ -1,27 +1,28 @@
 from typing import List
+from collections import deque
 
 class Solution:
-    def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
-        def distance_to_zero(row, col):
-            if row < 0 or row >= n or col < 0 or col >= m:
-                return float('inf')
-            if mat[row][col] == 0:
-                return 0
-            if (row, col) in visited:
-                return float('inf')
-            visited.add((row, col))
-            min_distance = float('inf')
-            for dc, dr in directions:
-                min_distance = min(min_distance, distance_to_zero(row + dr, col + dc))
-            visited.remove((row, col))
-            return min_distance + 1
-
-        visited = set()
+    def updateMatrix(self, grid: List[List[int]]) -> int:
+        n = len(grid)
+        m = len(grid[0])
         directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-        n = len(mat)
-        m = len(mat[0])
-        updated = [[0] * m for __ in range(n)]
-        for row in range(n):
-            for col in range(m):
-                updated[row][col] = distance_to_zero(row, col)
-        return updated
+        updated = deque()
+        visited = set()
+        for i in range(n):
+            for j in range(m):
+                if grid[i][j] == 0:
+                    updated.append((i, j, 0))
+                    visited.add((i, j))
+
+        while updated:
+            for __ in range(len(updated)):
+                row, col, distance_to_zero = updated.popleft()
+                grid[row][col] = distance_to_zero
+                
+                for dr, dc in directions:
+                    new_row = row + dr
+                    new_col = col + dc
+                    if 0 <= new_row < n and 0 <= new_col < m and (new_row, new_col) not in visited:
+                        updated.append((new_row, new_col, distance_to_zero + 1))
+                        visited.add((new_row, new_col))
+        return grid
