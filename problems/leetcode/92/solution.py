@@ -9,47 +9,33 @@ class ListNode:
 
 class Solution:
     def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
-        stack = []
-        before_head = ListNode(0)
-        before_head.next = head
-
-        runner = self.move_to_left(before_head, left)
-        self.remove_nodes(stack, runner, left, right)
-        self.insert_nodes(stack, runner)
-
-        return before_head.next
-
-    def insert_nodes(self, stack, runner):
-        while stack:
-            self.insert_right(runner, stack.pop())
-            runner = runner.next
-
-    def remove_nodes(self, stack, runner, left, right):
-        i = left
-        while i <= right:
-            stack.append(self.delete_right(runner))
-            i += 1
-            
-    def move_to_left(self, node, left):
         i = 1
-        runner = node
-        while i < left:
+        runner = head
+        while i < right:
             runner = runner.next
             i += 1
-        return runner
+        after_reverse = runner.next
+        runner.next = None
 
-    def delete_right(self, node):
-        tmp = node.next
-        node.next = node.next.next
-        tmp.next = None
-        return tmp
-
-    def insert_right(self, head, node):
-        node.next = head.next
-        head.next = node
-
-    def print(self, head):
-        runner = head
-        while runner:
-            print(runner.val)
+        before_head = ListNode(0, head)
+        runner = before_head
+        for __ in range(1, left):
             runner = runner.next
+
+        before_reverse = runner
+        runner = runner.next
+
+        last = after_reverse
+        for __ in range(left, right + 1):
+            tmp = runner.next
+            runner.next = last
+            last = runner
+            runner = tmp
+
+        before_reverse.next = last
+        return before_head.next
+    
+    def print(self, head):
+        while head:
+            print(head.val)
+            head = head.next
