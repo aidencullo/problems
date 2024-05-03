@@ -10,11 +10,13 @@ import operator
 def findMaxProduct(arr):
   # Write your code here
     res = [-1] * len(arr)
+    heap = []
     for i in range(len(arr)):
-        tmp = arr[:i + 1]
-        heapq.heapify(tmp)
-        if len(tmp) > 2:
-            res[i] = reduce(operator.mul, (heapq.nlargest(3, tmp)))
+        heapq.heappush(heap, arr[i])
+        if len(heap) > 3:
+            heapq.heappop(heap)
+        if len(heap) == 3:
+            res[i] = reduce(operator.mul, heap)
     return res
         
         
