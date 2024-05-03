@@ -1,9 +1,6 @@
 .venv/
-*/flycheck_cafeteria.py
 pytest.ini
 play.py
 **/venv/
 **/__pycache__/
-/data_structures/ADT/queue/.#priority_queue.py
-/problems/leetcode/224/#solution.py#
-/problems/leetcode/119/#solution.py#
+**/#*#
