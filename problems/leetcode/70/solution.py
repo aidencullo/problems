@@ -1,8 +1,12 @@
 class Solution:
+    def __init__(self):
+        self.cache = {}
+        
     def climbStairs(self, n: int) -> int:
-        dp = []
-        dp.append(1)
-        dp.append(1)
-        for i in range(1, n):
-            dp.append(dp[-1] + dp[-2])
-        return dp[-1]
+        if n == 1:
+            return 1
+        if n == 0:
+            return 1
+        if n not in self.cache:
+            self.cache[n] = self.climbStairs(n - 1) + self.climbStairs(n - 2)
+        return self.cache[n]
