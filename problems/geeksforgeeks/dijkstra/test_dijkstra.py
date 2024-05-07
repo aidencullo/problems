@@ -1,20 +1,14 @@
 import pytest
+
 from dijkstra import Solution  
 
+
 class TestSolution:
-    @pytest.fixture
-    def solution(self):
-        return Solution()
-
-    def test_dijkstra(self, solution):
-        
-        V = 2
-        adj = [
-            [[1, 9]],
-            [[0, 9]],
-        ]
-        S = 0  
-        
-        distances = solution.dijkstra(V, adj, S)
-
-        assert distances == [0, 9]
+    @pytest.mark.parametrize("vertices, graph, src, expected", [
+        (2, [[[1, 9]], [[0, 9]]], 0, [0, 9]),
+        (3, [[[1, 2], [2, 3]], [[0, 2], [2, 2]], [[0, 3], [1, 2]]], 0, [0, 2, 3]),
+    ])
+    def test_dijkstra(self, vertices, graph, src, expected):
+        solution = Solution()
+        distances = solution.dijkstra(vertices, graph, src)        
+        assert distances == expected
