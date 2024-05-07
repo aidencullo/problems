@@ -12,25 +12,7 @@ class Node:
 
 def count_of_nodes(root, queries, s):
   # Write your code here
-  def find_node(node, val):
-    if node.val == val:
-      return node
-    return reduce(lambda x,y: x or y, (find_node(child, val) for child in node.children), None)
-
-  def count_subtree_nodes(node, letter):
-    child_count = sum(count_subtree_nodes(child, letter) for child in node.children)
-    if s[node.val - 1] == letter:
-      return 1 + child_count
-    return child_count
-
-  res = []
-  for query in queries:
-    val, letter = query
-    val_node = find_node(root, val)
-    subtree_count = count_subtree_nodes(val_node, letter)
-    res.append(subtree_count)
-  return res
-
+  
     
     
     
