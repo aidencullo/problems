@@ -8,21 +8,40 @@ from collections import deque
 def minOperations(arr):
   # Write your code here
     n = len(arr)
-    q = deque([(0, arr)])
     target = list(range(1, n + 1))
-    visited = []
+    src = deque([arr])
+    dest = deque([target])
+    src_visited = []
+    src_steps = -1
+    dest_visited = []
+    dest_steps = -1
 
-    while q:
-        steps, node = q.popleft()
-        if node == target:
-            return steps
-        visited.append(node)
-        for i in range(n):
-            for j in range(i + 1, n + 1):
-                reversed_node = node[:i] + node[i:j][::-1] + node[j:]
-                if reversed_node not in visited:
-                    q.append((steps + 1, reversed_node))
+    while src and dest:
+        src_steps += 1
+        for __ in range(len(src)):
+            node = src.popleft()
+            if node in dest_visited:
+                return src_steps + dest_steps
+            src_visited.append(node)
+            for i in range(n):
+                for j in range(i + 1, n + 1):
+                    reversed_node = node[:i] + node[i:j][::-1] + node[j:]
+                    if not reversed_node in src_visited:
+                        src.append(reversed_node)            
 
+        
+
+        dest_steps += 1
+        for __ in range(len(dest)):
+            node = dest.popleft()
+            if node in src_visited:
+                return src_steps + dest_steps
+            dest_visited.append(node)
+            for i in range(n):
+                for j in range(i + 1, n + 1):
+                    reversed_node = node[:i] + node[i:j][::-1] + node[j:]
+                    if not reversed_node in dest_visited:
+                        dest.append(reversed_node)
 
 
 
