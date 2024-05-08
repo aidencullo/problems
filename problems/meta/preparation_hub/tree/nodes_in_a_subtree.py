@@ -1,6 +1,7 @@
 import math
 # Add any extra import statements you may need here
-from functools import reduce
+from collections import defaultdict
+from functools import partial
 
 class Node: 
   def __init__(self, data): 
@@ -12,7 +13,18 @@ class Node:
 
 def count_of_nodes(root, queries, s):
   # Write your code here
+  def dfs(node):
+    labels = [0] * 26
+    for child in node.children:
+      child_labels = dfs(child)
+      labels = [a + b for a, b in zip(labels, child_labels)]
+    labels[ord(s[node.val - 1]) % 26] += 1
+    hash_map[node.val] = labels
+    return labels
   
+  hash_map = defaultdict(list)
+  dfs(root)
+  return [hash_map[node][ord(letter) % 26] for node, letter in queries]
     
     
     
