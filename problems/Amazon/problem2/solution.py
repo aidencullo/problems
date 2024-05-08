@@ -1,19 +1,9 @@
-from collections import Counter
-import math
-    
-## O(n^2) time O(n^2) space
-# def distinct_words(password):        
-#         n = len(password)
-#         total = {password}
-#         for i in range(n):
-#             for j in range(i + 2, n + 1):
-#                 new_password = password[:i] + password[i:j][::-1] + password[j:]
-#                 total.add(new_password)
-#         return len(total)
-
-## O(1) time O(n) space
 def distinct_words(password):
-        total = sum(range(len(password)))
-        frequencies = Counter(password).values()
-        multiples = sum(sum(range(freq)) for freq in frequencies)
-        return total + 1 - multiples
+    n = len(password)
+    passwords = set()
+    for i in range(n):
+        for j in range(i + 1, n + 1):
+            reversed_password = password[:i] + password[i:j][::-1] + password[j:]
+            if not reversed_password in passwords:
+                passwords.add(reversed_password)
+    return len(passwords)
