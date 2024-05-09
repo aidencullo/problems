@@ -6,7 +6,8 @@ class Solution:
         while l <= r:
             if nums[l] == val:
                 nums[l], nums[r] = nums[r], nums[l]
-                r -= 1
+                while r >= l and nums[r] == val:
+                    r -= 1
             else:
                 l += 1
         return l

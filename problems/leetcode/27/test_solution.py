@@ -7,6 +7,7 @@ from solution import Solution
     (([0, 1, 2, 2, 3, 0, 4, 2], 2), 5),
     (([0, 1, 2, 2, 3, 0, 4, 2], 3), 7),
     (([0, 1, 2, 2, 3, 0, 4, 2], 4), 7),
+    (([1], 1), 0),
 ])
 def test_solution(test_input, expected):
     assert Solution().removeElement(*test_input) == expected
