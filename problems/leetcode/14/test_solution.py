@@ -13,6 +13,8 @@ from solution import Solution
     ((["dog","dog","dog","dog","dog","dog","dog","dog"],), "dog"),
     ((["dog","dog","dog","dog","dog","dog","dog","dog","dog"],), "dog"),
     ((["","dog","dog","dog","dog","dog","dog","dog","dog"],), ""),
+    ((["ab", "a"],), "a"),
+    ((["reflower","flow","flight"],), ""),
 ])
 def test_solution(test_input, expected):
     assert Solution().longestCommonPrefix(*test_input) == expected

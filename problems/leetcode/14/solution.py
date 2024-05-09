@@ -1,11 +1,21 @@
 from typing import List
 
+import itertools
+
 
 class Solution:
     def longestCommonPrefix(self, strs: List[str]) -> str:
-        if not strs:
+        strs = list(set(strs))
+        strs.sort()
+        if len(strs) == 0:
             return ""
-        for i, x in enumerate(zip(*strs)):
-            if len(set(x)) > 1:
-                return strs[0][:i]
-        return min(strs)
+        elif len(strs) == 1:
+            return strs[0]
+        else:
+            first = strs[0]
+            last = strs[-1]
+            if not first:
+                return ""
+            for i, (x, y) in enumerate(itertools.zip_longest(first, last)):
+                if x != y:
+                    return first[:i]
