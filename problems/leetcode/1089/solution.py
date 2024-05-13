@@ -8,11 +8,7 @@ class Solution:
                 if r < n:
                     arr[r] = 0
                 r -= 1
-                if r < n:
-                    arr[r] = 0
-                zeros -= 1
-            else:
-                if r < n:
-                    arr[r] = arr[l]
+            if r < n:
+                arr[r] = arr[l]
             l -= 1
             r -= 1
