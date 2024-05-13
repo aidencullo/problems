@@ -1,9 +1,18 @@
 class Solution:
     def duplicateZeros(self, arr: list[int]) -> None:
-        i = 0
-        while i < len(arr):
-            if arr[i] == 0:
-                arr.insert(i, 0)
-                arr.pop()
-                i += 1
-            i += 1
+        zeros = sum((1 if x == 0 else 0 for x in arr))
+        n = len(arr)
+        l, r = n - 1, n - 1 + zeros
+        while l < r:
+            if arr[l] == 0:
+                if r < n:
+                    arr[r] = 0
+                r -= 1
+                if r < n:
+                    arr[r] = 0
+                zeros -= 1
+            else:
+                if r < n:
+                    arr[r] = arr[l]
+            l -= 1
+            r -= 1
