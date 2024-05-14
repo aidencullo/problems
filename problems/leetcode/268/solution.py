@@ -1,7 +1,11 @@
+from itertools import chain
+from functools import reduce
+import operator
+
 class Solution:
     def missingNumber(self, nums: list[int]) -> int:
         n = len(nums)
-        return (n + 1) * n // 2 - sum(nums)
+        return reduce(operator.xor, chain(nums, range(0, n + 1)))
 
 
 """
