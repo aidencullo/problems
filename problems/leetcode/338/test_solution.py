@@ -5,8 +5,8 @@ from solution import Solution
 @pytest.mark.parametrize(
     ('test_input', 'expected'),
     [
-        ((2, ), [0, 1, 1]),
         ((5, ), [0, 1, 1, 2, 1, 2]),
+        ((2, ), [0, 1, 1]),
         ((0, ), [0]),
     ],
 )
