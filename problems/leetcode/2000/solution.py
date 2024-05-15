@@ -3,4 +3,10 @@ class Solution:
         if not ch in word:
             return word
         ch_idx = word.index(ch)
-        return word[:ch_idx + 1][::-1] + word[ch_idx + 1:]
+        l, r = 0, ch_idx
+        word = list(word)
+        while l < r:
+            word[l], word[r] = word[r], word[l]
+            l += 1
+            r -= 1
+        return ''.join(word)
