@@ -9,14 +9,11 @@ class Solution:
                     r += 1
                 if r == len(nums):
                     break
-                current = nums[r]
+            if current != nums[r]:
                 count = 1
+                current = nums[r]
             else:
-                if current != nums[r]:
-                    count = 1
-                    current = nums[r]
-                else:
-                    count += 1
+                count += 1
             nums[l], nums[r] = nums[r], nums[l]
             l += 1
             r += 1

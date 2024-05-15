@@ -1,8 +1,4 @@
+
 class Solution:
     def findDuplicate(self, nums: List[int]) -> int:
-        xor_sum = 0
-        for el in nums:
-            if xor_sum ^ el == xor_sum:
-                return el
-            xor_sum ^= el
-        return -1
+        return reduce(operator.xor, itertools.chain(range(1, len(nums)), nums)
