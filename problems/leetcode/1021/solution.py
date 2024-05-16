@@ -1,14 +1,14 @@
 class Solution:
     def removeOuterParentheses(self, s: str) -> str:
         result = []
-        stack = []
+        opened = 0
         for letter in s:
             if letter == '(':
-                if stack:
+                if opened > 0:
                     result.append(letter)
-                stack.append(letter)
+                opened += 1
             else:
-                if len(stack) > 1:
+                if opened > 1:
                     result.append(letter)
-                stack.pop()                    
+                opened -= 1
         return ''.join(result)
