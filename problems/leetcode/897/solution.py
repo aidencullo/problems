@@ -9,15 +9,13 @@ class Solution:
     def increasingBST(self, root: TreeNode) -> TreeNode:
         if not root:
             return
-        head = root
         l = self.increasingBST(root.left)
         r = self.increasingBST(root.right)
+        head = l or root
         if l:
-            head = l
-            runner = l
-            while runner.right:
-                runner = runner.right
-            runner.right = root
+            while l.right:
+                l = l.right
+            l.right = root
         root.right = r
         root.left = None
         return head
