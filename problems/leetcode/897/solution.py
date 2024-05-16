@@ -7,19 +7,21 @@ class TreeNode:
 
 class Solution:
     def increasingBST(self, root: TreeNode) -> TreeNode:
-        node = root
-        stack = []
-        head = TreeNode()
-        runner = head
-        while node or stack:
-            while node:
-                stack.append(node)
-                node = node.left
-            node = stack.pop()
-            runner.right = TreeNode(node.val)
-            runner = runner.right
-            node = node.right
-        return head.right
+        if not root:
+            return
+        head = root
+        l = self.increasingBST(root.left)
+        r = self.increasingBST(root.right)
+        if l:
+            head = l
+            runner = l
+            while runner.right:
+                runner = runner.right
+            runner.right = root
+        root.right = r
+        root.left = None
+        return head
+     
 
 """
 order?
