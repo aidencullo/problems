@@ -15,5 +15,3 @@ class Solution:
                 break
         digits[i] += 1
         return digits
-                
-                
