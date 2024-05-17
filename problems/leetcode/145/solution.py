@@ -15,26 +15,14 @@ class Solution:
         while node or stack:
             while node:
                 stack.append(node)
-                if node.left:
-                    if node.right:
-                        stack.append(node.right)
-                    node = node.left
-                else:
-                    if node.right:
-                        node = node.right
-                    else:
-                        node = node.left                        
-            u = stack.pop()
-            res.append(u.val)
-            if not stack:
-                break
-            v = stack.pop()
-            while v.right == u or v.left == u:
-                res.append(v.val)
-                if not stack:
+                if node.left and node.right:
+                    stack.append(node.right)
+                node = node.left or node.right
+            node = stack.pop()
+            while True:
+                res.append(node.val)
+                child = node
+                node = stack.pop() if stack else None
+                if not node or not child in [node.right, node.left]:
                     break
-                u = v
-                v = stack.pop()
-            else:
-                node = v                
         return res
