@@ -6,11 +6,14 @@ class Node:
 
 class Solution:
     def postorder(self, root: 'Node') -> list[int]:
-        if not root:
-            return []
-        if not root.children:
-            return [root.val]
-        result = [grandchild
-                  for child in root.children
-                  for grandchild in self.postorder(child)]
-        return result + [root.val]
+        result = []
+        stack = []
+        next_child = []
+        node = root
+        while node or stack:
+            stack.append(node)
+            for child in (node.children or []):
+                stack.append(child)
+            node = stack.pop()
+            result.append(node.val)
+        return result
