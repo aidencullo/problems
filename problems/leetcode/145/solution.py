@@ -9,6 +9,32 @@ class TreeNode:
 
 class Solution:
     def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-        if not root:
-            return []
-        return self.postorderTraversal(root.left) + self.postorderTraversal(root.right) + [root.val]
+        stack = []
+        res = []
+        node = root
+        while node or stack:
+            while node:
+                stack.append(node)
+                if node.left:
+                    if node.right:
+                        stack.append(node.right)
+                    node = node.left
+                else:
+                    if node.right:
+                        node = node.right
+                    else:
+                        node = node.left                        
+            u = stack.pop()
+            res.append(u.val)
+            if not stack:
+                break
+            v = stack.pop()
+            while v.right == u or v.left == u:
+                res.append(v.val)
+                if not stack:
+                    break
+                u = v
+                v = stack.pop()
+            else:
+                node = v                
+        return res
