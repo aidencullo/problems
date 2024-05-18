@@ -1,5 +1,6 @@
 from typing import List, Optional
 
+
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
@@ -9,20 +10,13 @@ class TreeNode:
 
 class Solution:
     def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-        stack = []
+        stack = [root]
         res = []
-        node = root
-        while node or stack:
-            while node:
-                stack.append(node)
-                if node.left and node.right:
-                    stack.append(node.right)
-                node = node.left or node.right
+        while stack:
             node = stack.pop()
-            while True:
-                res.append(node.val)
-                child = node
-                node = stack.pop() if stack else None
-                if not node or not child in [node.right, node.left]:
-                    break
-        return res
+            if not node:
+                continue
+            res.append(node.val)
+            stack.append(node.left)
+            stack.append(node.right)
+        return res[::-1]

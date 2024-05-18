@@ -7,6 +7,7 @@ from solution import Solution, TreeNode
     [
         ((TreeNode(1, None, TreeNode(2, TreeNode(3), None)), ), [3, 2, 1]),
         ((TreeNode(1), ), [1]),
+        ((None, ), []),
     ],
 )
 def test_solution(test_input, expected):
