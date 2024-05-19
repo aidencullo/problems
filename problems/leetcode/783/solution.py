@@ -10,17 +10,11 @@ class TreeNode:
 
 
 class Solution:
-    def __init__(self):
-        self.min_diff = math.inf
-        self.prev = -math.inf
-
     def minDiffInBST(self, root: Optional[TreeNode]) -> int:
-        def minDiffInBSTHelper(root: Optional[TreeNode]) -> int:
+        def inorder(root: Optional[TreeNode]) -> None:
             if not root:
-                return
-            minDiffInBSTHelper(root.left)
-            self.min_diff = min(self.min_diff, abs(self.prev - root.val))
-            self.prev = root.val
-            minDiffInBSTHelper(root.right)
-        minDiffInBSTHelper(root)
-        return self.min_diff
+                return []
+            return inorder(root.left) + [root.val] + inorder(root.right)
+        traversed = inorder(root)
+        res = [abs(a - b) for a, b in zip(traversed[1:], traversed)]
+        return min(res)
