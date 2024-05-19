@@ -1,5 +1,4 @@
 .venv/
-pytest.ini
 play.py
 **/venv/
 **/__pycache__/
