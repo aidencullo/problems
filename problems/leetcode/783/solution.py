@@ -11,7 +11,7 @@ class TreeNode:
 
 class Solution:
     def minDiffInBST(self, root: Optional[TreeNode]) -> int:
-        def inorder(root: Optional[TreeNode]) -> None:
+        def inorder(root: Optional[TreeNode]) -> list[int]:
             if not root:
                 return []
             return inorder(root.left) + [root.val] + inorder(root.right)
