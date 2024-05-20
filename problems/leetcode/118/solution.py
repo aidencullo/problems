@@ -4,10 +4,5 @@ class Solution:
         running = [1]
         for __ in range(numRows):
             result.append(running)
-            last = running
-            running = []
-            for x, y in zip(last[1:], last):
-                running.append(x + y)
-            running = [1] + running + [1]
-            last = running
+            running = [1] + [x + y for x, y in zip(running[1:], running)] + [1]
         return result
