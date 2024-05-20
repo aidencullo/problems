@@ -1,8 +1,8 @@
 class Solution:
     def generate(self, numRows: int) -> list[list[int]]:
-        result = []
-        running = [1]
-        for __ in range(numRows):
-            result.append(running)
-            running = [1] + [x + y for x, y in zip(running[1:], running)] + [1]
-        return result
+        if numRows == 1:
+            return [[1]]
+        running = self.generate(numRows - 1)
+        last = running[-1]
+        next = [1] + [x + y for x, y in zip(last[1:], last)] + [1]
+        return running + [next]
