@@ -1,22 +1,20 @@
 import pytest
 
-from solution import Solution, TreeNode
+from solution import Solution, ListNode
 
 @pytest.mark.parametrize(
     ('test_input', 'expected'),
     [
-        ((TreeNode(3,
-                   TreeNode(4,
-                            TreeNode(1),
-                            TreeNode(2)),
-                   TreeNode(5)),
-         TreeNode(4,
-                  TreeNode(1),
-                  TreeNode(2)),
-         ),
-         True),
     ],
 )
 def test_single_node(test_input, expected):
-    result = Solution().isSubtree(*test_input)
-    assert result == expected
+    s = Solution()
+    assert compare_nodes(s.getIntersectionNode(*test_input), expected)
+
+
+def test_single_node():
+    s = Solution()
+    l = ListNode(4, ListNode(4, ListNode(8, ListNode(4, ListNode(5)))))
+    r = ListNode(5, ListNode(6, ListNode(1, l.next.next)))
+    
+    assert s.getIntersectionNode(r, l) == l.next.next
