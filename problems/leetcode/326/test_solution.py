@@ -10,6 +10,7 @@ from solution import Solution
     ((9, ), True),
     ((1, ), True),
     ((43046721, ), True),
+    ((243, ), True),
 ])
 def test_solution(test_input, expected):
     sol = Solution()
