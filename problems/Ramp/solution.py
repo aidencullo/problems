@@ -70,6 +70,58 @@ test4_json = """[
 ]"""
 
 
+test5_json = """[
+    {
+        "id": "0",
+        "agent": "Derek Jordan",
+        "unit": "#931",
+        "description": "ornate, ornate and gorgeous studio in the heart of midtown!",
+        "num_bedrooms": 1
+    },
+    {
+        "id": "1",
+        "agent": "John Smith",
+        "unit": "#184",
+        "description": "This small studio is located on the second of a nice building in midtown!",
+        "num_bedrooms": 1
+    },
+    {
+        "id": "2",
+        "agent": "Paul Martinez",
+        "unit": "#596",
+        "description": "cheap art is close by the 1-bedroom!",
+        "num_bedrooms": 1
+    },
+    {
+        "id": "3",
+        "agent": "Nicholas North",
+        "unit": "#544",
+        "description": "studio has big fridge and it is perfect for a man.",
+        "num_bedrooms": 1
+    },
+    {
+        "id": "4",
+        "agent": "Fred Shawler",
+        "unit": "#917",
+        "description": "comfortable, small and renovated apartment in the heart of midtown!",
+        "num_bedrooms": 0
+    },
+    {
+        "id": "5",
+        "agent": "Evan Williams",
+        "unit": "#348",
+        "description": "What a good deal for this ornate and cheap studio!",
+        "num_bedrooms": 1
+    },
+    {
+        "id": "6",
+        "agent": "Evan Williams",
+        "unit": "#467",
+        "description": "The studio is 15 min walking distance to yoga studio.",
+        "num_bedrooms": 1
+    }
+]"""
+
 import re
 import json
 
@@ -78,7 +130,7 @@ def solution(jsonData):
     return [extract_bedrooms(i['description'], i['num_bedrooms']) for i in data]
 
 def is_studio(description):
-    description = re.sub(r'[.]', '', description)
+    description = re.sub(r'[.!?]', '', description)
     description = description.lower().split()
     studios = [i for i, el in enumerate(description) if el == 'studio']
     for studio in studios:
@@ -90,7 +142,7 @@ def is_studio(description):
     return False
 
 def is_bedroom(description):
-    description = re.sub(r'[.]', '', description)
+    description = re.sub(r'[.!?]', '', description)
     description = description.lower().split()
     bedrooms = [i for i, el in enumerate(description) if el == '1-bedroom']
     for bedroom in bedrooms:
@@ -115,3 +167,4 @@ assert solution(localJson) == [0, 1, 1, 0]
 assert solution(test2_json) == [0]
 assert solution(test3_json) == [0, 1]
 assert solution(test4_json) == [0]
+assert solution(test5_json) == [0, 0, 1, 0, 0, 0, 0]
