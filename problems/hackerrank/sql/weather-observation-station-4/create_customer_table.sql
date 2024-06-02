@@ -1,18 +1,22 @@
--- DROP TABLE IF EXISTS station;
+CREATE DATABASE IF NOT EXISTS TestDB;
 
--- CREATE TABLE station (
---   id INTEGER PRIMARY KEY AUTO_INCREMENT,
---   city VARCHAR(21) NOT NULL,
---   state VARCHAR(2),
---   lat_n INTEGER,
---   long_n INTEGER
--- );
+USE TestDB;
 
--- -- INSERT INTO station (city) VALUES
--- -- ('John'),
--- -- ('William');
+DROP TABLE IF EXISTS station;
 
--- SELECT * FROM station;
-SHOW DATABASES;
+CREATE TABLE station (
+  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  city VARCHAR(21) NOT NULL,
+  state VARCHAR(2),
+  lat_n INTEGER,
+  long_n INTEGER
+);
 
--- DROP DATABASE TestDB;
+INSERT INTO station (city) VALUES
+('John'),
+('John'),
+('William');
+
+SELECT COUNT(city) - COUNT(DISTINCT city)
+FROM station;
+		
