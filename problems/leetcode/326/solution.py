@@ -1,5 +1,9 @@
 class Solution:
     def isPowerOfThree(self, n: int) -> bool:
-        if n <= 0:
+        if n < 1:
             return False
-        return 3 ** 19 % n == 0
+        while n != 1:
+            if n % 3 != 0:
+                return False
+            n //= 3
+        return True

@@ -4,6 +4,7 @@ from solution import Solution
 
 
 @pytest.mark.parametrize("test_input, expected", [
+    ((129140162, ), False),
     ((27, ), True),
     ((0, ), False),
     ((-1, ), False),
