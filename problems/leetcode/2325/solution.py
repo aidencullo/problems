@@ -1,11 +1,13 @@
 class Solution:
     def decodeMessage(self, key: str, message: str) -> str:
-        letter_key = 'a'
         cipher = {}
-        for letter in key:
-            if letter.isalpha() and letter not in cipher:
-                cipher[letter] = letter_key
-                letter_key = chr(ord(letter_key) + 1)
+        key_without_spaces = key.replace(' ', '')
+        key_without_duplicates = ''.join(dict.fromkeys(key_without_spaces))
+        alphabet = 'abcdefghijklmnopqrstuvwxyz'
+        cipher = {
+            key: letter
+            for key, letter in zip(key_without_duplicates, alphabet)
+        }
         message_list = list(message)
         for i, letter in enumerate(message_list):
             if letter.isalpha():
