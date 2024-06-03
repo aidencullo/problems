@@ -1,7 +1,8 @@
 class Solution:
     def deleteGreatestValue(self, grid: list[list[int]]) -> int:
-        res = 0
-        for i, row in enumerate(grid):
-            grid[i] = sorted(row)
-        print(grid)
-        return res
+        result = 0
+        while grid[0]:
+            result += max(max(row) for row in grid)
+            for i, row in enumerate(grid):
+                grid[i].remove(max(row))
+        return result
