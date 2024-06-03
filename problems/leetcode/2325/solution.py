@@ -4,12 +4,6 @@ class Solution:
         key_without_spaces = key.replace(' ', '')
         key_without_duplicates = ''.join(dict.fromkeys(key_without_spaces))
         alphabet = 'abcdefghijklmnopqrstuvwxyz'
-        cipher = {
-            key: letter
-            for key, letter in zip(key_without_duplicates, alphabet)
-        }
-        message_list = list(message)
-        for i, letter in enumerate(message_list):
-            if letter.isalpha():
-                message_list[i] = cipher[letter]
-        return ''.join(message_list)
+        cipher = dict(zip(key_without_duplicates, alphabet))
+        encrypted_map = map(lambda letter: cipher.get(letter, letter), message)
+        return ''.join(encrypted_map)
