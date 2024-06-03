@@ -14,10 +14,19 @@ CREATE TABLE station (
 
 INSERT INTO station (city) VALUES
 ('John'),
-('John'),
+('Dave'),
+('Michael'),
 ('William');
 
-SELECT COUNT(city) - COUNT(DISTINCT city)
-FROM station;
+SELECT city, (SELECT MIN(LENGTH(city)) FROM station) AS min_length
+FROM station
+ORDER BY LENGTH(city), city ASC 
+LIMIT 1;
 
+SELECT city, (SELECT MAX(LENGTH(city)) FROM station) AS min_length
+FROM station
+ORDER BY LENGTH(city) DESC, city ASC 
+LIMIT 1;
+
+		  
 DROP DATABASE TestDB;
