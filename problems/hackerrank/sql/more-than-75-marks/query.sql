@@ -24,14 +24,15 @@ INSERT INTO students (name, marks) VALUES
 ('William', 100);
 
 
--- Actual query
 SELECT name
 FROM students
 WHERE marks > 75
 ORDER BY 
-    SUBSTRING(name, LENGTH(name) - 2, 3),
+    SUBSTRING(name, -3),
     id;
 
+
+-- select Name from Students where Marks > 75 order by substring(Ucase(Name), -3) asc, id asc;
 
 
 -- Cleanup
