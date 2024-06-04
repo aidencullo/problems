@@ -25,7 +25,7 @@ INSERT INTO students (name, marks) VALUES
 
 
 -- Actual query
-SELECT *
+SELECT name
 FROM students
 WHERE marks > 75
 ORDER BY 
