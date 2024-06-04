@@ -1,13 +1,10 @@
-from collections import defaultdict
-
-
 class Solution:
     def smallerNumbersThanCurrent(self, nums: list[int]) -> list[int]:
-        counts = defaultdict(int)
-        for num in nums: # O(n)
-            counts[num] += 1
-        return [less_than(num, counts) for num in nums] # O(n)
-
-
-def less_than(num: int, counts: dict[int, int]) -> int:
-    return sum(counts[x] for x in counts if x < num) # O(1) because there are at most 101 keys in counts
+        t = nums[:]
+        d = {}
+        t.sort()
+        for i, el in enumerate(t):
+            if t[i] in d:
+                continue
+            d[t[i]] = i
+        return [d[num] for num in nums]
