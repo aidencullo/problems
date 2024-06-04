@@ -1,8 +1,3 @@
 class Solution:
     def numberOfPairs(self, nums1: list[int], nums2: list[int], k: int) -> int:
-        cnt = 0
-        for x in nums1:
-            for y in nums2:
-                if x % (k * y) == 0:
-                    cnt += 1
-        return cnt
+        return sum(1 for i in nums1 for j in nums2 if i % (j * k) == 0)
