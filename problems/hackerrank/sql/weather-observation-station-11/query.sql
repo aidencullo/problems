@@ -1,9 +1,10 @@
--- Setup the database
-CREATE DATABASE IF NOT EXISTS TestDB;
+CREATE DATABASE IF
+NOT EXISTS TestDB;
 
 USE TestDB;
 
-DROP TABLE IF EXISTS station;
+DROP TABLE
+IF EXISTS station;
 
 CREATE TABLE station (
   id INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -13,7 +14,6 @@ CREATE TABLE station (
   long_n INTEGER
 );
 
--- Insert data
 INSERT INTO station (city) VALUES
 ('John'),
 ('Dave'),
@@ -23,14 +23,9 @@ INSERT INTO station (city) VALUES
 
 
 
-
--- Actual query
-SELECT DISTINCT city FROM station
+SELECT DISTINCT city
+FROM station
 WHERE city RLIKE '^[^aeiou]|[^aeiou]$';
 
 
-
-
--- Cleanup
--- drop the database
 DROP DATABASE TestDB;
