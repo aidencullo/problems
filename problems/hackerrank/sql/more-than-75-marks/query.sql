@@ -1,4 +1,3 @@
--- Setup the database
 CREATE DATABASE IF NOT EXISTS TestDB;
 
 USE TestDB;
@@ -11,7 +10,6 @@ CREATE TABLE students (
   marks INTEGER NOT NULL
 );
 
--- Insert data
 INSERT INTO students (name, marks) VALUES
 ('Wilz', 100),
 ('William', 101),
@@ -32,9 +30,4 @@ ORDER BY
     id;
 
 
--- select Name from Students where Marks > 75 order by substring(Ucase(Name), -3) asc, id asc;
-
-
--- Cleanup
--- drop the database
 DROP DATABASE TestDB;
