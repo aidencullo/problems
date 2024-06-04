@@ -1,9 +1,13 @@
+from collections import Counter
+
+
 class Solution:
     def smallerNumbersThanCurrent(self, nums: list[int]) -> list[int]:
-        n = len(nums)
-        res = [0] * n
-        for i in range(n):
-            for j in range(n):
-                if i != j and nums[j] < nums[i]:
-                    res[i] += 1
-        return res
+        nums_counter = Counter(nums)
+        sorted_nums = sorted(nums_counter.items())
+        prefix_sum = {}
+        running_count = 0
+        for num, count in sorted_nums:
+            prefix_sum[num] = running_count
+            running_count += count
+        return [prefix_sum[num] for num in nums]
