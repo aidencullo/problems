@@ -1,6 +1,3 @@
-from functools import reduce
-
-
 class Solution:
     def duplicateNumbersXOR(self, nums: list[int]) -> int:
         res = 0
