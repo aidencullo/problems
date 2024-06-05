@@ -1,4 +1,8 @@
 class Solution:
     def findPermutationDifference(self, s: str, t: str) -> int:
-        t_dict = {letter: index for index, letter in enumerate(t)}
-        return sum(abs(index - t_dict[letter]) for index, letter in enumerate(s))
+        result = 0
+        for i, x in enumerate(s):
+            for j, y in enumerate(t):
+                if x == y:
+                    result += abs(i - j)
+        return result
