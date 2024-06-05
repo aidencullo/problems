@@ -4,6 +4,8 @@ from solution import Solution
 
 
 @pytest.mark.parametrize("test_input, expected", [
+    (("abc"), "abc"),
+    (("abci"), "cba"),
     (("string"), "rtsng"),
     (("poiinter"), "ponter"),
 ])

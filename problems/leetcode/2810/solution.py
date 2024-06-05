@@ -1,9 +1,16 @@
+from collections import deque
+
+
 class Solution:
     def finalString(self, s: str) -> str:
-        stack = []
+        deq = deque()
+        front = False
         for letter in s:
             if letter == 'i':
-                stack = stack[::-1]
+                front = not front
             else:
-                stack.append(letter)
-        return "".join(stack)
+                if front:
+                    deq.appendleft(letter)
+                else:
+                    deq.append(letter)
+        return "".join(deq) if not front else "".join(deq)[::-1]
