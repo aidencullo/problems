@@ -1,0 +1,30 @@
+DROP DATABASE IF EXISTS SampleDB;
+CREATE DATABASE SampleDB;
+
+USE SampleDB;
+
+CREATE TABLE Table1 (
+id INT AUTO_INCREMENT PRIMARY KEY,
+name TEXT
+);
+
+
+CREATE TABLE Table2 (
+id INT AUTO_INCREMENT PRIMARY KEY,
+color TEXT
+);
+
+INSERT INTO Table1 (name)
+VALUES
+('Alice'),
+('Bob');
+
+
+INSERT INTO Table2 (color)
+VALUES
+('Red'),
+('Green');
+
+SELECT *
+FROM Table1
+CROSS JOIN Table2;
