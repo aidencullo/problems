@@ -10,29 +10,33 @@ CREATE TABLE students (
 
 CREATE TABLE grades (
   grade_id INT AUTO_INCREMENT PRIMARY KEY,
-  student_id INTEGER,
+  student_id INT,
   subject TEXT,
-  grade INTEGER,
-  FOREIGN KEY (student_id) REFERENCES students(student_id)
+  grade INT
 );
+
 
 INSERT INTO students (name)
 VALUES
 ('Alice'),
 ('Bob'),
-('Bobby'),
 ('Charlie');
 
 INSERT INTO grades (student_id, subject, grade)
 VALUES
+(1, 'History', 90),
 (1, 'Math', 90),
-(1, 'Science', 95),
-(2, 'Math', 80),
-(2, 'Science', 85),
-(3, 'Math', 70),
 (3, 'Science', 75);
 
 SELECT *
 FROM students
 LEFT JOIN grades
 ON students.student_id = grades.student_id;
+
+-- Expected output
+-- 1	Alice	2	1	Math	90
+-- 1	Alice	1	1	History	90
+-- 2	Bob	NULL	NULL	NULL	NULL
+-- 3	Charlie	3	3	Science	75
+
+-- Bob is not in the output because he has no grades. Charlie is in the output because he has a grade in Science. Alice is in the output because she has grades in Math and History.
