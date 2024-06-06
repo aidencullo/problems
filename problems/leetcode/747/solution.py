@@ -1,8 +1,11 @@
+import heapq
+
+
 class Solution:
     def dominantIndex(self, nums: list[int]) -> int:
         idx = nums.index(max(nums))
-        nums.sort()
-        if 2 * nums[-2] <= nums[-1]:
+        heap = [-num for num in nums]
+        heapq.heapify(heap)
+        if -heapq.heappop(heap) >= 2 * -heapq.heappop(heap):
             return idx
         return -1
-
