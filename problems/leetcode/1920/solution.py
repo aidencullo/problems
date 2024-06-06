@@ -1,6 +1,3 @@
 class Solution:
     def buildArray(self, nums: list[int]) -> list[int]:
-        res = []
-        for num in nums:
-            res.append(nums[num])
-        return res
+        return [nums[num] for num in nums]
