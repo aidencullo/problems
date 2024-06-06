@@ -8,15 +8,11 @@ class TreeNode:
 class Solution:
     def getTargetCopy(self, original: TreeNode, cloned: TreeNode, target: TreeNode) -> TreeNode:
         stack = []
-        while stack or original:
-            while original:
+        while stack or cloned:
+            while cloned:
                 stack.append(cloned)
-                stack.append(original)
                 cloned = cloned.left
-                original = original.left
-            original = stack.pop()
             cloned = stack.pop()
-            if original == target:
+            if cloned.val == target.val:
                 return cloned
-            original = original.right
             cloned = cloned.right
