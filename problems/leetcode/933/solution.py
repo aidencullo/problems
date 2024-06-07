@@ -1,3 +1,6 @@
+SIZE = 1000
+
+
 class Entry:
     def __init__(self, key):
         self.key = key
@@ -7,15 +10,10 @@ class Entry:
 class MyHashSet:
 
     def __init__(self):
-        self.hashset = [None] * 1000001
+        self.hashset = [Entry(-1)] * SIZE
 
     def add(self, key: int) -> None:
-        if not self.hashset[hash(key)]:
-            self.hashset[hash(key)] = Entry(key)
-            return
-        prev = Entry(-1)
-        prev.next = self.hashset[hash(key)]
-        entry = prev
+        entry = self.hashset[hash(key) % SIZE]
         while entry.next:
             if entry.next.key == key:
                 return
@@ -23,12 +21,7 @@ class MyHashSet:
         entry.next = Entry(key)
 
     def remove(self, key: int) -> None:
-        if self.hashset[hash(key)] and self.hashset[hash(key)].key == key:
-            self.hashset[hash(key)] = self.hashset[hash(key)].next
-            return
-        prev = Entry(-1)
-        prev.next = self.hashset[hash(key)]
-        entry = prev
+        entry = self.hashset[hash(key) % SIZE]
         while entry.next:
             if entry.next.key == key:
                 entry.next = entry.next.next
@@ -36,11 +29,10 @@ class MyHashSet:
             entry = entry.next
 
     def contains(self, key: int) -> bool:
-        prev = Entry(-1)
-        prev.next = self.hashset[hash(key)]
-        entry = prev
+        entry = self.hashset[hash(key) % SIZE]
         while entry.next:
             if entry.next.key == key:
                 return True
             entry = entry.next
         return False
+
