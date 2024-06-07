@@ -18,11 +18,8 @@ INSERT INTO triangles(A, B, C) VALUES
 
 
 SELECT
-    CASE
-        WHEN A + B + C <= GREATEST(A, B, C) * 2 THEN 'Not A Triangle'
-        WHEN A=B AND B=C THEN 'Equilateral'
-        WHEN A=B OR B=C OR A=C THEN 'Isosceles'
-        ELSE 'Scalene'
-    END AS triangle_type
+IF(A + B + C <= GREATEST(A, B, C) * 2, 'Not A Triangle',
+IF(A = B AND B = C, 'Equilateral',
+IF(A = B OR B = C OR A = C, 'Isosceles', 'Scalene')))
 FROM 
     triangles;
