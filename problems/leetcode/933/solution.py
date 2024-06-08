@@ -18,6 +18,8 @@ class MyHashSet:
             self._resize()
             return
         entry = self.hashset[hash(key) % self.capacity]
+        if entry.key == key:
+            return
         while entry.next:
             if entry.next.key == key:
                 return
