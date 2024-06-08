@@ -12,28 +12,31 @@ class MyHashSet:
         self.hashset = [None] * self.capacity
 
     def add(self, key: int) -> None:
-        if not self.hashset[hash(key) % self.capacity]:
-            self.hashset[hash(key) % self.capacity] = Entry(key)
+        if self.contains(key):
+            return
+        hash_key = hash(key) % self.capacity
+        entry = self.hashset[hash_key]
+        if not entry:
+            self.hashset[hash_key] = Entry(key)
             self.size += 1
             self._resize()
             return
-        entry = self.hashset[hash(key) % self.capacity]
-        if entry.key == key:
-            return
+        self.insert_entry(entry, key)
+
+    def insert_entry(self, entry, key):
         while entry.next:
-            if entry.next.key == key:
-                return
             entry = entry.next
         entry.next = Entry(key)
         self.size += 1
         self._resize()
 
     def remove(self, key: int) -> None:
-        entry = self.hashset[hash(key) % self.capacity]
+        hash_key = hash(key) % self.capacity
+        entry = self.hashset[hash_key]
         if not entry:
             return
         if entry.key == key:
-            self.hashset[hash(key) % self.capacity] = entry.next
+            self.hashset[hash_key] = entry.next
             self.size -= 1
             return
         while entry.next:
@@ -44,7 +47,8 @@ class MyHashSet:
             entry = entry.next
 
     def contains(self, key: int) -> bool:
-        entry = self.hashset[hash(key) % self.capacity]
+        hash_key = hash(key) % self.capacity
+        entry = self.hashset[hash_key]
         while entry:
             if entry.key == key:
                 return True
