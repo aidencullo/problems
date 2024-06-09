@@ -1,12 +1,12 @@
 DROP DATABASE IF EXISTS test_db;
-CREATE DATABASE test_db;
+		CREATE DATABASE test_db;
 USE test_db;
 
 CREATE TABLE sales (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    product VARCHAR(50),
-    amount INT,
-    tax INT
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  product VARCHAR(50),
+  amount INT,
+  tax INT
 );
 
 INSERT INTO sales (product, amount, tax) VALUES
@@ -23,17 +23,17 @@ INSERT INTO sales (product, amount, tax) VALUES
 
 
 SELECT product, SUM(amount)
-FROM sales
-GROUP BY product;
+  FROM sales
+ GROUP BY product;
 
 SELECT product, COUNT(*)
-FROM sales
-GROUP BY product;
+  FROM sales
+ GROUP BY product;
 
 SELECT product, AVG(amount)
-FROM sales
-GROUP BY product;
+  FROM sales
+ GROUP BY product;
 
 SELECT product, tax, SUM(amount)
-FROM sales
-GROUP BY product, tax;
+  FROM sales
+ GROUP BY product, tax;
