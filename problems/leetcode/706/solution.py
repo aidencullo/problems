@@ -1,6 +1,7 @@
 class Entry:
-    def __init__(self, key):
+    def __init__(self, key, value=None):
         self.key = key
+        self.value = value
         self.next = None
 
 
@@ -8,25 +9,16 @@ class MyHashMap:
 
     def __init__(self):
         self.size = 0
-        self.capacity = 1
+        self.capacity = 10 ** 6
         self.hashset = [None] * self.capacity
 
     def put(self, key: int, value: int) -> None:
-        if self.contains(key):
-            return
         hash_key = hash(key) % self.capacity
         entry = self.hashset[hash_key]
         if not entry:
-            self.hashset[hash_key] = Entry(key)
-            self.size += 1
-            self._resize()
-            return
-        self.insert_entry(entry, key)
-
-    def insert_entry(self, entry, key):
-        while entry.next:
-            entry = entry.next
-        entry.next = Entry(key)
+            self.hashset[hash_key] = Entry(key, value)
+        else:
+            self.insert(entry, key, value)
         self.size += 1
         self._resize()
 
@@ -46,6 +38,19 @@ class MyHashMap:
                 return
             entry = entry.next
 
+    def get(self, key: int) -> None:
+        hash_key = hash(key) % self.capacity
+        entry = self.hashset[hash_key]
+        if not entry:
+            return -1
+        if entry.key == key:
+            return entry.value
+        while entry.next:
+            if entry.next.key == key:
+                return entry.next.value
+            entry = entry.next
+        return -1
+
     def contains(self, key: int) -> bool:
         hash_key = hash(key) % self.capacity
         entry = self.hashset[hash_key]
@@ -55,6 +60,17 @@ class MyHashMap:
             entry = entry.next
         return False
 
+    def insert(self, entry, key, value):
+        if entry.key == key:
+            entry.value = value
+            return
+        while entry.next:
+            if entry.key == key:
+                entry.value = value
+                return
+            entry = entry.next
+        entry.next = Entry(key, value)
+
     def _resize(self):
         if self._load_factor() < .5:
             return
@@ -63,7 +79,7 @@ class MyHashMap:
         self.hashset = [None] * self.capacity
         for key_hash in new_hashset:
             while key_hash:
-                self.add(key_hash.key)
+                self.put(key_hash.key, key_hash.value)
                 key_hash = key_hash.next
 
     def _load_factor(self):
