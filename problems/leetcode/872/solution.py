@@ -10,17 +10,11 @@ class TreeNode:
 
 class Solution:
     def leafSimilar(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> bool:
-        return self.getLeafs(root1) == self.getLeafs(root2)
-
-    def getLeafs(self, root1: Optional[TreeNode]) -> list[int]:
-        def helper(root1: Optional[TreeNode]) -> list[int]:
-            if not root1:
+        def dfs(root: Optional[TreeNode]) -> list[int]:
+            if not root:
                 return
-            if not root1.left and not root1.right:
-                leaves.append(root1.val)
-            helper(root1.left)
-            helper(root1.right)
-            
-        leaves = []
-        helper(root1)
-        return leaves
+            if not root.left and not root.right:
+                yield root.val
+            yield from dfs(root.left)
+            yield from dfs(root.right)
+        return list(dfs(root1)) == list(dfs(root2))
