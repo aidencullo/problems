@@ -10,16 +10,12 @@ class TreeNode:
 
 class Solution:
     def isUnivalTree(self, root: Optional[TreeNode]) -> bool:
-        def helper(root: Optional[TreeNode]) -> bool:
+        def helper(root: Optional[TreeNode], prev) -> bool:
             if not root:
-                return 
-            l = helper(root.left)
-            r = helper(root.right)
-            if not l is None:
-                self.univalue = self.univalue and root.val == root.left.val
-            if not r is None:
-                self.univalue = self.univalue and root.val == root.right.val
-            return root.val
+                return
+            self.univalue = self.univalue and root.val == prev
+            helper(root.left, prev)
+            helper(root.right, prev)
         self.univalue = True
-        helper(root)
+        helper(root, root.val)
         return self.univalue
