@@ -8,6 +8,9 @@ class Node:
 class Solution:
 
     def printBoundaryView(self, root):
+        def isLeaf(node):
+            return not node.left and not node.right
+        
         def dfs(root):
             if not root:
                 return False
@@ -18,26 +21,27 @@ class Solution:
             return True
 
         def helper(root):
-            runner = root
-            while runner.left or runner.right:
-                self.traversal.append(runner.data)
+            if not isLeaf(root):
+                self.traversal.append(root.data)
+
+            runner = root.left
+            while runner:
+                if not isLeaf(runner):
+                    self.traversal.append(runner.data)
                 runner = runner.left or runner.right
-            if runner.right:
-                self.traversal.append(runner.data)
 
             dfs(root)
             runner = root
 
             stack = []
-            runner = root
-            while runner.right or runner.left:
-                stack.append(runner.data)
+            runner = root.right
+            while runner:
+                if not isLeaf(runner):
+                    stack.append(runner.data)
                 runner = runner.right or runner.left
-            if runner.left:
-                stack.append(runner.data)
 
             self.traversal.extend(stack[::-1])
 
         self.traversal = []
         helper(root)
-        return self.traversal[:-1]
+        return self.traversal
