@@ -1,5 +1,5 @@
 class Entry:
-    def __init__(self, key, value=None):
+    def __init__(self, key, value):
         self.key = key
         self.value = value
         self.next = None
@@ -9,18 +9,33 @@ class MyHashMap:
 
     def __init__(self):
         self.size = 0
-        self.capacity = 10 ** 6
+        self.capacity = 1
         self.hashset = [None] * self.capacity
+
 
     def put(self, key: int, value: int) -> None:
         hash_key = hash(key) % self.capacity
         entry = self.hashset[hash_key]
+        if self.contains(key):
+            self.insert(entry, key, value)
+            return
         if not entry:
             self.hashset[hash_key] = Entry(key, value)
         else:
             self.insert(entry, key, value)
         self.size += 1
         self._resize()
+
+    def _put(self, key: int, value: int) -> None:
+        hash_key = hash(key) % self.capacity
+        entry = self.hashset[hash_key]
+        if self.contains(key):
+            self.insert(entry, key, value)
+            return
+        if not entry:
+            self.hashset[hash_key] = Entry(key, value)
+        else:
+            self.insert(entry, key, value)
 
     def remove(self, key: int) -> None:
         hash_key = hash(key) % self.capacity
@@ -38,7 +53,7 @@ class MyHashMap:
                 return
             entry = entry.next
 
-    def get(self, key: int) -> None:
+    def get(self, key: int) -> int:
         hash_key = hash(key) % self.capacity
         entry = self.hashset[hash_key]
         if not entry:
@@ -65,8 +80,8 @@ class MyHashMap:
             entry.value = value
             return
         while entry.next:
-            if entry.key == key:
-                entry.value = value
+            if entry.next.key == key:
+                entry.next.value = value
                 return
             entry = entry.next
         entry.next = Entry(key, value)
@@ -79,7 +94,7 @@ class MyHashMap:
         self.hashset = [None] * self.capacity
         for key_hash in new_hashset:
             while key_hash:
-                self.put(key_hash.key, key_hash.value)
+                self._put(key_hash.key, key_hash.value)
                 key_hash = key_hash.next
 
     def _load_factor(self):

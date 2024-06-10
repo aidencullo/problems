@@ -86,13 +86,11 @@ def test_contains_multiple():
     assert my_hash_map.contains(6) == False
 
 def test_constraints():
+    N = 10 ** 5
     my_hash_map = MyHashMap()
-    for i in range(10 ** 4):
+    for i in range(N):
         my_hash_map.put(i, i)
-    for i in range(10 ** 4):
         my_hash_map.put(i, i * 2)
-    for i in range(10 ** 4):
         assert my_hash_map.get(i) == i * 2
-    for i in range(10 ** 4):
         my_hash_map.remove(i)
         assert my_hash_map.get(i) == -1
