@@ -4,7 +4,13 @@ from collections import Counter
 class Solution:
     def findSpecialInteger(self, arr: list[int]) -> int:
         n = len(arr)
-        counter = Counter(arr)
-        for key, value in counter.items():
-            if value > n / 4:
-                return key
+        cnt = 0
+        last = -1
+        for el in arr:
+            if el == last:
+                cnt += 1
+            else:
+                last = el
+                cnt = 1
+            if cnt > n / 4:
+                return el
