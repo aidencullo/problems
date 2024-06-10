@@ -21,4 +21,3 @@ class Solution:
         self.paths = []
         helper(root, "")
         return self.paths
-        
