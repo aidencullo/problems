@@ -14,25 +14,21 @@ class Solution:
             if not root:
                 return
             dfs(root.left)
-            self.inorder.append(root.val)
+            if root.val != self.prev:
+                self.count = 0
+            else:
+                self.count += 1
+            if self.count == self.mode:
+                self.res.append(root.val)
+            if self.count > self.mode:
+                self.res = [root.val]
+                self.mode = self.count
+            self.prev = root.val
             dfs(root.right)
 
-        self.inorder = []
-        dfs(root)
-
-        mode = 0
-        count = 0
-        last = None
+        self.mode = 0
+        self.count = 0
+        self.prev = None
         self.res = []
-        for cur in self.inorder:
-            if cur != last:
-                count = 1
-            else:
-                count += 1
-            if count == mode:
-                self.res.append(cur)
-            if count > mode:
-                self.res = [cur]
-                mode = count
-            last = cur
+        dfs(root)
         return self.res
