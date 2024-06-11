@@ -1,3 +1,7 @@
 class Solution:
     def checkIfPangram(self, sentence: str) -> bool:
-        return len(set(sentence)) == 26
+        alphabet = "abcdefghijklmnopqrstuvwxyz"
+        for char in alphabet:
+            if char not in sentence:
+                return False
+        return True
