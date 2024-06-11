@@ -1,10 +1,11 @@
+from typing import Optional
+
+
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
         self.left = left
         self.right = right
-
-from typing import Optional
 
 
 class Solution:
@@ -14,8 +15,8 @@ class Solution:
                 return
             self.diff = min(
                 self.diff,
-                abs(high - root.val),
-                abs(low - root.val)
+                high - root.val,
+                root.val - low
             )
             dfs(root.left, low, root.val)
             dfs(root.right, root.val, high)
