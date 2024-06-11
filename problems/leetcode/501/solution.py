@@ -16,13 +16,12 @@ class Solution:
             dfs(root.left)
             if root.val != self.prev:
                 self.count = 0
-            else:
-                self.count += 1
+            self.count += 1
+            if self.count > self.mode:
+                self.res = []
+                self.mode = self.count
             if self.count == self.mode:
                 self.res.append(root.val)
-            if self.count > self.mode:
-                self.res = [root.val]
-                self.mode = self.count
             self.prev = root.val
             dfs(root.right)
 
