@@ -10,16 +10,14 @@ class TreeNode:
 
 class Solution:
     def getMinimumDifference(self, root: Optional[TreeNode]) -> int:
-        def dfs(root: Optional[TreeNode], low, high) -> int:
+        def inorder(root: Optional[TreeNode]) -> int:
             if not root:
                 return
-            self.diff = min(
-                self.diff,
-                high - root.val,
-                root.val - low
-            )
-            dfs(root.left, low, root.val)
-            dfs(root.right, root.val, high)
+            inorder(root.left)
+            self.diff = min(self.diff, root.val - self.prev)
+            self.prev = root.val
+            inorder(root.right)
         self.diff = float('inf')
-        dfs(root, float('-inf'), float('inf'))
+        self.prev = float('-inf')
+        inorder(root)
         return self.diff
