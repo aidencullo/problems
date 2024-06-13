@@ -1,6 +1,7 @@
 from typing import Optional
 from collections import deque
 from itertools import groupby
+from operator import itemgetter
 
 
 class TreeNode:
@@ -21,12 +22,16 @@ class Solution:
         q = deque([(root, None)]) if root else deque()
 
         while q:
-            node_tuples = list((cur.val, parent) for cur, parent in q)
-            sum_by_parent = dict(
-                (parent, sum(map(get_first, group)))
-                for parent, group
-                in groupby(node_tuples, key=get_second)
+            parent_child = list((parent, child.val) for child, parent in q)
+            grouped = groupby(
+                parent_child,
+                key=itemgetter(0)
             )
+            sum_by_parent = {
+                key: sum(value for _, value in group)
+                for key, group
+                in grouped
+            }
             total = sum(sum_by_parent.values())
             for i in range(len(q)):
                 cur, parent = q.popleft()
