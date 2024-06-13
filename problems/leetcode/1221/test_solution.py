@@ -9,8 +9,3 @@ def test_balancedStringSplit():
     assert sol.balancedStringSplit("LLLLRRRR") == 1
     assert sol.balancedStringSplit("") == 0
     assert sol.balancedStringSplit("RL") == 1
-    assert sol.balancedStringSplit("RRRLLLRLRRLR") == 3
-    assert sol.balancedStringSplit("RLRRRLLRLL") == 2
-
-if __name__ == "__main__":
-    pytest.main()

@@ -1,13 +1,12 @@
 class Solution:
     def balancedStringSplit(self, s: str) -> int:
-        stack = []
-        opposite = {'R': 'L', 'L': 'R'}
+        Rs = 0
         cnt = 0
         for c in s:
-            if stack and stack[-1] == opposite[c]:
-                stack.pop()
+            if c == 'R':
+                Rs += 1
             else:
-                stack.append(c)
-            if not stack:
+                Rs -= 1
+            if Rs == 0:
                 cnt +=1
         return cnt
