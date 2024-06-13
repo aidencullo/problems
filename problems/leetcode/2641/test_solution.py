@@ -1,4 +1,5 @@
 from solution import TreeNode, Solution
+from collections import deque
 
 
 def tree_to_list(root):

@@ -1,5 +1,6 @@
 from typing import Optional
-from collections import deque, defaultdict
+from collections import deque
+from itertools import groupby
 
 
 class TreeNode:
@@ -11,14 +12,22 @@ class TreeNode:
 
 class Solution:
     def replaceValueInTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        def get_first(obj):
+            return obj[0]
+
+        def get_second(obj):
+            return obj[1]
+
         q = deque([(root, None)]) if root else deque()
 
         while q:
-            sum_by_parent = defaultdict(int)
-            for cur, parent in q:
-                sum_by_parent[parent] += cur.val
+            node_tuples = list((cur.val, parent) for cur, parent in q)
+            sum_by_parent = dict(
+                (parent, sum(map(get_first, group)))
+                for parent, group
+                in groupby(node_tuples, key=get_second)
+            )
             total = sum(sum_by_parent.values())
-            print(total)
             for i in range(len(q)):
                 cur, parent = q.popleft()
                 cur.val = total - sum_by_parent[parent]
