@@ -1,39 +1,5 @@
-# test_remove_nodes.py
+from solution import Solution, ListNode
 
-import pytest
-
-# Definition for singly-linked list.
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
-class Solution:
-    def removeNodes(self, head: ListNode) -> ListNode:
-        # This is the provided solution
-        def reverse(head):
-            prev = None
-            while head:
-                next_node = head.next
-                head.next = prev
-                prev = head
-                head = next_node
-            return prev
-
-        head = reverse(head)
-        dummy = ListNode()
-        curr = dummy
-
-        while head:
-            if not curr.next or head.val > curr.next.val:
-                curr.next = head
-                head = head.next
-                curr = curr.next
-                curr.next = None
-            else:
-                head = head.next
-
-        return reverse(dummy.next)
 
 # Helper functions for testing
 def list_to_linkedlist(items):
@@ -66,7 +32,7 @@ def test_remove_nodes():
     assert linkedlist_to_list(result) == expected
 
     head = list_to_linkedlist([5, 4, 3, 2, 1])
-    expected = [5]
+    expected = [5, 4, 3, 2, 1]
     result = solution.removeNodes(head)
     assert linkedlist_to_list(result) == expected
 
@@ -76,7 +42,7 @@ def test_remove_nodes():
     assert linkedlist_to_list(result) == expected
 
     head = list_to_linkedlist([10, 9, 8, 7, 6, 5, 4, 3, 2, 1])
-    expected = [10]
+    expected = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
     result = solution.removeNodes(head)
     assert linkedlist_to_list(result) == expected
 

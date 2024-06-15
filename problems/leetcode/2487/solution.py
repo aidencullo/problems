@@ -9,94 +9,29 @@ class ListNode:
 
 class Solution:
     def removeNodes(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        def reverse(node):
+        def reverse(head):
             prev = None
-            while node:
-                next = node.next
-                node.next = prev
-                prev = node
-                node = next
+            while head:
+                next_node = head.next
+                head.next = prev
+                prev = head
+                head = next_node
             return prev
 
-
         head = reverse(head)
-        runner = head
-        while runner.next:
-            if runner.next.val < runner.val:
-                runner.next = runner.next.next
+        dummy = ListNode()
+        curr = dummy
+
+        while head:
+            if not curr.next:
+                curr.next = head
+                head = head.next
+                curr.next.next = None
+            elif head.val >= curr.next.val:
+                curr = curr.next
+                curr.next = head
+                head = head.next
+                curr.next.next = None
             else:
-                runner = runner.next
-        return reverse(head)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# class Solution:
-#     def removeNodes(self, head: Optional[ListNode]) -> Optional[ListNode]:
-#         def reverse(head):
-#             prev = None
-#             while head:
-#                 next_node = head.next
-#                 head.next = prev
-#                 prev = head
-#                 head = next_node
-#             return prev
-
-#         head = reverse(head)
-#         dummy = ListNode()
-#         curr = dummy
-
-#         while head:
-#             if not curr.next or head.val > curr.next.val:
-#                 curr.next = head
-#                 head = head.next
-#                 curr = curr.next
-#                 curr.next = None
-#             else:
-#                 head = head.next
-
-#         return reverse(dummy.next)
+                head = head.next
+        return reverse(dummy.next)
