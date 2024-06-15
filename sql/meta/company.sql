@@ -124,6 +124,8 @@ INSERT INTO works_with VALUES(107, 405, 26000);
 INSERT INTO works_with VALUES(102, 406, 15000);
 INSERT INTO works_with VALUES(105, 406, 130000);
 
-SELECT salary FROM employee
-UNION
-  SELECT total_sales FROM works_with;
+
+SELECT *
+  FROM employee
+       LEFT JOIN branch
+	   ON branch.mgr_id = employee.emp_id; 
