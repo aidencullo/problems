@@ -1,13 +1,11 @@
+from collections import defaultdict
+from math import comb as combination
+
+
 class Solution:
     def similarPairs(self, words: list[str]) -> int:
-        def isSimilar(wordA, wordB):
-            return set(wordA) == set(wordB)
-        
-        n = len(words)
-        cnt = 0
-        for i in range(n):
-            for j in range(i + 1, n):
-                if isSimilar(words[i], words[j]):
-                    cnt += 1
-        return cnt
-                        
+        hash_table = defaultdict(int)
+        for word in words:
+            hash_table[frozenset(word)] += 1
+
+        return sum(combination(n, 2) for n in hash_table.values())
