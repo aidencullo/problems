@@ -25,14 +25,16 @@ class Solution:
                 head = head.next
             return length
 
+        def getNthNode(head, n):
+            for i in range(n):
+                head = head.next
+            return head
+
         max_pair_sum = 0
         n = getLength(head)
         n //= 2
-        runner = head
-        for i in range(n):
-            runner = runner.next
-        new_head = reverseList(runner)
-        pair_runner = new_head
+        runner = getNthNode(head, n)
+        pair_runner = reverseList(runner)
         runner = head
         for i in range(n):
             max_pair_sum = max(max_pair_sum, runner.val + pair_runner.val)
