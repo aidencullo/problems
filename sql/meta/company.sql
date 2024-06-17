@@ -125,7 +125,14 @@ INSERT INTO works_with VALUES(102, 406, 15000);
 INSERT INTO works_with VALUES(105, 406, 130000);
 
 
-SELECT *
-  FROM employee
-       LEFT JOIN branch
-	   ON branch.mgr_id = employee.emp_id; 
+-- find the name of the employees who have sold over $30,000 of products to a single client
+
+
+SELECT first_name
+  FROM employee AS e
+ WHERE e.emp_id IN (
+   SELECT works_with.emp_id
+     FROM works_with
+    WHERE works_with.total_sales > 30000
+ )
+       
