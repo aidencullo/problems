@@ -1,8 +1,9 @@
 class Solution:
     def removePalindromeSub(self, s: str) -> int:
-        def isPalidrome(t):
-            return all(t[i] == t[len(t) - 1 - i] for i in range(len(t) // 2))
-        
-        if isPalidrome(s):
-            return 1
-        return 2
+        l, r = 0, len(s) - 1
+        while l < r:
+            if s[l] != s[r]:
+                return 2
+            l += 1
+            r -= 1
+        return 1
