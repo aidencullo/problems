@@ -134,5 +134,12 @@ SELECT first_name
    SELECT works_with.emp_id
      FROM works_with
     WHERE works_with.total_sales > 30000
- )
+ );
        
+
+-- find all clients that are handled by the branch that michael scott manages
+       
+SELECT e.branch_id
+FROM employee AS e
+WHERE e.first_name = 'Michael'
+  AND e.last_name = 'Scott';
