@@ -11,10 +11,8 @@ class TestIntegration(unittest.TestCase):
 
     def tearDown(self):
         if self.user_id:
-            # Attempt to delete the user and their tasks
-            response = self.app.delete(f'/users/{self.user_id}')
-            if response.status_code != 204:
-                print(f"Failed to delete user with ID {self.user_id}")
+            # Delete the user created during the test
+            self.app.delete(f'/users/{self.user_id}')
 
     def test_user_task_integration(self):
         # Create a user
