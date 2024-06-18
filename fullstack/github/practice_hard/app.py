@@ -49,12 +49,12 @@ def replace_user(user_id):
 def delete_user(user_id):
     global users
     global tasks
-    initial_length = len(users)
-    initial_length = len(tasks)
+    initial_users = len(users)
+    initial_tasks = len(tasks)
     users = [user for user in users if user.get('id') != user_id]
     tasks = [task for task in tasks if task.get('user_id') != user_id]
     
-    if len(users) == initial_length:
+    if len(users) == initial_users:
         return jsonify(message='User not found'), 404
     return jsonify(message='User deleted successfully'), 204
 
