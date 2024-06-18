@@ -3,6 +3,6 @@ class Solution:
         hash_set = set(nums)
         max_k = -1
         for num in nums:
-            if -num in hash_set:
-                max_k = max(max_k, abs(num))
+            if num > 0 and -num in hash_set:
+                max_k = max(max_k, num)
         return max_k
