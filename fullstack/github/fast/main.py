@@ -1,11 +1,12 @@
-from fastapi import FastAPI
+from fastapi import APIRouter, FastAPI
 
 app = FastAPI()
+router = APIRouter()
 
-@app.get("/")
-async def read_root():
-    return {"Hello": "World"}
 
-@app.get("/items/{item_id}")
-async def read_item(item_id: int, q: str = None):
-    return {"item_id": item_id, "q": q}
+@router.get("/users/", tags=["users"])
+async def read_users():
+    return [{"username": "Rick"}, {"username": "Morty"}]
+
+
+app.include_router(router)
