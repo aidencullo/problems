@@ -168,5 +168,17 @@ INSERT INTO works_with VALUES(105, 406, 130000);
 --  );
 
 
--- print employee log
- SELECT * FROM employee_log;
+-- -- print employee log
+--  SELECT * FROM employee_log;
+
+-- cte
+
+WITH scranton_employes AS (
+  SELECT *
+    FROM employee
+   WHERE branch_id = 2
+)
+
+    SELECT *
+      FROM scranton_employes
+     WHERE salary > 60000;
