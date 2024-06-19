@@ -21,7 +21,7 @@ DELIMITER $$
 CREATE TRIGGER log_employee_changes
   BEFORE INSERT ON employee
   FOR EACH ROW BEGIN
-		 INSERT INTO employee_log VALUES('added new employee');
+		 INSERT INTO employee_log VALUES(NEW.first_name);
 	       END $$
 DELIMITER ;
  
