@@ -137,19 +137,12 @@ INSERT INTO works_with VALUES(105, 406, 130000);
 --  );
 
 
--- -- find all clients that are handled by the branch that michael scott manages
+-- find all clients that are handled by the branch that michael scott manages, assume you know michael scott's emp_id
 
 
-SELECT client_name
+SELECT c.client_name
   FROM client AS c
- WHERE c.client_id IN
-(SELECT DISTINCT ww.client_id
-  FROM works_with AS ww
- WHERE ww.emp_id IN
-(SELECT ee.emp_id
-  FROM employee AS ee
- WHERE ee.branch_id IN
-       (SELECT e.branch_id
-	  FROM employee AS e
-	 WHERE e.first_name = 'Michael'
-	   AND e.last_name = 'Scott')));
+ WHERE c.branch_id IN       
+(SELECT b.branch_id
+  FROM branch AS b
+ WHERE b.mgr_id = 102);
