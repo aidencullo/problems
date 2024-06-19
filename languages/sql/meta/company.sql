@@ -128,18 +128,28 @@ INSERT INTO works_with VALUES(105, 406, 130000);
 -- find the name of the employees who have sold over $30,000 of products to a single client
 
 
-SELECT first_name
-  FROM employee AS e
- WHERE e.emp_id IN (
-   SELECT works_with.emp_id
-     FROM works_with
-    WHERE works_with.total_sales > 30000
- );
-       
+-- SELECT first_name
+--   FROM employee AS e
+--  WHERE e.emp_id IN (
+--    SELECT works_with.emp_id
+--      FROM works_with
+--     WHERE works_with.total_sales > 30000
+--  );
 
--- find all clients that are handled by the branch that michael scott manages
-       
-SELECT e.branch_id
-FROM employee AS e
-WHERE e.first_name = 'Michael'
-  AND e.last_name = 'Scott';
+
+-- -- find all clients that are handled by the branch that michael scott manages
+
+
+SELECT client_name
+  FROM client AS c
+ WHERE c.client_id IN
+(SELECT DISTINCT ww.client_id
+  FROM works_with AS ww
+ WHERE ww.emp_id IN
+(SELECT ee.emp_id
+  FROM employee AS ee
+ WHERE ee.branch_id IN
+       (SELECT e.branch_id
+	  FROM employee AS e
+	 WHERE e.first_name = 'Michael'
+	   AND e.last_name = 'Scott')));
