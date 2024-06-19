@@ -142,7 +142,9 @@ INSERT INTO works_with VALUES(105, 406, 130000);
 
 SELECT c.client_name
   FROM client AS c
- WHERE c.branch_id IN       
-(SELECT b.branch_id
+ WHERE c.branch_id  = (
+   SELECT b.branch_id
   FROM branch AS b
- WHERE b.mgr_id = 102);
+    WHERE b.mgr_id = 102
+    LIMIT 1	  
+ );
