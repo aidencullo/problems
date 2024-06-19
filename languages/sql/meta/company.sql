@@ -2,6 +2,10 @@ DROP DATABASE IF EXISTS company;
 		CREATE DATABASE company;
 USE company;
 
+CREATE TABLE employee_log (
+  log_message VARCHAR(100)
+);
+
 CREATE TABLE employee (
   emp_id INT PRIMARY KEY,
   first_name VARCHAR(40),
@@ -13,6 +17,14 @@ CREATE TABLE employee (
   branch_id INT
 );
 
+DELIMITER $$
+CREATE TRIGGER log_employee_changes
+  BEFORE INSERT ON employee
+  FOR EACH ROW BEGIN
+		 INSERT INTO employee_log VALUES('added new employee');
+	       END $$
+DELIMITER ;
+ 
 CREATE TABLE branch (
   branch_id INT PRIMARY KEY,
   branch_name VARCHAR(40),
@@ -140,11 +152,15 @@ INSERT INTO works_with VALUES(105, 406, 130000);
 -- find all clients that are handled by the branch that michael scott manages, assume you know michael scott's emp_id
 
 
-SELECT c.client_name
-  FROM client AS c
- WHERE c.branch_id  = (
-   SELECT b.branch_id
-  FROM branch AS b
-    WHERE b.mgr_id = 102
-    LIMIT 1	  
- );
+-- SELECT c.client_name
+--   FROM client AS c
+--  WHERE c.branch_id  = (
+--    SELECT b.branch_id
+--   FROM branch AS b
+--     WHERE b.mgr_id = 102
+--     LIMIT 1	  
+--  );
+
+
+-- print employee log
+ SELECT * FROM employee_log;
