@@ -21,7 +21,13 @@ DELIMITER $$
 CREATE TRIGGER log_employee_changes
   BEFORE INSERT ON employee
   FOR EACH ROW BEGIN
-		 INSERT INTO employee_log VALUES(NEW.first_name);
+		 IF NEW.sex = 'M' THEN
+		   INSERT INTO employee_log VALUES('Adding Male Employee');
+		 ELSEIF NEW.sex = 'F' THEN
+		   INSERT INTO employee_log VALUES('Adding Female Employee');
+		   ELSE
+		     INSERT INTO employee_log VALUES('Adding Employee');
+		 END IF;
 	       END $$
 DELIMITER ;
  
