@@ -176,23 +176,12 @@ SELECT customer_id
   ) AS max_total_transaction_amount;
 
 
-
---   SELECT employee_id, employee_name, department_id, salary
--- FROM employees
--- WHERE department_id = (
---     SELECT department_id
---     FROM (
---         SELECT department_id, AVG(salary) AS avg_salary
---         FROM employees
---         GROUP BY department_id
---         ORDER BY avg_salary DESC
---         LIMIT 1
---     ) AS max_avg_salary_department
--- );
-
-
 -- 8. Aggregation with DISTINCT
 -- Question: Given a table page_views with columns user_id, page_url, and view_date, write a query to find the number of unique users who viewed each page URL.
+ 
+SELECT page_url, COUNT(DISTINCT user_id) AS distinct_user_count
+FROM page_views
+GROUP BY page_url;
 
 -- 9. Aggregation with CASE Statement
 -- Question: Given a table orders with columns order_id, customer_id, order_date, and order_status (which can be 'completed', 'pending', or 'cancelled'), write a query to find the total number of orders for each status.
