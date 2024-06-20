@@ -1,31 +1,23 @@
 class Solution:
     def findTheDistanceValue(self, arr1: List[int], arr2: List[int], d: int) -> int:
-        def search(target, arr): #O(logm)
-            l, r = 0, len(arr) - 1
-            while l <= r:
-                mid = (l + r) // 2
-                if arr[mid] <= target:
-                    l = mid + 1
+        def binary_search(arr, target):
+            left, right = 0, len(arr) - 1
+            while left <= right:
+                mid = (left + right) // 2
+                if target >= arr[mid]:
+                    left = mid + 1
                 else:
-                    r = mid - 1
-            return r
+                    right = mid - 1
+            return right
 
-        def search2(target, arr): #O(logm)
-            l, r = 0, len(arr) - 1
-            while l <= r:
-                mid = (l + r) // 2
-                if arr[mid] >= target:
-                    r = mid - 1
-                else:
-                    l = mid + 1
-            return l
-
-        arr1.sort() #O(nlogn)
-        arr2.sort() #O(mlogm)
+        arr1.sort()
+        arr2.sort()
         cnt = 0
-        for x in arr1: #O(n)
-            upper = search(x + d, arr2) #O(logm)
-            lower = search2(x - d, arr2) #O(logm)
-            if upper < lower:
+        for x in arr1:
+            upper = binary_search(arr2, x + d)
+            lower = binary_search(arr2, x - d)
+            if upper == lower:
+                if lower > -1 and arr2[lower] == x - d:
+                    continue
                 cnt += 1
         return cnt
