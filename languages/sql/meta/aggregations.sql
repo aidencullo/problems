@@ -22,4 +22,14 @@ INSERT INTO orders (order_id, customer_id, order_date, order_amount) VALUES
 
 SELECT customer_id, SUM(order_amount) AS total_order_amount
   FROM orders
-GROUP BY customer_id;
+ GROUP BY customer_id;
+
+
+-- 2. Aggregation with Filtering
+-- Question: Given the same orders table, write a query to find the total order amount for each customer, but only for orders placed in the year 2023.
+
+
+SELECT customer_id, SUM(order_amount) AS total_order_amount
+  FROM orders
+ WHERE YEAR(order_date) = 2023
+ GROUP BY customer_id;
