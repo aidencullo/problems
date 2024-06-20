@@ -158,6 +158,11 @@ SELECT c.customer_name, COALESCE(SUM(o.order_amount), 0) AS total_order_amount
 -- 6. Aggregation with DATE Functions
 -- Question: Given a table sales with columns sale_id, product_id, sale_date, and sale_amount, write a query to find the total sales for each month in the year 2023.
 
+SELECT SUM(sale_amount)
+  FROM sales
+ GROUP BY MONTH(sale_date);
+
+
 -- 7. Aggregation and Subqueries
 -- Question: Given a table transactions with columns transaction_id, customer_id, transaction_date, and transaction_amount, write a query to find the customer who has the highest total transaction amount.
 
