@@ -1,3 +1,12 @@
+from collections import deque
+
 class Solution:
     def reverseBits(self, n: int) -> int:
-        return int(bin(n)[2:].zfill(32)[::-1], 2)
+        q = deque()
+        for i in range(32):
+            q.append(n & 1)
+            n >>= 1
+        for i in range(32):
+            n <<= 1
+            n |= (q.popleft())
+        return n
