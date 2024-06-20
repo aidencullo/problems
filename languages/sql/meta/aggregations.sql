@@ -4,7 +4,7 @@ CREATE DATABASE testdb;
 USE testdb;
 
 -- setup
-
+ 
 -- Create table orders
 CREATE TABLE orders (
     order_id INT PRIMARY KEY,
@@ -178,6 +178,7 @@ SELECT customer_id
 
 -- 8. Aggregation with DISTINCT
 -- Question: Given a table page_views with columns user_id, page_url, and view_date, write a query to find the number of unique users who viewed each page URL.
+
  
 SELECT page_url, COUNT(DISTINCT user_id) AS distinct_user_count
 FROM page_views
@@ -185,6 +186,48 @@ GROUP BY page_url;
 
 -- 9. Aggregation with CASE Statement
 -- Question: Given a table orders with columns order_id, customer_id, order_date, and order_status (which can be 'completed', 'pending', or 'cancelled'), write a query to find the total number of orders for each status.
+
+DROP TABLE orders;
+CREATE TABLE orders (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT,
+    order_date DATE,
+    order_status ENUM('completed', 'pending', 'cancelled')
+);
+
+INSERT INTO orders (customer_id, order_date, order_status) VALUES
+(101, '2023-01-15', 'completed'),
+(102, '2023-02-20', 'pending'),
+(101, '2023-03-10', 'completed'),
+(103, '2022-12-01', 'cancelled'),
+(102, '2023-05-25', 'pending'),
+(104, '2023-06-15', 'completed');
+
+
+
+SELECT order_status, COUNT(*) AS status_count
+FROM orders
+GROUP BY order_status;
+
+
+
+SELECT
+  SUM(CASE WHEN order_status = 'completed' THEN 1 ELSE 0 END) AS completed_orders,
+  SUM(CASE WHEN order_status = 'pending' THEN 1 ELSE 0 END) AS pending_orders,
+  SUM(CASE WHEN order_status = 'cancelled' THEN 1 ELSE 0 END) AS cancelled_orders
+  FROM orders;
+	 
+-- SELECT customer_id,
+--     SUM(order_amount) AS total_sales,
+--     CASE
+--         WHEN SUM(order_amount) < 500 THEN 'Low Sales'
+--         WHEN SUM(order_amount) BETWEEN 500 AND 1000 THEN 'Medium Sales'
+--         WHEN SUM(order_amount) > 1000 THEN 'High Sales'
+--     END AS sales_category
+-- FROM orders
+-- GROUP BY customer_id;
+
+
 
 -- 10. Aggregation with Window Functions
 -- Question: Given a table sales with columns sale_id, product_id, sale_date, and sale_amount, write a query to find the cumulative sales amount for each product, ordered by sale date.
