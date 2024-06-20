@@ -166,6 +166,31 @@ SELECT SUM(sale_amount)
 -- 7. Aggregation and Subqueries
 -- Question: Given a table transactions with columns transaction_id, customer_id, transaction_date, and transaction_amount, write a query to find the customer who has the highest total transaction amount.
 
+SELECT customer_id
+  FROM (
+    SELECT customer_id, SUM(transaction_amount) AS total_transaction_amount
+      FROM transactions
+     GROUP BY customer_id
+     ORDER BY total_transaction_amount DESC
+     LIMIT 1	   
+  ) AS max_total_transaction_amount;
+
+
+
+--   SELECT employee_id, employee_name, department_id, salary
+-- FROM employees
+-- WHERE department_id = (
+--     SELECT department_id
+--     FROM (
+--         SELECT department_id, AVG(salary) AS avg_salary
+--         FROM employees
+--         GROUP BY department_id
+--         ORDER BY avg_salary DESC
+--         LIMIT 1
+--     ) AS max_avg_salary_department
+-- );
+
+
 -- 8. Aggregation with DISTINCT
 -- Question: Given a table page_views with columns user_id, page_url, and view_date, write a query to find the number of unique users who viewed each page URL.
 
