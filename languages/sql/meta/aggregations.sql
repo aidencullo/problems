@@ -134,8 +134,26 @@ SELECT product_id, store_id, SUM(sale_amount)
 -- 4. Aggregation with HAVING Clause
 -- Question: Given a table employees with columns employee_id, department_id, salary, and hire_date, write a query to find the average salary for each department, but only for departments with more than 5 employees.
 
+SELECT COUNT(*), AVG(salary) AS avg_salary
+  FROM employees
+ GROUP BY department_id
+HAVING COUNT(*) > 5;
+
+
 -- 5. Aggregation with JOIN
 -- Question: Given two tables, orders (with columns order_id, customer_id, order_date, and order_amount) and customers (with columns customer_id and customer_name), write a query to find the total order amount for each customer name.
+
+UPDATE orders
+   SET order_amount = NULL
+ WHERE customer_id = 103;
+SELECT * FROM customers;
+SELECT * FROM orders;
+
+SELECT c.customer_name, COALESCE(SUM(o.order_amount), 0) AS total_order_amount
+  FROM customers AS c
+       JOIN orders AS o
+	   ON c.customer_id = o.customer_id
+ GROUP BY c.customer_name;
 
 -- 6. Aggregation with DATE Functions
 -- Question: Given a table sales with columns sale_id, product_id, sale_date, and sale_amount, write a query to find the total sales for each month in the year 2023.
