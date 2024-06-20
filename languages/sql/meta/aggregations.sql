@@ -231,3 +231,40 @@ SELECT
 
 -- 10. Aggregation with Window Functions
 -- Question: Given a table sales with columns sale_id, product_id, sale_date, and sale_amount, write a query to find the cumulative sales amount for each product, ordered by sale date.
+
+
+
+SELECT 
+    product_id,
+    sale_date,
+    sale_amount,
+    SUM(sale_amount) OVER (PARTITION BY product_id ORDER BY sale_date) AS cumulative_amount
+FROM sales;
+
+
+-- -- setup
+
+-- DROP TABLE IF EXISTS orders;
+-- -- Create table orders
+-- CREATE TABLE orders (
+--     order_id INT PRIMARY KEY,
+--     customer_id INT,
+--     order_date DATE,
+--     order_amount DECIMAL(10, 2)
+-- );
+
+-- -- Insert data into orders
+-- INSERT INTO orders (order_id, customer_id, order_date, order_amount) VALUES
+-- (1, 101, '2023-01-15', 150.00),
+-- (2, 102, '2023-02-20', 200.00),
+-- (3, 101, '2023-03-10', 50.00),
+-- (4, 103, '2022-12-01', 100.00),
+-- (5, 104, '2023-05-25', 300.00);
+
+-- SELECT 
+--     customer_id,
+--     order_date,
+--     order_amount,
+--     SUM(order_amount) OVER (PARTITION BY customer_id ORDER BY order_date) AS cumulative_amount
+-- FROM orders;
+
