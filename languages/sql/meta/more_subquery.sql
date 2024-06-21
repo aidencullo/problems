@@ -6,18 +6,18 @@ USE retail_db;
 
 -- Create departments table
 CREATE TABLE departments (
-    dept_id INT PRIMARY KEY,
-    dept_name VARCHAR(50)
+  dept_id INT PRIMARY KEY,
+  dept_name VARCHAR(50)
 );
 
 -- Create employees table
 CREATE TABLE employees (
-    emp_id INT PRIMARY KEY,
-    emp_name VARCHAR(50),
-    dept_id INT,
-    salary DECIMAL(10, 2),
-    hire_date DATE,
-    FOREIGN KEY (dept_id) REFERENCES departments(dept_id)
+  emp_id INT PRIMARY KEY,
+  emp_name VARCHAR(50),
+  dept_id INT,
+  salary DECIMAL(10, 2),
+  hire_date DATE,
+  FOREIGN KEY (dept_id) REFERENCES departments(dept_id)
 );
 
 -- Insert data into departments table
@@ -56,11 +56,26 @@ SELECT emp_name
 -- --------
 -- David
 
-   
+
 
 
 -- Question 2:
 -- Find the department(s) with the highest average salary among its employees.
+
+SELECT dept_name
+  FROM departments
+ WHERE dept_id = (
+   SELECT dept_id
+     FROM employees
+    GROUP BY dept_id
+    ORDER BY AVG(salary) DESC	  
+    LIMIT 1
+ );
+
+-- dept_name
+-- ---------
+-- Finance
+
 
 -- Question 3:
 -- List the employees who joined after Eve in the same department.
