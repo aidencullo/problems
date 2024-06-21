@@ -21,9 +21,11 @@ INSERT INTO employees (employee_id, first_name, last_name, department, salary, m
 VALUES
     (101, 'John', 'Doe', 'IT', 75000.00, 100, '2015-01-15'),
     (102, 'Jane', 'Smith', 'Sales', 60000.00, 101, '2017-03-20'),
-    (103, 'Michael', 'Johnson', 'IT', 85000.00, 100, '2016-06-10'),
+    (103, 'Michael', 'Johnson', 'IT', 78000.00, 100, '2016-06-10'),
     (104, 'Emily', 'Davis', 'HR', 70000.00, 101, '2018-02-05'),
     (105, 'William', 'Wilson', 'Sales', 58000.00, 102, '2019-04-30');
+
+
 
 -- Create orders table
 CREATE TABLE orders (
@@ -96,6 +98,21 @@ WHERE o.order_id IN (
 
 -- 2. Conditional Update
 -- Increase the salary of employees in the 'IT' department by 5% if their current salary is below 80000.
+
+UPDATE employees
+SET salary = salary * 1.05
+ WHERE department = 'IT' AND salary < 80000;
+
+
+-- | employee_id | first_name | last_name | department | salary   | manager_id | hire_date  |
+-- |-------------|------------|-----------|------------|----------|------------|------------|
+-- | 101         | John       | Doe       | IT         | 78750.00 | 100        | 2015-01-15 |
+-- | 102         | Jane       | Smith     | Sales      | 60000.00 | 101        | 2017-03-20 |
+-- | 103         | Michael    | Johnson   | IT         | 81900.00 | 100        | 2016-06-10 |
+-- | 104         | Emily      | Davis     | HR         | 70000.00 | 101        | 2018-02-05 |
+-- | 105         | William    | Wilson    | Sales      | 58000.00 | 102        | 2019-04-30 |
+
+
 
 -- 3. Update Using Subquery
 -- Set the manager_id of each employee to the employee_id of the employee who has the highest salary in their department.
