@@ -31,31 +31,12 @@ INSERT INTO sales (sale_id, product_name, sale_amount, sale_date) VALUES
 (13, 'Product C', 200.00, '2022-10-05');
 
 
-UPDATE
-    sales
-SET
-    sale_amount = 0
-WHERE 
-    sale_amount IS NULL;
-
--- UPDATE employees
--- SET department = 'HR'
--- WHERE employee_id IN (
---     SELECT employee_id
---     FROM employee_audit
---     WHERE audit_type = 'promotion'
--- );
-
-
-
 SELECT
     product_name,
     COUNT(*) AS total_sales_count,
-    SUM(sale_amount) AS total_sales_amount
+    SUM(COALESCE(sale_amount, 0)) AS total_sales_amount
 FROM 
     sales
-WHERE 
-    sale_amount IS NOT NULL
 GROUP BY 
     product_name
 HAVING 
