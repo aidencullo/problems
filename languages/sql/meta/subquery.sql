@@ -44,3 +44,24 @@ WHERE student_id IN (
     GROUP BY student_id
     HAVING AVG(grade) > 85
 );
+
+
+
+
+
+
+
+-- Find all students who have grades in both Math and Science subjects.
+
+
+SELECT student_id, student_name
+FROM students
+WHERE student_id IN (
+    SELECT student_id
+      FROM grades
+     WHERE subject = 'Math'
+) AND student_id IN (
+    SELECT student_id
+      FROM grades
+     WHERE subject = 'Science'
+);
