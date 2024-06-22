@@ -4,18 +4,18 @@ DROP DATABASE IF EXISTS retail_db;
 USE retail_db;
 -- Create departments table
 CREATE TABLE departments (
-    dept_id INT PRIMARY KEY,
-    dept_name VARCHAR(50)
+  dept_id INT PRIMARY KEY,
+  dept_name VARCHAR(50)
 );
 
 -- Create employees table
 CREATE TABLE employees (
-    emp_id INT PRIMARY KEY,
-    emp_name VARCHAR(50),
-    dept_id INT,
-    salary DECIMAL(10, 2),
-    hire_date DATE,
-    FOREIGN KEY (dept_id) REFERENCES departments(dept_id)
+  emp_id INT PRIMARY KEY,
+  emp_name VARCHAR(50),
+  dept_id INT,
+  salary DECIMAL(10, 2),
+  hire_date DATE,
+  FOREIGN KEY (dept_id) REFERENCES departments(dept_id)
 );
 
 -- Insert data into departments table
@@ -81,17 +81,17 @@ SELECT dept_name
 
 
 SELECT emp_name
-FROM employees e1
-WHERE hire_date > (
-    SELECT hire_date
-    FROM employees e2
+  FROM employees e1
+ WHERE hire_date > (
+   SELECT hire_date
+     FROM employees e2
     WHERE e2.emp_name = 'Eve'
-)
-AND dept_id = (
-    SELECT dept_id
-    FROM employees
-    WHERE emp_name = 'Eve'
-);
+ )
+   AND dept_id = (
+     SELECT dept_id
+       FROM employees
+      WHERE emp_name = 'Eve'
+   );
 
 -- emp_name
 -- --------
@@ -105,8 +105,8 @@ AND dept_id = (
 
 SELECT dept_name, COUNT(*)
   FROM employees e
-  JOIN departments d
-    ON e.dept_id = d.dept_id
+       JOIN departments d
+	   ON e.dept_id = d.dept_id
  GROUP BY dept_name
 HAVING COUNT(*) > 2;
 
@@ -120,6 +120,17 @@ HAVING COUNT(*) > 2;
 -- Question 5:
 -- Identify employees who have a salary higher than any employee in the IT department.
 
+
+
+SELECT emp_name
+  FROM employees
+ WHERE salary > (
+   SELECT MAX(salary)
+     FROM employees AS e
+	  JOIN departments AS d
+	      ON e.dept_id = d.dept_id
+    WHERE dept_name = 'IT'
+ );
 
 
 -- emp_name
