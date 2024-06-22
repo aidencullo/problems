@@ -141,27 +141,10 @@ SELECT * FROM employees;
 -- | 105         | William    | Wilson    | Sales      | 58000.00 | 102        | 2019-04-30 
 
 
--- 4. Update with Case Statement
--- Update the grade column of the students table based on their final_score as follows:
-
--- If final_score is between 90 and 100, set grade to 'A'.
--- If final_score is between 80 and 89, set grade to 'B'.
--- If final_score is between 70 and 79, set grade to 'C'.
--- Otherwise, set grade to 'F'.
-
-
--- UPDATE employees e
--- JOIN temp_lowest_salary_employee t
--- ON 1 = 1
--- SET e.manager_id = CASE
---     WHEN t.employee_id IS NOT NULL THEN t.employee_id
---     ELSE e.manager_id
--- END;
-
-
-
 -- 5. Update Using Multiple Tables
 -- Update the employees table to reflect a 10% increase in salary for employees who work in departments where the average salary is above 70000.
+
+
 
 
 -- These scenarios cover different aspects of using the UPDATE statement in SQL, including joins, subqueries, conditional updates, and updates based on calculations and conditions. Practice solving these scenarios to improve your SQL proficiency!
