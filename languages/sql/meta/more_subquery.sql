@@ -2,22 +2,20 @@ DROP DATABASE IF EXISTS retail_db;
 		CREATE DATABASE retail_db;
 
 USE retail_db;
-
-
 -- Create departments table
 CREATE TABLE departments (
-  dept_id INT PRIMARY KEY,
-  dept_name VARCHAR(50)
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(50)
 );
 
 -- Create employees table
 CREATE TABLE employees (
-  emp_id INT PRIMARY KEY,
-  emp_name VARCHAR(50),
-  dept_id INT,
-  salary DECIMAL(10, 2),
-  hire_date DATE,
-  FOREIGN KEY (dept_id) REFERENCES departments(dept_id)
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    dept_id INT,
+    salary DECIMAL(10, 2),
+    hire_date DATE,
+    FOREIGN KEY (dept_id) REFERENCES departments(dept_id)
 );
 
 -- Insert data into departments table
@@ -33,7 +31,8 @@ INSERT INTO employees (emp_id, emp_name, dept_id, salary, hire_date) VALUES
 (3, 'Charlie', 2, 70000.00, '2018-08-10'),
 (4, 'David', 2, 75000.00, '2021-02-28'),
 (5, 'Eve', 3, 65000.00, '2022-04-05'),
-(6, 'Frank', 3, 60000.00, '2020-11-12');
+(6, 'Frank', 3, 60000.00, '2020-11-12'),
+(7, 'Grace', 3, 67000.00, '2022-09-10');
 
 
 
@@ -104,11 +103,17 @@ AND dept_id = (
 -- Count the number of employees in each department and display the department names with more than two employees.
 
 
+SELECT dept_name, COUNT(*)
+  FROM employees e
+  JOIN departments d
+    ON e.dept_id = d.dept_id
+ GROUP BY dept_name
+HAVING COUNT(*) > 2;
 
--- dept_name  | num_employees
--- --------------------------
--- HR         | 2
--- IT         | 2
+
+-- dept_name | COUNT(*)
+-- --------------------
+-- IT        | 3
 
 
 
