@@ -117,26 +117,16 @@ SET salary = salary * 1.05
 -- 3. Update Using Subquery
 -- Set the manager_id of each employee to the employee_id of the employee who has the highest salary in their department.
 
-CREATE TEMPORARY TABLE department_max_salary AS
-  SELECT e.department, MAX(e.salary) AS max_salary
-  FROM employees e
-  GROUP BY e.department;
-
-CREATE TEMPORARY TABLE pared_down_employee AS
-  SELECT e.employee_id, e.department, e.salary
-  FROM employees e;
-
-CREATE TEMPORARY TABLE employee_max_salary AS
-  SELECT p.employee_id, p.department, p.salary, d.max_salary
-  FROM pared_down_employee p
-  JOIN department_max_salary d
-  ON p.department = d.department
-  AND p.salary = d.max_salary;
 
 UPDATE employees e
-       JOIN employee_max_salary ems
-       ON e.department = ems.department
-   SET e.manager_id = ems.employee_id;
+       JOIN (
+	 SELECT department, MAX(salary) AS max_salary
+	   FROM employees
+	  GROUP BY department		  
+       ) ems ON e.department = ems.department
+       JOIN employees ee
+       ON ee.department = ems.department AND ee.salary = ems.max_salary
+   SET e.manager_id = ee.employee_id;
 
 SELECT * FROM employees;
 
