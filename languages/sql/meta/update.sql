@@ -117,32 +117,38 @@ SET salary = salary * 1.05
 -- 3. Update Using Subquery
 -- Set the manager_id of each employee to the employee_id of the employee who has the highest salary in their department.
 
--- UPDATE employees e
--- JOIN (
---     SELECT department, MAX(salary) as max_salary
---     FROM employees
---     GROUP BY department
--- ) dept_max ON e.department = dept_max.department
--- JOIN employees manager ON e.department = manager.department 
---                       AND manager.salary = dept_max.max_salary
--- SET e.manager_id = manager.employee_id;
-
--- SELECT * FROM employees;
-
-
-SELECT e.employee_id, e.first_name, e.department, e.salary, e.manager_id, dept_max.max_salary
+CREATE TEMPORARY TABLE department_max_salary AS
+  SELECT e.department, MAX(e.salary) AS max_salary
   FROM employees e
-JOIN (
-    SELECT department, MAX(salary) as max_salary
-    FROM employees
-    GROUP BY department
-) dept_max ON e.department = dept_max.department
-JOIN employees manager ON e.department = manager.department 
-                      AND manager.salary = dept_max.max_salary;
-       
+  GROUP BY e.department;
+
+CREATE TEMPORARY TABLE pared_down_employee AS
+  SELECT e.employee_id, e.department, e.salary
+  FROM employees e;
+
+CREATE TEMPORARY TABLE employee_max_salary AS
+  SELECT p.employee_id, p.department, p.salary, d.max_salary
+  FROM pared_down_employee p
+  JOIN department_max_salary d
+  ON p.department = d.department
+  AND p.salary = d.max_salary;
+
+UPDATE employees e
+       JOIN employee_max_salary ems
+       ON e.department = ems.department
+   SET e.manager_id = ems.employee_id;
 
 SELECT * FROM employees;
 
+
+-- Updated employees table:
+-- | employee_id | first_name | last_name | department | salary   | manager_id | hire_date  |
+-- |-------------|------------|-----------|------------|----------|------------|------------|
+-- | 101         | John       | Doe       | IT         | 78750.00 | 103        | 2015-01-15 |
+-- | 102         | Jane       | Smith     | Sales      | 60000.00 | 102        | 2017-03-20 |
+-- | 103         | Michael    | Johnson   | IT         | 81900.00 | 103        | 2016-06-10 |
+-- | 104         | Emily      | Davis     | HR         | 70000.00 | 104        | 2018-02-05 |
+-- | 105         | William    | Wilson    | Sales      | 58000.00 | 102        | 2019-04-30 
 
 
 -- 4. Update with Case Statement
