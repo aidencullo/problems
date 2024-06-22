@@ -80,8 +80,44 @@ SELECT dept_name
 -- Question 3:
 -- List the employees who joined after Eve in the same department.
 
+
+SELECT emp_name
+FROM employees e1
+WHERE hire_date > (
+    SELECT hire_date
+    FROM employees e2
+    WHERE e2.emp_name = 'Eve'
+)
+AND dept_id = (
+    SELECT dept_id
+    FROM employees
+    WHERE emp_name = 'Eve'
+);
+
+-- emp_name
+-- --------
+
+
+
+
 -- Question 4:
 -- Count the number of employees in each department and display the department names with more than two employees.
 
+
+
+-- dept_name  | num_employees
+-- --------------------------
+-- HR         | 2
+-- IT         | 2
+
+
+
 -- Question 5:
 -- Identify employees who have a salary higher than any employee in the IT department.
+
+
+
+-- emp_name
+-- --------
+-- Charlie
+-- David
