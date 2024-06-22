@@ -146,18 +146,14 @@ SELECT * FROM employees;
 
 SELECT * FROM employees;
 
-CREATE TEMPORARY TABLE department_avg_salary AS
-     SELECT department
-     FROM employees ee
-    GROUP BY department	     
-   HAVING AVG(salary) > 70000;
-
 UPDATE employees e
-   SET e.salary = e.salary * 1.10
- WHERE e.department IN (
-    SELECT department
-      FROM department_avg_salary
- );
+JOIN (
+    SELECT department, AVG(salary) as avg_salary
+    FROM employees
+    GROUP BY department
+    HAVING AVG(salary) > 70000
+) high_salary_depts ON e.department = high_salary_depts.department
+   SET e.salary = e.salary * 1.1;
      
 SELECT * FROM employees;
 
