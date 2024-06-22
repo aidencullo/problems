@@ -33,21 +33,12 @@ VALUES
 
 UPDATE products
 SET price = 
-    CASE
-    WHEN category = 'Electronics' AND stock_quantity < 75 THEN price * 1.10
-    WHEN category = 'Clothing' AND stock_quantity > 150 THEN price * .95
-    WHEN category NOT IN ('Electronics', 'Clothing') AND stock_quantity BETWEEN 25 AND 100 THEN price * 1.02
-    ELSE price
+    CASE 
+        WHEN category = 'Electronics' AND stock_quantity < 75 THEN price * 1.10
+        WHEN category = 'Clothing' AND stock_quantity > 150 THEN price * 0.95
+        WHEN category NOT IN ('Electronics', 'Clothing') AND stock_quantity BETWEEN 25 AND 100 THEN price * 1.02
+        ELSE price
     END;
-
--- UPDATE products
--- SET price = 
---     CASE 
---         WHEN category = 'Electronics' AND stock_quantity < 75 THEN price * 1.10
---         WHEN category = 'Clothing' AND stock_quantity > 150 THEN price * 0.95
---         WHEN category NOT IN ('Electronics', 'Clothing') AND stock_quantity BETWEEN 25 AND 100 THEN price * 1.02
---         ELSE price
---     END;
 
 SELECT * FROM products;
 
