@@ -144,7 +144,30 @@ SELECT * FROM employees;
 -- 5. Update Using Multiple Tables
 -- Update the employees table to reflect a 10% increase in salary for employees who work in departments where the average salary is above 70000.
 
+SELECT * FROM employees;
+
+CREATE TEMPORARY TABLE department_avg_salary AS
+     SELECT department
+     FROM employees ee
+    GROUP BY department	     
+   HAVING AVG(salary) > 70000;
+
+UPDATE employees e
+   SET e.salary = e.salary * 1.10
+ WHERE e.department IN (
+    SELECT department
+      FROM department_avg_salary
+ );
+     
+SELECT * FROM employees;
 
 
 
--- These scenarios cover different aspects of using the UPDATE statement in SQL, including joins, subqueries, conditional updates, and updates based on calculations and conditions. Practice solving these scenarios to improve your SQL proficiency!
+-- Updated employees table:
+-- | employee_id | first_name | last_name | department | salary    | manager_id | hire_date  |
+-- |-------------|------------|-----------|------------|-----------|------------|------------|
+-- | 101         | John       | Doe       | IT         | 86625.00  | 103        | 2015-01-15 |
+-- | 102         | Jane       | Smith     | Sales      | 60000.00  | 102        | 2017-03-20 |
+-- | 103         | Michael    | Johnson   | IT         | 90090.00  | 103        | 2016-06-10 |
+-- | 104         | Emily      | Davis     | HR         | 70000.00  | 104        | 2018-02-05 |
+-- | 105         | William    | Wilson    | Sales      | 58000.00  | 102        | 2019-04-30 |
