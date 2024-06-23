@@ -141,6 +141,30 @@ RIGHT JOIN
 -- 4. **Employees and their Project Departments:**
 --    Write a query to list all employees along with the departments of the projects they are working on. Include employees working on projects that are not assigned to any department and employees who are not working on any projects.
 
+
+
+SELECT
+  e.EmployeeName,
+  d.DepartmentName
+FROM
+    Employees e
+LEFT JOIN EmployeeProjects ep ON e.EmployeeID = ep.EmployeeID
+LEFT JOIN Projects p ON ep.ProjectID = p.ProjectID
+LEFT JOIN Departments d ON p.DepartmentID = d.DepartmentID;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -- 5. **Highest Salary by Department:**
 --    Write a query to find the highest salary in each department. Include departments that have no employees and indicate that they have no salaries.
 
