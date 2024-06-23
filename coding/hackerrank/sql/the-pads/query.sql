@@ -25,16 +25,16 @@ INSERT INTO OCCUPATIONS (name, Occupation) VALUES
 -- Query the number of ocurrences of each occupation in OCCUPATIONS. Sort the occurrences in ascending order, and output them in the following format:
 
 SELECT
-  CONCAT(name, '(', LEFT(Occupation, 1), ')') AS name_occupation
+  CONCAT(name, '(', SUBSTRING(Occupation, 1, 1), ')') AS name_occupation
   FROM OCCUPATIONS
  ORDER BY name;
 
 
 SELECT
-  CONCAT('There are a total of ', COUNT(Occupation), ' ', LOWER(Occupation), 's.') AS occupation_count
+  CONCAT('There are a total of ', COUNT(*), ' ', LOWER(Occupation), 's.') AS occupation_count
   FROM OCCUPATIONS
   GROUP BY Occupation
-  ORDER BY occupation_count;
+  ORDER BY COUNT(*) ASC;
 
 
 
