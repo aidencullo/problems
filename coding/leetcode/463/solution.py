@@ -7,10 +7,10 @@ class Solution:
                 return 0
             if grid[row][col] == 0:
                 return 1
-            seen.append((row, col))
+            seen.add((row, col))
             return dfs(grid, row + 1, col) + dfs(grid, row - 1, col) + dfs(grid, row, col + 1) + dfs(grid, row, col - 1)
 
-        seen = []
+        seen = set()
         rows = len(grid)
         cols = len(grid[0])
         for i in range(rows):
