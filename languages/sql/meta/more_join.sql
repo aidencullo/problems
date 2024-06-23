@@ -114,24 +114,22 @@ ON ep.ProjectID = p.ProjectID;
 
 
 SELECT
-  DepartmentName,
-  ProjectName
-  FROM Departments d
-       LEFT JOIN Projects p
-	   ON d.DepartmentID = p.DepartmentID
-	      
+    d.DepartmentName,
+    p.ProjectName
+FROM
+    Departments d
+LEFT JOIN
+    Projects p ON d.DepartmentID = p.DepartmentID
+
 UNION
-  
+
 SELECT
-  DepartmentName,
-  ProjectName
-  FROM Departments d
-       RIGHT JOIN Projects p
-	   ON d.DepartmentID = p.DepartmentID;
-	      
-
-
-
+    d.DepartmentName,
+    p.ProjectName
+FROM
+    Departments d
+RIGHT JOIN
+    Projects p ON d.DepartmentID = p.DepartmentID;
 
 
 
