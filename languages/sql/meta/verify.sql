@@ -131,10 +131,5 @@ SELECT
  WHERE rn = 1;
 
 
-
-
-
-
-
 -- Ranking Students with Exam Scores:
 -- Write a query to rank students based on their exam scores in descending order. Include students who have not taken the exam (NULL scores) at the end of the ranking with a message indicating they haven't taken the exam.
