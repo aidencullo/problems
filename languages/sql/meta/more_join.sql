@@ -63,6 +63,7 @@ INSERT INTO EmployeeProjects (EmployeeID, ProjectID) VALUES
 
 -- 1. **List Employees and their Departments:**
 --    Write a query to list all employees along with their respective department names. Include employees who do not belong to any department.
+
 SELECT
   EmployeeName,
   DepartmentName
@@ -79,6 +80,45 @@ ON Employees.DepartmentID = Departments.DepartmentID;
 
 -- 2. **Employees and Projects:**
 --    Write a query to list all employees and the projects they are working on. Include employees who are not assigned to any projects and projects that have no employees assigned to them.
+
+
+
+SELECT
+  EmployeeName,
+  ProjectName
+FROM Employees e
+LEFT JOIN EmployeeProjects ep
+ON e.EmployeeID = ep.EmployeeID
+LEFT JOIN Projects p
+ON ep.ProjectID = p.ProjectID
+ UNION
+SELECT
+  EmployeeName,
+  ProjectName
+FROM Employees e
+LEFT JOIN EmployeeProjects ep
+ON e.EmployeeID = ep.EmployeeID
+RIGHT JOIN Projects p
+ON ep.ProjectID = p.ProjectID
+
+-- SELECT
+--   EmployeeName,
+--   ProjectName
+-- FROM Employees e
+-- LEFT JOIN EmployeeProjects ep
+-- ON e.EmployeeID = ep.EmployeeID
+-- LEFT JOIN Projects p
+-- ON ep.ProjectID = p.ProjectID
+
+
+
+
+
+
+
+
+
+
 
 -- 3. **Departments and their Projects:**
 --    Write a query to list all departments along with the projects under them. Include departments that have no projects and projects that are not assigned to any department.
