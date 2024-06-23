@@ -74,8 +74,17 @@ FROM Employees;
 
     
 SELECT EmployeeID, EmployeeName, DepartmentID, Salary,       
-       RANK() OVER (ORDER BY Salary DESC) AS Rank
+       RANK() OVER (ORDER BY DepartmentID) AS RankNumber
 FROM Employees;
+
+
+SELECT 
+    EmployeeID, Salary,
+    DENSE_RANK() OVER (ORDER BY Salary DESC) AS dense_ranking,
+    ROW_NUMBER() OVER (ORDER BY Salary DESC) AS row_numbering
+FROM 
+    Employees;
+
 
 
 -- RANK(): This function assigns a rank to each row based on the specified order. Rows with the same values receive the same rank, and the next rank is skipped accordingly.
@@ -88,14 +97,69 @@ FROM Employees;
 
 
 
+    
+SELECT EmployeeName,
+       RANK() OVER (ORDER BY salary DESC) AS RankNumber
+FROM Employees;
+
 
 
 
 
 -- Dense Ranking: Create a query to produce a dense rank for students based on their exam scores in ascending order, ensuring no ranks are skipped.
 
+    
+SELECT StudentName,
+       DENSE_RANK() OVER (ORDER BY ExamScore) AS RankNumber
+FROM StudentScores;
+
 -- Top N per Group: Write a query to find the top 3 highest-paid employees within each department.
+
+    
+-- WITH (SELECT EmployeeName, Salary,
+--        ROW_NUMBER() OVER (PARTITION BY DepartmentID ORDER BY Salary DESC) AS RankNumber
+--   FROM Employees AS RankedEmployees);
+
+-- SELECT EmployeeName, Salary
+--   FROM RankedEmployees
+--  WHERE RankNumber <= 3;
+
+WITH RankedEmployees AS (
+    SELECT EmployeeName, 
+           Salary,
+           DepartmentID,
+           ROW_NUMBER() OVER (PARTITION BY DepartmentID ORDER BY Salary DESC) AS RankNumber
+      FROM Employees
+)
+
+
+SELECT EmployeeName, 
+       Salary,
+       DepartmentID
+FROM RankedEmployees
+WHERE RankNumber <= 3;
+
+
 
 -- Percentile Ranking: Calculate the percentile rank of each student based on their exam scores, considering ties.
 
+SELECT
+  StudentName,
+  PERCENT_RANK() OVER (ORDER BY ExamScore)
+FROM
+  StudentScores;
+
+
+
+
 -- Running Total Rank: Create a query to calculate a running total rank of sales revenue by month, resetting the rank at the beginning of each new month.
+
+SELECT Revenue
+	FROM Sales;
+
+SELECT
+  SaleID,
+  SaleDate,
+  ROW_NUMBER() OVER (PARTITION BY YEAR(SaleDate), MONTH(SaleDate) ORDER BY Revenue DESC) AS RankNumber
+FROM
+  Sales;
