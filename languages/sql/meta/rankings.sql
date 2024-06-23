@@ -115,15 +115,6 @@ FROM StudentScores;
 
 -- Top N per Group: Write a query to find the top 3 highest-paid employees within each department.
 
-    
--- WITH (SELECT EmployeeName, Salary,
---        ROW_NUMBER() OVER (PARTITION BY DepartmentID ORDER BY Salary DESC) AS RankNumber
---   FROM Employees AS RankedEmployees);
-
--- SELECT EmployeeName, Salary
---   FROM RankedEmployees
---  WHERE RankNumber <= 3;
-
 WITH RankedEmployees AS (
     SELECT EmployeeName, 
            Salary,
