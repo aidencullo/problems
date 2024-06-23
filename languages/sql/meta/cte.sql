@@ -28,9 +28,15 @@ INSERT INTO sales (sale_id, product_id, amount) VALUES
 
 WITH highest_sales AS (
   SELECT
-    DepartmentID,
-    EmployeeName,
-    Salary,
-    ROW_NUMBER() OVER (PARTITION BY DepartmentID ORDER BY Salary DESC) AS rn
-  FROM Employees
+    product_id,
+    amount,
+    ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY amount DESC) AS rn
+  FROM sales
 )
+SELECT
+  product_id,
+  amount
+FROM
+  highest_sales
+WHERE
+  rn <= 3;
