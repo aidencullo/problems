@@ -37,7 +37,8 @@ INSERT INTO Employees (EmployeeID, EmployeeName, Salary, DepartmentID) VALUES
 INSERT INTO Departments (DepartmentID, DepartmentName) VALUES
 (1, 'HR'),
 (2, 'Engineering'),
-(3, 'Sales');
+(3, 'Sales'),
+(4, 'Marketing');
 
 INSERT INTO Projects (ProjectID, ProjectName, DepartmentID) VALUES
 (1, 'Project A', 1),
@@ -167,5 +168,34 @@ LEFT JOIN Departments d ON p.DepartmentID = d.DepartmentID;
 
 -- 5. **Highest Salary by Department:**
 --    Write a query to find the highest salary in each department. Include departments that have no employees and indicate that they have no salaries.
+
+
+
+-- SELECT DepartmentName,
+--        COALESCE(MAX(Salary), 'No Salary') AS HighestSalary
+--   FROM Employees e
+--        RIGHT JOIN Departments d
+-- 	   ON e.DepartmentID = d.DepartmentID		   
+--  GROUP BY DepartmentName;
+
+
+SELECT
+    d.DepartmentName,
+    COALESCE(MAX(e.Salary), 'No Salary') AS HighestSalary
+FROM
+    Departments d
+LEFT JOIN
+    Employees e ON d.DepartmentID = e.DepartmentID
+GROUP BY
+    d.DepartmentName;
+
+
+
+
+
+
+
+
+
 
 -- These questions will help you practice different types of joins, including inner joins, left joins, right joins, and full outer joins (if supported by your SQL environment).
