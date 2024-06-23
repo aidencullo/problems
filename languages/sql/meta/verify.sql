@@ -49,7 +49,7 @@ INSERT INTO StudentScores (StudentID, StudentName, ExamScore) VALUES
 INSERT INTO Sales (SaleID, SaleDate, Revenue) VALUES
 (1, '2024-01-05', 1000),
 (2, '2024-01-15', 1500),
-(3, '2024-02-10', NULL),
+(3, '2024-06-10', NULL),
 (4, '2024-02-15', 2000),
 (5, '2024-03-05', 2500);
 
@@ -82,11 +82,38 @@ SELECT
 -- Average Exam Scores:
 -- Write a query to calculate the average exam score for students. Handle NULL exam scores by excluding them from the average calculation. Ensure the result set still includes students with NULL scores, displaying their names and a message indicating they haven't taken the exam.
 
+SELECT
+  StudentName,
+  COALESCE(AVG(ExamScore), 'No exam taken') AS AverageScore
+  FROM StudentScores
+ GROUP BY StudentName;
+
+
+
+
+
+
+
+
+
 -- Sales Revenue by Month:
 -- Write a query to calculate the total sales revenue for each month. Include months where the revenue might be NULL and display 'No sales' for such months.
 
+
+
+
+SELECT
+  MONTH(SaleDate) AS Month,
+  COALESCE(SUM(Revenue), 'No sales') AS TotalRevenue
+FROM Sales
+GROUP BY MONTH(SaleDate);
+
 -- Top Paid Employees per Department:
 -- Write a query to find the highest-paid employee in each department. Handle cases where some employees may not have a department assigned by including them in a separate category labeled 'No Department'.
+
+
+
+
 
 -- Ranking Students with Exam Scores:
 -- Write a query to rank students based on their exam scores in descending order. Include students who have not taken the exam (NULL scores) at the end of the ranking with a message indicating they haven't taken the exam.
