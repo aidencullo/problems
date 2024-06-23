@@ -85,34 +85,23 @@ ON Employees.DepartmentID = Departments.DepartmentID;
 
 SELECT
   EmployeeName,
-  ProjectName
+  COALESCE(ProjectName, 'No Project') AS ProjectName
 FROM Employees e
 LEFT JOIN EmployeeProjects ep
 ON e.EmployeeID = ep.EmployeeID
 LEFT JOIN Projects p
 ON ep.ProjectID = p.ProjectID
+
  UNION
+
 SELECT
-  EmployeeName,
+  COALESCE(EmployeeName, 'No Employee') AS EmployeeName,
   ProjectName
 FROM Employees e
 LEFT JOIN EmployeeProjects ep
 ON e.EmployeeID = ep.EmployeeID
 RIGHT JOIN Projects p
-ON ep.ProjectID = p.ProjectID
-
--- SELECT
---   EmployeeName,
---   ProjectName
--- FROM Employees e
--- LEFT JOIN EmployeeProjects ep
--- ON e.EmployeeID = ep.EmployeeID
--- LEFT JOIN Projects p
--- ON ep.ProjectID = p.ProjectID
-
-
-
-
+ON ep.ProjectID = p.ProjectID;
 
 
 
@@ -122,6 +111,34 @@ ON ep.ProjectID = p.ProjectID
 
 -- 3. **Departments and their Projects:**
 --    Write a query to list all departments along with the projects under them. Include departments that have no projects and projects that are not assigned to any department.
+
+
+SELECT
+  DepartmentName,
+  ProjectName
+  FROM Departments d
+       LEFT JOIN Projects p
+	   ON d.DepartmentID = p.DepartmentID
+	      
+UNION
+  
+SELECT
+  DepartmentName,
+  ProjectName
+  FROM Departments d
+       RIGHT JOIN Projects p
+	   ON d.DepartmentID = p.DepartmentID;
+	      
+
+
+
+
+
+
+
+
+
+
 
 -- 4. **Employees and their Project Departments:**
 --    Write a query to list all employees along with the departments of the projects they are working on. Include employees working on projects that are not assigned to any department and employees who are not working on any projects.
