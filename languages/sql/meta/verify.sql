@@ -112,6 +112,27 @@ GROUP BY MONTH(SaleDate);
 -- Write a query to find the highest-paid employee in each department. Handle cases where some employees may not have a department assigned by including them in a separate category labeled 'No Department'.
 
 
+WITH highest_salaries AS (
+  SELECT
+    DepartmentID,
+    EmployeeName,
+    Salary,
+    ROW_NUMBER() OVER (PARTITION BY DepartmentID ORDER BY Salary DESC) AS rn
+  FROM Employees
+)
+
+SELECT
+  COALESCE(DepartmentName, 'No Department') AS DepartmentName,
+  EmployeeName,
+  Salary
+  FROM highest_salaries hs
+       LEFT JOIN Departments d
+	   ON hs.DepartmentID = d.DepartmentID
+ WHERE rn = 1;
+
+
+
+
 
 
 
