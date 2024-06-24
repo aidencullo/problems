@@ -49,7 +49,18 @@
  */
 
 
-
+SELECT
+AVG(CASE WHEN transaction_date = end_date OR transaction_date = start_date THEN 100.00 ELSE 0 END) AS pct_of_transactions_on_first_or_last_day_of_valid_promotion
+FROM
+sales s
+JOIN
+promotions p
+ON
+s.promotion_id = p.promotion_id
+WHERE 
+transaction_date <= end_date
+AND
+transaction_date >= start_date;
 
 
 
