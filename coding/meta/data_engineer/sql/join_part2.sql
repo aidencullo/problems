@@ -52,9 +52,21 @@
 
 
 
-
-
-
-
-
-
+SELECT
+AVG(CASE WHEN total_units_sold = 0 THEN 1 ELSE 0 END)
+FROM
+(SELECT
+product_category,
+COALESCE(SUM(units_sold), 0) AS total_units_sold
+FROM
+product_classes pc
+LEFT JOIN
+products p
+ON
+p.product_class_id = pc.product_class_id
+LEFT JOIN
+sales s
+ON
+s.product_id = p.product_id
+GROUP BY product_category)
+	 
