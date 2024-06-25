@@ -25,12 +25,10 @@ INSERT INTO OCCUPATIONS (Name, Occupation) VALUES
 ('Ketty', 'Professor'),
   ('Maria', 'Singer');
 
--- Query to pivot the OCCUPATIONS table
+
+
 SELECT
-    MAX(CASE WHEN Occupation = 'Doctor' THEN Name ELSE NULL END) AS Doctor,
-    MAX(CASE WHEN Occupation = 'Professor' THEN Name ELSE NULL END) AS Professor,
-    MAX(CASE WHEN Occupation = 'Singer' THEN Name ELSE NULL END) AS Singer,
-    MAX(CASE WHEN Occupation = 'Actor' THEN Name ELSE NULL END) AS Actor
+  Name
 FROM
     OCCUPATIONS
 GROUP BY
