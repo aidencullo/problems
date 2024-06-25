@@ -19,12 +19,5 @@ class Solution:
             return tree_sum
         tree_sums = defaultdict(int)
         dfs(root)
-        max_freq = float('-inf')
-        res = []
-        for tree_sum, freq in tree_sums.items():
-            if freq == max_freq:
-                res.append(tree_sum)
-            if freq > max_freq:
-                res = [tree_sum]
-                max_freq = freq
-        return res
+        max_freq = max(tree_sums.values(), default=0)
+        return [tree_sum for tree_sum, freq in tree_sums.items() if freq == max_freq]
