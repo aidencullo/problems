@@ -1,9 +1,12 @@
+from collections import defaultdict
+
+
 class Solution:
     def validPath(self, n: int, edges: list[list[int]], source: int, destination: int) -> bool:
-        graph = {}
+        graph = defaultdict(list)
         for u, v in edges:
-            graph[u] = graph.get(u, []) + [v]
-            graph[v] = graph.get(v, []) + [u]
+            graph[u].append(v)
+            graph[v].append(u)
         stack = [source]
         seen = set()
         while stack:
