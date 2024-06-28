@@ -16,14 +16,8 @@ INSERT INTO station (city) VALUES
 ('John'),
 ('John'),
 ('William');
-	
+
 SELECT
 ROUND(SUM(lat_n), 2) AS lat_n,
 ROUND(SUM(long_w), 2) AS long_n
-FROM station;
-
-
--- SELECT
--- ROUND(SUM(lat_n), 2) AS lat_n,
--- ROUND(SUM(long_w), 2) AS long_n
--- FROm station;
+FROm station;
