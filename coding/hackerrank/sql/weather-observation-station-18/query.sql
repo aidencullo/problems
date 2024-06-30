@@ -22,9 +22,9 @@ INSERT INTO STATION (ID, CITY, STATE, LAT_N, LONG_W) VALUES
 (4, 'Chicago', 'Illinois', 41.8781, -87.6298),
 (5, 'Houston', 'Texas', 29.7604, -95.3698);
 
-
 SELECT
-MAX(long_w) - MIN(long_w),
-MAX(lat_n) - MIN(lat_n)
+ROUND(
+SQRT(POW(MAX(lat_n) - MIN(lat_n), 2) + POW(MAX(long_w) - MIN(long_w), 2))
+, 4)
 FROM
 station
