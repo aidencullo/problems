@@ -8,7 +8,6 @@ DROP TABLE IF EXISTS Senior_Manager;
 DROP TABLE IF EXISTS Manager;
 DROP TABLE IF EXISTS Employee;
 
-
 -- Create Company Table
 CREATE TABLE Company (
     company_code VARCHAR(10),
@@ -81,16 +80,10 @@ INSERT INTO Employee (employee_code, manager_code, senior_manager_code, lead_man
 SELECT
 c.company_code,
 c.founder,
-COUNT(DISTINCT e.lead_manager_code) AS total_lead_managers,
-COUNT(DISTINCT e.senior_manager_code) AS total_senior_managers,
-COUNT(DISTINCT e.manager_code) AS total_managers,
-COUNT(DISTINCT e.employee_code) AS total_employees
+(SELECT COUNT(DISTINCT lead_manager_code) FROM Lead_Manager WHERE company_code = c.company_code) AS total_lead_managers,
+(SELECT COUNT(DISTINCT senior_manager_code) FROM Senior_Manager WHERE company_code = c.company_code) AS total_senior_managers,
+(SELECT COUNT(DISTINCT manager_code) FROM Manager WHERE company_code = c.company_code) AS total_managers,
+(SELECT COUNT(DISTINCT employee_code) FROM Employee WHERE company_code = c.company_code) AS total_employees
 FROM
 Company c
-JOIN
-Employee e
-ON
-c.company_code = e.company_code
-GROUP BY
-c.company_code,
-c.founder
+ORDER BY c.company_code;
