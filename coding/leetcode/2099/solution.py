@@ -1,15 +1,7 @@
-# time complexity: O(nlogn)
-# space complexity: O(n)
-
-
-import heapq
-
-
 class Solution:
-    def maxSubsequence(self, nums: list[int], k: int) -> list[int]:
-        heap = []
-        for i, el in enumerate(nums):
-            heapq.heappush(heap, (el, i))
-            if len(heap) > k:
-                heapq.heappop(heap)
-        return [el for el, i in sorted(heap, key=lambda x: x[1])]
+    def maxSubsequence(self, nums: List[int], k: int) -> List[int]:
+        d = list(enumerate(nums))
+        d.sort(key=lambda x: x[1])
+        d = d[-k:]
+        d.sort(key=lambda x: x[0])
+        return [y for x, y in d]
