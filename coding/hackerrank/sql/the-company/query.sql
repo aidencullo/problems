@@ -81,24 +81,12 @@ INSERT INTO Employee (employee_code, manager_code, senior_manager_code, lead_man
 SELECT
 c.company_code,
 c.founder,
-COUNT(DISTINCT lm.lead_manager_code) AS total_lead_managers,
-COUNT(DISTINCT sm.senior_manager_code) AS total_senior_managers,
-COUNT(DISTINCT m.manager_code) AS total_managers,
+COUNT(DISTINCT e.lead_manager_code) AS total_lead_managers,
+COUNT(DISTINCT e.senior_manager_code) AS total_senior_managers,
+COUNT(DISTINCT e.manager_code) AS total_managers,
 COUNT(DISTINCT e.employee_code) AS total_employees
 FROM
 Company c
-JOIN
-Lead_Manager lm
-ON
-c.company_code = lm.company_code
-JOIN
-Senior_Manager sm
-ON
-c.company_code = sm.company_code
-JOIN
-Manager m
-ON
-c.company_code = m.company_code
 JOIN
 Employee e
 ON
