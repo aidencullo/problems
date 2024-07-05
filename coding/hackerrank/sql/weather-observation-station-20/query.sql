@@ -27,20 +27,18 @@ INSERT INTO STATION (ID, CITY, STATE, LAT_N, LONG_W) VALUES
 (9, 'San Diego', 'California', 32.7157, -117.1611),
 (10, 'Dallas', 'Texas', 32.7767, -96.7970);
 
-SELECT
-*
-FROM
-STATION
-ORDER BY
-LAT_N;
-
-SELECT
-ROUND(AVG(a), 4)
-FROM
-(select lat_n a, row_number() over (order by lat_n) b, count(ID) over () c from station) mb
-WHERE
-mb.b = (mb.c + 1) / 2
-OR
-mb.b = (mb.c) / 2
-OR
-mb.b = (mb.c + 2) / 2;
+select truncate((SELECT avg(t1.LAT_N) as median_val FROM (
+SELECT @rownum:=@rownum+1 as `row_number`, d.LAT_N
+  FROM station d,  (SELECT @rownum:=0) r
+  WHERE 1
+  -- put some where clause here
+  ORDER BY d.LAT_N
+) as t1, 
+(
+  SELECT count(*) as total_rows
+  FROM station d
+  WHERE 1
+  -- put same where clause here
+) as t2
+WHERE 1
+AND t1.row_number in ( floor((total_rows+1)/2), floor((total_rows+2)/2) )),4);
