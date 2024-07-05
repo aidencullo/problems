@@ -2,9 +2,7 @@ class Solution:
     def maxSubsequence(self, nums: List[int], k: int) -> List[int]:
         heap = [-x for x in nums]
         heapq.heapify(heap)
-        max_subarray = []
-        for i in range(k):
-            max_subarray.append(heapq.heappop(heap))
+        max_subarray = heapq.nsmallest(k, heap)
         max_subarray = [-x for x in max_subarray]
         hash_map = Counter(max_subarray)
         res = []
