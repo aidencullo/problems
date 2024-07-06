@@ -1,9 +1,8 @@
-from collections import Counter
-
 class Solution:
     def countKDifference(self, nums: List[int], k: int) -> int:
-        counter = Counter(nums)
         total = 0
-        for num in nums:
-            total += counter[num - k]
+        for x in nums:
+            for y in nums:
+                if x - y == k:
+                    total += 1
         return total
