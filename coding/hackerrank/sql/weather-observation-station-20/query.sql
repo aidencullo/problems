@@ -28,20 +28,12 @@ INSERT INTO STATION (ID, CITY, STATE, LAT_N, LONG_W) VALUES
 (10, 'Dallas', 'Texas', 32.7767, -96.7970);
 
 SELECT
-ROW_NUMBER() OVER (),
-lat_n
-FROM
-STATION
-ORDER BY
-lat_n;
-
-SELECT
-lat_n, b.bb
+ROUND(AVG(lat_n), 4)
 FROM
 (
 SELECT
 lat_n,
-ROW_NUMBER() OVER() AS bb
+ROW_NUMBER() OVER(ORDER BY lat_n) AS bb
 FROM
 STATION
 ) b
