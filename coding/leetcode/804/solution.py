@@ -1,12 +1,11 @@
 class Solution:
     def uniqueMorseRepresentations(self, words: List[str]) -> int:
-        def get_morse(letter):
-            return morse[ord(letter) - 97]
         morse = [".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."]
+        alphabet = 'abcdefghijklmnopqrstuvwxyz'
         transformations = set()
         for word in words:
             transformation = []
             for letter in word:
-                transformation.append(get_morse(letter))
+                transformation.append(morse[alphabet.index(letter)])
             transformations.add(''.join(transformation))
         return len(transformations)
