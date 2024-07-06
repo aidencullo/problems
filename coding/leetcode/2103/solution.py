@@ -1,4 +1,5 @@
 from itertools import zip_longest
+from collections import defaultdict
 
 
 def grouper(iterable, n, fillvalue=None):
@@ -9,7 +10,7 @@ def grouper(iterable, n, fillvalue=None):
 
 class Solution:
     def countPoints(self, rings: str) -> int:
-        rods = [set() for _ in range(10)]
+        rods = defaultdict(set)
         for color, ring in grouper(rings, 2):
-            rods[int(ring)].add(color)
-        return sum(1 for rod in rods if len(rod) == 3)
+            rods[ring].add(color)
+        return sum(1 for rod in rods if len(rods[rod]) == 3)
