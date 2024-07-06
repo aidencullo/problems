@@ -44,21 +44,21 @@ INSERT INTO Submissions (submission_id, hacker_id, challenge_id, score) VALUES
 (9, 80305, 19797, 67),
 (10, 49438, 19797, 43);
 
-     
+WITH sub AS (
 SELECT
-h.hacker_id,
-name,
-SUM(score)
+hacker_id,
+challenge_id,
+MAX(score) AS max_score
+FROM
+submissions
+GROUP BY
+hacker_id, challenge_id
+)
+SELECT
+*
 FROM
 hackers h
 JOIN
-submissions s
+sub s
 ON
-h.hacker_id = s.hacker_id
-GROUP BY
-h.hacker_id
-HAVING
-SUM(score) > 0
-ORDER BY
-SUM(score) DESC,
-h.hacker_id ASC;
+h.hacker_id = s.hacker_id;
