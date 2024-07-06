@@ -1,43 +1,64 @@
-CREATE DATABASE IF NOT EXISTS TestDB;
+DROP DATABASE IF EXISTS HackerRank;
+CREATE DATABASE HackerRank;
+USE HackerRank;
 
-USE TestDB;
+-- Drop the tables if they already exist
+DROP TABLE IF EXISTS Submissions;
+DROP TABLE IF EXISTS Hackers;
 
-DROP TABLE IF EXISTS station;
-
-
--- Create the STATION table
-CREATE TABLE STATION (
-    ID INT PRIMARY KEY,
-    CITY VARCHAR(50),
-    STATE VARCHAR(50),
-    LAT_N FLOAT,
-    LONG_W FLOAT
+-- Create the Hackers table
+CREATE TABLE Hackers (
+    hacker_id INT PRIMARY KEY,
+    name VARCHAR(100)
 );
 
--- Insert sample data into the STATION table
-INSERT INTO STATION (ID, CITY, STATE, LAT_N, LONG_W) VALUES
-(1, 'San Francisco', 'California', 37.7749, -122.4194),
-(2, 'Los Angeles', 'California', 34.0522, -118.2437),
-(3, 'New York', 'New York', 40.7128, -74.0060),
-(4, 'Chicago', 'Illinois', 41.8781, -87.6298),
-(5, 'Houston', 'Texas', 29.7604, -95.3698),
-(6, 'Phoenix', 'Arizona', 33.4484, -112.0740),
-(7, 'Philadelphia', 'Pennsylvania', 39.9526, -75.1652),
-(8, 'San Antonio', 'Texas', 29.4241, -98.4936),
-(9, 'San Diego', 'California', 32.7157, -117.1611),
-(10, 'Dallas', 'Texas', 32.7767, -96.7970);
+-- Create the Submissions table
+CREATE TABLE Submissions (
+    submission_id INT PRIMARY KEY,
+    hacker_id INT,
+    challenge_id INT,
+    score INT,
+    FOREIGN KEY (hacker_id) REFERENCES Hackers(hacker_id)
+);
 
+-- Insert data into the Hackers table
+INSERT INTO Hackers (hacker_id, name) VALUES 
+(4071, 'Rose'),
+(74842, 'Lisa'),
+(84072, 'Bonnie'),
+(4806, 'Angela'),
+(26071, 'Frank'),
+(80305, 'Kimberly'),
+(49438, 'Patrick');
+
+-- Insert data into the Submissions table
+INSERT INTO Submissions (submission_id, hacker_id, challenge_id, score) VALUES 
+(1, 4071, 19797, 100),
+(2, 4071, 49593, 91),
+(3, 74842, 19797, 90),
+(4, 74842, 63132, 84),
+(5, 84072, 49593, 100),
+(6, 84072, 63132, 0),
+(7, 4806, 49593, 89),
+(8, 26071, 19797, 85),
+(9, 80305, 19797, 67),
+(10, 49438, 19797, 43);
+
+     
 SELECT
-ROUND(AVG(lat_n), 4)
+h.hacker_id,
+name,
+SUM(score)
 FROM
-(
-SELECT
-lat_n,
-ROW_NUMBER() OVER(ORDER BY lat_n) AS bb
-FROM
-STATION
-) b
-WHERE
-b.bb = (SELECT FLOOR((COUNT(*) + 1) / 2) FROM STATION)
-OR
-b.bb = (SELECT CEIL((COUNT(*) + 1) / 2) FROM STATION);
+hackers h
+JOIN
+submissions s
+ON
+h.hacker_id = s.hacker_id
+GROUP BY
+h.hacker_id
+HAVING
+SUM(score) > 0
+ORDER BY
+SUM(score) DESC,
+h.hacker_id ASC;
