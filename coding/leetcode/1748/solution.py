@@ -1,9 +1,6 @@
+from collections import Counter
+
 class Solution:
-    def sumOfUnique(self, nums: List[int]) -> int:
-        dup = set()
-        seen = set()
-        for num in nums:
-            if num in seen:
-                dup.add(num)
-            seen.add(num)
-        return sum(seen - dup)
+    def sumOfUnique(self, nums: list[int]) -> int:
+        frequencies = Counter(nums)
+        return sum(val for val, freq in frequencies.items() if freq == 1)
