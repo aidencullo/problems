@@ -1,8 +1,12 @@
+from collections import defaultdict
+
 class Solution:
     def countCompleteDayPairs(self, hours: list[int]) -> int:
         total = 0
-        for i in range(len(hours)):
-            for j in range(i + 1, len(hours)):
-                if (hours[i] + hours[j]) % 24 == 0:
-                    total += 1
+        seen = defaultdict(int)
+        for hour in hours:
+            target = (24 - (hour % 24)) % 24
+            if target in seen:
+                total += seen[target]
+            seen[hour % 24] += 1
         return total
