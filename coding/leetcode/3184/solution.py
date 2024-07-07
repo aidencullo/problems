@@ -5,7 +5,7 @@ class Solution:
         total = 0
         seen = defaultdict(int)
         for hour in hours:
-            target = (24 - (hour % 24)) % 24
+            target = (24 - hour) % 24
             if target in seen:
                 total += seen[target]
             seen[hour % 24] += 1
