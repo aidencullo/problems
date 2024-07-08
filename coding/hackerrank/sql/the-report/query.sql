@@ -1,4 +1,4 @@
-
+DROP DATABASE IF EXISTS School;
 CREATE DATABASE School;
 USE School;
 
@@ -38,6 +38,22 @@ INSERT INTO Grades (Grade, Min_Mark, Max_Mark) VALUES
 (2, 10, 19),
 (1, 0, 9);
 
--- Verify the data
-SELECT * FROM Students;
-SELECT * FROM Grades;
+    
+SELECT
+CASE
+WHEN g.grade < 8 THEN NULL
+ELSE s.name
+END,
+g.grade,
+s.marks
+FROM
+Students s
+JOIN
+Grades g
+ON
+s.marks >= g.min_mark
+AND
+s.marks <= g.max_mark
+ORDER BY
+g.grade DESC,
+s.name;
