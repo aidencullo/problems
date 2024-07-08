@@ -40,20 +40,13 @@ INSERT INTO Grades (Grade, Min_Mark, Max_Mark) VALUES
 
     
 SELECT
-CASE
-WHEN g.grade < 8 THEN NULL
-ELSE s.name
-END,
+IF (grade < 8, NULL, name),
 g.grade,
 s.marks
 FROM
-Students s
-JOIN
-Grades g
-ON
-s.marks >= g.min_mark
-AND
-s.marks <= g.max_mark
+(
+SELECT 
+)
 ORDER BY
 g.grade DESC,
 s.name;
