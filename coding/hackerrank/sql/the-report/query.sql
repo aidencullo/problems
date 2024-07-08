@@ -1,46 +1,43 @@
-CREATE DATABASE IF NOT EXISTS TestDB;
 
-USE TestDB;
-
-DROP TABLE IF EXISTS CITY;
-DROP TABLE IF EXISTS COUNTRY;
-
+CREATE DATABASE School;
+USE School;
 
 -- Create the Students table
 CREATE TABLE Students (
     ID INT PRIMARY KEY,
-    Name VARCHAR(50),
+    Name VARCHAR(100),
     Marks INT
 );
 
 -- Create the Grades table
 CREATE TABLE Grades (
-    ID INT PRIMARY KEY,
-    Grade INT
+    Grade INT,
+    Min_Mark INT,
+    Max_Mark INT
 );
 
--- Insert sample data into the Students table
+-- Insert sample data into Students table
 INSERT INTO Students (ID, Name, Marks) VALUES
-(1, 'Maria', 99),
-(2, 'Jane', 81),
-(3, 'Julia', 88),
-(4, 'Scarlet', 78),
-(5, 'Lara', 72),
-(6, 'John', 63),
-(7, 'Eve', 69);
+(1, 'Julia', 88),
+(2, 'Scarlet', 78),
+(3, 'Jane', 81),
+(4, 'Maria', 99),
+(5, 'Tom', 63),
+(6, 'Jerry', 68);
 
--- Insert sample data into the Grades table
-INSERT INTO Grades (ID, Grade) VALUES
-(1, 10),
-(2, 9),
-(3, 9),
-(4, 8),
-(5, 7),
-(6, 7),
-(7, 6);
+-- Insert sample data into Grades table
+INSERT INTO Grades (Grade, Min_Mark, Max_Mark) VALUES
+(10, 90, 100),
+(9, 80, 89),
+(8, 70, 79),
+(7, 60, 69),
+(6, 50, 59),
+(5, 40, 49),
+(4, 30, 39),
+(3, 20, 29),
+(2, 10, 19),
+(1, 0, 9);
 
-SELECT
-*
-FROM
-Students
-JOIN
+-- Verify the data
+SELECT * FROM Students;
+SELECT * FROM Grades;
