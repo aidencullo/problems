@@ -38,15 +38,17 @@ INSERT INTO Grades (Grade, Min_Mark, Max_Mark) VALUES
 (2, 10, 19),
 (1, 0, 9);
 
-    
 SELECT
 IF (grade < 8, NULL, name),
-g.grade,
-s.marks
+grade,
+marks
 FROM
-(
-SELECT 
-)
+(SELECT
+name,
+(SELECT grade FROM grades WHERE min_mark <= marks AND max_mark >= marks) AS grade,
+marks
+FROM
+Students
 ORDER BY
-g.grade DESC,
-s.name;
+grade DESC,
+name) AS s

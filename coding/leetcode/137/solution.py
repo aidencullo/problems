@@ -6,9 +6,5 @@ class Solution:
                 bits[i] += num & 1
                 num >>= 1
         bits_mod = [bit % 3 for bit in bits]
-        total = 0
-        for i in range(32):
-            total |= bits_mod[i]
-            total <<= 1
-        print(total)
-
+        b = ''.join(list(map(str, bits_mod)))
+        return int(b, 2)
