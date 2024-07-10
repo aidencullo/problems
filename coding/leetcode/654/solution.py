@@ -10,14 +10,11 @@ class TreeNode:
 
 class Solution:
     def constructMaximumBinaryTree(self, nums: list[int]) -> Optional[TreeNode]:
-        def helper(low: int, high: int):
-            if low > high:
-                return
-            cur_arr = nums[low: high + 1]
-            max_val = max(cur_arr)
-            max_idx = low + cur_arr.index(max_val)
-            node = TreeNode(max_val)
-            node.left = helper(low, max_idx - 1)
-            node.right = helper(max_idx + 1, high)
-            return node
-        return helper(0, len(nums) - 1)
+        if not nums:
+            return None
+        _max = max(nums)
+        _idx = nums.index(_max)
+        node = TreeNode(_max)
+        node.left = self.constructMaximumBinaryTree(nums[:_idx])
+        node.right = self.constructMaximumBinaryTree(nums[_idx + 1:])
+        return node

@@ -7,7 +7,6 @@ from solution import Solution, TreeNode
 ])
 def test_solution(test_input, expected):
     result = Solution().constructMaximumBinaryTree(*test_input)
-    print_tree(result)
     assert compare_tree(Solution().constructMaximumBinaryTree(*test_input), expected)
 
 def compare_tree(t1, t2):
