@@ -1,16 +1,15 @@
-# time: O(n^2)
-# space: O(n)
-
-from typing import List
-import numpy as np
-
-
 class Solution:
-    def lengthOfLIS(self, nums: List[int]) -> int:
-        n = len(nums)
-        dp = [1] * n
-        for i in range(1, n):
-            for j in range(i):
-                if nums[j] < nums[i]:
-                    dp[i] = max(dp[i], dp[j] + 1)
-        return max(dp)
+    def lengthOfLIS(self, nums: list[int]) -> int:
+        def backtrack(i: int, path: list[int]):
+            if i == len(nums):
+                nonlocal LIS
+                LIS = max(LIS, len(path))
+                return
+            if not path or path[-1] < nums[i]:
+                path.append(nums[i])
+                backtrack(i + 1, path)
+                path.pop()
+            backtrack(i + 1, path)
+        LIS = 0
+        backtrack(0, [])
+        return LIS
