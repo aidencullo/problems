@@ -1,13 +1,9 @@
 class Solution:
     def lengthOfLIS(self, nums: list[int]) -> int:
-        def backtrack(i: int, path: list[int]):
-            if i == len(nums):
-                nonlocal LIS
-                LIS = max(LIS, len(path))
-                return
-            if not path or path[-1] < nums[i]:
-                backtrack(i + 1, path + [nums[i]])
-            backtrack(i + 1, path)
-        LIS = 0
-        backtrack(0, [])
-        return LIS
+        n = len(nums)
+        dp = [1] * n
+        for i in range(n):
+            for j in range(i):
+                if nums[i] > nums[j]:
+                    dp[i] = max(dp[i], dp[j] + 1)
+        return max(dp)
