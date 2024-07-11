@@ -1,9 +1,21 @@
 class Solution:
     def lengthOfLIS(self, nums: list[int]) -> int:
-        n = len(nums)
-        dp = [1] * n
-        for i in range(n):
-            for j in range(i):
-                if nums[i] > nums[j]:
-                    dp[i] = max(dp[i], dp[j] + 1)
-        return max(dp)
+        def search(arr, target):
+            left, right = 0, len(arr) - 1
+            while left <= right:
+                mid = (left + right) // 2
+                if arr[mid] == target:
+                    return mid
+                elif arr[mid] < target:
+                    left = mid + 1
+                else:
+                    right = mid - 1
+            return left
+        buckets = []
+        for num in nums:
+            idx = search(buckets, num)
+            if idx == len(buckets):
+                buckets.append(num)
+            else:
+                buckets[idx] = num
+        return len(buckets)
