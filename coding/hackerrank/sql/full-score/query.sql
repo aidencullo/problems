@@ -76,29 +76,73 @@ INSERT INTO Submissions (submission_id, hacker_id, challenge_id, score) VALUES
 (11, 54321, 12356, 70),
 (12, 54321, 23467, 50);
 
+-- SELECT
+-- h.hacker_id,
+-- h.name
+-- FROM
+-- (
+-- SELECT
+-- s.hacker_id
+-- FROM
+-- Submissions s
+-- JOIN
+-- Challenges c
+-- ON
+-- s.challenge_id = c.challenge_id
+-- JOIN
+-- Difficulty d
+-- ON
+-- c.difficulty_level = d.difficulty_level
+-- JOIN
+-- Hackers h
+-- ON
+-- s.hacker_id = h.hacker_id
+-- WHERE
+-- d.score = s.score
+-- GROUP BY
+-- s.hacker_id
+-- HAVING
+-- COUNT(*) > 1
+-- ORDER BY
+-- COUNT(*) DESC,
+-- s.hacker_id
+-- ) AS leaderboard
+-- JOIN
+-- Hackers h
+-- ON
+-- leaderboard.hacker_id = h.hacker_id;
+
+WITH full_scores AS (
+    SELECT
+	s.hacker_id,
+	COUNT(*) AS num_full_scores
+    FROM
+	Submissions s
+    JOIN
+	Challenges c
+    ON
+	s.challenge_id = c.challenge_id
+    JOIN
+	Difficulty d
+    ON
+	c.difficulty_level = d.difficulty_level
+    WHERE
+	s.score = d.score
+    GROUP BY
+	s.hacker_id
+    HAVING
+        COUNT(*) > 1
+)
+
 SELECT
-s.hacker_id,
-h.name
+    h.hacker_id,
+    h.name
 FROM
-Submissions s
-JOIN
-Challenges c
-ON
-s.challenge_id = c.challenge_id
-JOIN
-Difficulty d
-ON
-c.difficulty_level = d.difficulty_level
+    full_scores f
 JOIN
 Hackers h
 ON
-s.hacker_id = h.hacker_id
-WHERE
-d.score = s.score
-GROUP BY
-s.hacker_id
-HAVING
-COUNT(*) > 1
+f.hacker_id = h.hacker_id
 ORDER BY
-COUNT(*) DESC,
-s.hacker_id
+f.num_full_scores DESC,
+    h.hacker_id;
