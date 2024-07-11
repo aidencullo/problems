@@ -42,10 +42,14 @@ INSERT INTO Orders (Number, order_date, cust_id, salesperson_id, Amount) VALUES
 
 
 SELECT
-    name,
-    (SELECT COUNT(*) FROM Orders o WHERE s.id = o.salesperson_id) AS num_orders
+    s.name
 FROM
     Salesperson s
+JOIN
+    Orders o
+ON
+    s.id = o.salesperson_id
+GROUP BY
+    s.id
 HAVING
-    num_orders >= 2
-
+    COUNT(*) > 1
