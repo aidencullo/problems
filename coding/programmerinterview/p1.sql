@@ -41,15 +41,10 @@ INSERT INTO Orders (Number, order_date, cust_id, salesperson_id, Amount) VALUES
 (70, '1998-05-06', 9, 7, 150);
 
 
-SELECT
-    s.name
-FROM
-    Salesperson s
-JOIN
-    Orders o
-ON
-    s.id = o.salesperson_id
-GROUP BY
-    s.id
-HAVING
-    COUNT(*) > 1
+
+SELECT MAX(Name) AS Name, COUNT( salesperson_id ) AS Orders
+FROM Orders, Salesperson
+WHERE Orders.salesperson_id = Salesperson.ID
+GROUP BY salesperson_id, Name                  
+-- we added the name column to the group by, and now it works!
+HAVING COUNT( salesperson_id ) >1
