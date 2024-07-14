@@ -1,20 +1,15 @@
 class Solution:
     def findNumberOfLIS(self, nums: list[int]) -> int:
-        def dfs(i, path_len, prev):
-            if i == len(nums):
-                if path_len > self.LIS:
-                    self.count = 1
-                    self.LIS = path_len
-                elif path_len == self.LIS:
-                    self.count += 1
-                return
-            if i == 0:
-                dfs(i + 1, 1, nums[i])
-            if i != 0 and nums[i] > prev:
-                dfs(i + 1, path_len + 1, nums[i])
-            dfs(i + 1, path_len, prev)
-
-        self.count = 0
-        self.LIS = 0
-        dfs(0, 0, float("-inf"))
-        return self.count
+        n = len(nums)
+        dp = [1] * n
+        count = [1] * n
+        for i in range(n):
+            for j in range(i):
+                if nums[i] > nums[j]:
+                    if dp[j] + 1 > dp[i]:
+                        dp[i] = dp[j] + 1
+                        count[i] = count[j]
+                    elif dp[j] + 1 == dp[i]:
+                        count[i] += count[j]
+        max_length = max(dp)
+        return sum(count[i] for i, val in enumerate(dp) if val == max_length)
