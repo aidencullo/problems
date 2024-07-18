@@ -1,42 +1,37 @@
+-- Example task: Create a trigger that logs INSERT operations on an orders table to a log table.
+
 DROP DATABASE IF EXISTS company;
 CREATE DATABASE company;
 USE company;
 
-
--- Create the log table
-CREATE TABLE log (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    message VARCHAR(255),
-    log_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE orders(
+order_id INT PRIMARY KEY AUTO_INCREMENT,
+price INT
 );
 
-CREATE TABLE employees (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100),
-    salary DECIMAL(10, 2)
+CREATE TABLE log(
+id INT PRIMARY KEY AUTO_INCREMENT,
+message TEXT
 );
 
--- Create the trigger
 DELIMITER //
 
-CREATE TRIGGER after_insert_employee
-AFTER UPDATE ON employees
+CREATE TRIGGER after_insert_orders
+AFTER INSERT ON orders
 FOR EACH ROW
 BEGIN
     INSERT INTO log (message)
-    VALUES ('A new employee has been added.');
+    VALUES ('New order was inserted');
 END;
 
 //
 
 DELIMITER ;
 
-INSERT INTO employees (name, salary)
-VALUES ('John Doe', 1000),
-       ('Jane Doe', 1500),
-       ('Jim Doe', 2000);
-
-UPDATE employees
-SET salary = 2500;
+INSERT INTO orders (price)
+VALUES
+(100),
+(200),
+(300);
 
 SELECT * FROM log;
