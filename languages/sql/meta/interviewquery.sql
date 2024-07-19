@@ -4,80 +4,45 @@ DROP DATABASE IF EXISTS company;
 CREATE DATABASE company;
 USE company;
 
-CREATE TABLE users(
-id INT PRIMARY KEY AUTO_INCREMENT,
-name TEXT,
-created_at DATE,
-neighborhood_id INT,
-date DATETIME,
-mail TEXT
+
+-- Create the 'events' table
+CREATE TABLE events (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    user_id INTEGER NOT NULL,
+    created_at DATETIME NOT NULL,
+    action VARCHAR(20) NOT NULL,
+    url VARCHAR(255),
+    platform VARCHAR(255)
 );
 
-CREATE TABLE comments(
-id INT PRIMARY KEY AUTO_INCREMENT,
-user_id INT,
-body VARCHAR(255),
-created_at DATETIME
-);
+-- Insert sample data into the 'events' table
+INSERT INTO events (user_id, created_at, action, url, platform)
+VALUES
+    (123, '2020-01-01 08:30:00', 'post_enter', 'http://example.com/post1', 'web'),
+    (123, '2020-01-01 09:00:00', 'post_submit', 'http://example.com/post1', 'web'),
+    (456, '2020-01-02 10:00:00', 'post_enter', 'http://example.com/post2', 'mobile'),
+    (456, '2020-01-02 10:30:00', 'post_canceled', 'http://example.com/post2', 'mobile'),
+    (789, '2020-01-03 11:00:00', 'post_enter', 'http://example.com/post3', 'web'),
+    (789, '2020-01-03 11:15:00', 'post_submit', 'http://example.com/post3', 'web');
 
--- Insert sample data into users table
-INSERT INTO users (name, created_at, neighborhood_id, mail) VALUES
-('Alice', '2019-12-15 08:30:00', 1, 'alice@example.com'),
-('Bob', '2019-11-20 09:00:00', 2, 'bob@example.com'),
-('Carol', '2020-01-05 10:00:00', 3, 'carol@example.com');
-
--- Insert sample data into comments table
-INSERT INTO comments (user_id, body, created_at) VALUES
-(1, 'Great post!', '2020-01-10 08:30:00'),
-(1, 'Thanks for sharing!', '2020-01-15 09:00:00'),
-(2, 'Interesting read.', '2020-01-20 10:00:00'),
-(2, 'I agree!', '2020-01-21 11:00:00'),
-(3, 'Nice article.', '2020-01-07 12:00:00'),
-(3, 'Well written.', '2020-01-08 13:00:00'),
-(3, 'Enjoyed reading this.', '2020-01-09 14:00:00');
-
-WITH user_comments AS (
 SELECT
-c.user_id,
-COUNT(*) AS comment_count
+AVG(action) AS avg_action
 FROM
-comments c
+(SELECT
+CASE
+WHEN action = 'post_submit' THEN 1
+WHEN action = 'post_canceled' THEN 0
+END AS action
+FROM
+(SELECT
+action
+FROM
+events
 WHERE
-MONTH(c.created_at) = 1
+MONTH(created_at) = 1
 AND
-YEAR(c.created_at) = 2020
-GROUP BY
-c.user_id
-)
-
-SELECT
-comment_count,
-COUNT(*) AS freq
-FROM
-user_comments u
-GROUP BY
-comment_count
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+YEAR(created_at) = 2020
+AND
+(action = 'post_submit'
+OR
+action = 'post_canceled')) AS results) AS results;
