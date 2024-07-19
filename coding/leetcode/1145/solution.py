@@ -12,8 +12,8 @@ class Solution:
             l = count_nodes(node.left)
             r = count_nodes(node.right)
             if node.val == x:
-                m = max(l, r, n - (l + r + 1))
-                self.winner = m > n - m                
+                if  l > n / 2 or r > n / 2 or n - (l + r  + 1) > n / 2:
+                    self.winner = True
             return 1 + l + r
 
         self.winner = False
