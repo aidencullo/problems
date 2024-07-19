@@ -32,12 +32,17 @@ INSERT INTO comments (user_id, body, created_at) VALUES
 (1, 'Thanks for sharing!', '2020-01-15 09:00:00'),
 (2, 'Interesting read.', '2020-01-20 10:00:00'),
 (2, 'I agree!', '2020-01-21 11:00:00'),
-(3, 'Nice article.', '2020-01-07 12:00:00');
-
+(3, 'Nice article.', '2020-01-07 12:00:00'),
+(3, 'Well written.', '2020-01-08 13:00:00'),
+(3, 'Enjoyed reading this.', '2020-01-09 14:00:00');
 
 SELECT
+comment_count AS comments_per_user,
+COUNT(*) AS frequency
+FROM (
+SELECT
 user_id,
-COUNT(*) AS num_comments
+COUNT(*) AS comment_count
 FROM
 users u
 JOIN
@@ -46,7 +51,56 @@ ON
 u.id = c.user_id
 WHERE
 MONTH(c.created_at) = 1
+AND
+YEAR(c.created_at) = 2020
 GROUP BY
 user_id
-HAVING
+) AS comment_counts
+GROUP BY
+comment_count;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT
+    comment_count AS comments_per_user,
+    COUNT(*) AS frequency
+FROM (
+    SELECT
+        user_id,
+        COUNT(*) AS comment_count
+    FROM
+        comments
+    WHERE
+        created_at >= '2020-01-01 00:00:00'
+        AND created_at < '2020-02-01 00:00:00'
+    GROUP BY
+        user_id
+) AS comment_counts
+GROUP BY
+    comment_count
+ORDER BY
+    comments_per_user;
