@@ -6,24 +6,16 @@
 
 class Solution:
     def btreeGameWinningMove(self, root: Optional[TreeNode], n: int, x: int) -> bool:
-        def populate(node, parent_count=0):
+        def count_nodes(node):
             if not node:
                 return 0
-            counts[node.val] = parent_count
-            l = populate(node.left)
-            r = populate(node.right, l + 1)
-            return l + r + 1
+            l = count_nodes(node.left)
+            r = count_nodes(node.right)
+            if node.val == x:
+                m = max(l, r, n - (l + r + 1))
+                self.winner = m > n - m                
+            return 1 + l + r
 
-        def populate(node, parent_count=0):
-            if not node:
-                return 0
-            if parent_count == 0:
-                parent_count = n - parent_count
-            counts[node.val] = 
-            r = populate(node.right)
-            l = populate(node.left, r + 1)
-            return l + r + 1
-        
-        counts = {}
-        populate(root)
-        print(counts)
+        self.winner = False
+        count_nodes(root)
+        return self.winner
