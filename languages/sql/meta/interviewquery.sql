@@ -26,23 +26,9 @@ VALUES
     (789, '2020-01-03 11:15:00', 'post_submit', 'http://example.com/post3', 'web');
 
 SELECT
-AVG(action) AS avg_action
-FROM
-(SELECT
-CASE
-WHEN action = 'post_submit' THEN 1
-WHEN action = 'post_canceled' THEN 0
-END AS action
-FROM
-(SELECT
-action
+    AVG(CASE
+    WHEN action = 'post_submit' THEN 1
+    WHEN action = 'post_canceled' THEN 0
+    END)
 FROM
 events
-WHERE
-MONTH(created_at) = 1
-AND
-YEAR(created_at) = 2020
-AND
-(action = 'post_submit'
-OR
-action = 'post_canceled')) AS results) AS results;
