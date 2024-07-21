@@ -27,7 +27,6 @@ def test_all_possible_fbt():
     # Test case 1
     n = 7
     result = sol.allPossibleFBT(n)
-    print(result)
     expected = [
         [0, 0, 0, None, None, 0, 0, None, None, 0, 0],
         [0, 0, 0, None, None, 0, 0, 0, 0],

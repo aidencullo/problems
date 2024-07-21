@@ -8,12 +8,14 @@ class TreeNode:
 
 class Solution:
     def allPossibleFBT(self, n: int) -> list[Optional[TreeNode]]:
+        if n == 1:
+            return [TreeNode()]
         trees = []
-        root = TreeNode(0)
         for i in range(1, n, 2):
             for left in self.allPossibleFBT(i):
                 for right in self.allPossibleFBT(n - 1 - i):
+                    root = TreeNode()
                     root.left = left
                     root.right = right
-                    tree.append(root)
+                    trees.append(root)
         return trees
