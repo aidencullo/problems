@@ -23,12 +23,21 @@ VALUES
     (456, '2020-01-02 10:00:00', 'post_enter', 'http://example.com/post2', 'mobile'),
     (456, '2020-01-02 10:30:00', 'post_canceled', 'http://example.com/post2', 'mobile'),
     (789, '2020-01-03 11:00:00', 'post_enter', 'http://example.com/post3', 'web'),
+    (789, '2020-01-03 11:00:00', 'post_enter', 'http://example.com/post3', 'web'),
     (789, '2020-01-03 11:15:00', 'post_submit', 'http://example.com/post3', 'web');
 
 SELECT
-    AVG(CASE
+    DAY(created_at) AS day,
+    COUNT(CASE
     WHEN action = 'post_submit' THEN 1
-    WHEN action = 'post_canceled' THEN 0
-    END)
+    END) / COUNT(CASE
+    WHEN action = 'post_enter' THEN 1
+    END) AS enter_count
 FROM
 events
+WHERE
+MONTH(created_at) = 1
+AND
+YEAR(created_at) = 2020
+GROUP BY
+DAY(created_at)
