@@ -27,17 +27,16 @@ VALUES
     (789, '2020-01-03 11:15:00', 'post_submit', 'http://example.com/post3', 'web');
 
 SELECT
-    DAY(created_at) AS day,
-    COUNT(CASE
-    WHEN action = 'post_submit' THEN 1
-    END) / COUNT(CASE
-    WHEN action = 'post_enter' THEN 1
-    END) AS enter_count
+date,
+total_posts_created / total_posts_entered AS posts_created_per_entered
 FROM
-events
-WHERE
-MONTH(created_at) = 1
-AND
-YEAR(created_at) = 2020
-GROUP BY
-DAY(created_at)
+(SELECT 
+    DATE(created_at) AS date,
+    COUNT(CASE WHEN action = 'post_enter' THEN 1 END) AS total_posts_entered,
+    COUNT(CASE WHEN action = 'post_submit' THEN 1 END) AS total_posts_created
+FROM 
+    events
+WHERE 
+    created_at BETWEEN '2020-01-01' AND '2020-01-31'
+GROUP BY 
+    DATE(created_at)) AS subquery
