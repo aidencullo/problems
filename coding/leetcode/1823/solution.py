@@ -1,8 +1,23 @@
+class ListNode:
+    def __init__(self, val=0):
+        self.val = val
+        self.next = None
+
 class Solution:
     def findTheWinner(self, n: int, k: int) -> int:
-        friends = list(range(1, n + 1))
-        current = 0
-        while len(friends) > 1:
-            current = (current + (k - 1)) % len(friends)
-            friends.pop(current)
-        return friends[0]
+        head = ListNode()
+        runner = head
+        for i in range(1, n + 1):
+            runner.next = ListNode(i)
+            runner = runner.next
+        runner.next = head.next
+        current = head
+        while head.next.next:
+            for i in range(k - 1):
+                if current.next:
+                    current = current.next
+                else:
+                    current = head.next
+            if not current.next.next
+            current.next = current.next.next
+        return head.next.val
