@@ -33,24 +33,22 @@ INSERT INTO page_likes (user_id, page_id) VALUES
 (2, 101),
 (2, 103),
 (3, 101),
+(3, 103),
 (3, 104),
 (4, 105),
 (5, 106);
 
-SELECT
-*
+SELECT DISTINCT
+    page_likes.page_id
 FROM
-friends f
+    friends
 JOIN
-page_likes p
-ON
-f.friend_id = p.user_id
+    page_likes
+    ON friends.friend_id = page_likes.user_id
+LEFT JOIN
+    page_likes user_likes
+    ON user_likes.page_id = page_likes.page_id
+    AND user_likes.user_id = friends.user_id
 WHERE
-p.page_id NOT IN (
-    SELECT
-    page_id
-    FROM
-    page_likes pp
-    WHERE
-    f.user_id = pp.user_id
-);
+    friends.user_id = 1
+    AND user_likes.page_id IS NULL;
