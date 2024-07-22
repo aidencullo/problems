@@ -40,10 +40,17 @@ INSERT INTO page_likes (user_id, page_id) VALUES
 SELECT
 *
 FROM
-friends
+friends f
 JOIN
-page_likes
+page_likes p
 ON
-friends.friend_id = page_likes.user_id
-AND
-friends.user_id <> page_likes.user_id;
+f.friend_id = p.user_id
+WHERE
+p.page_id NOT IN (
+    SELECT
+    page_id
+    FROM
+    page_likes pp
+    WHERE
+    f.user_id = pp.user_id
+);
