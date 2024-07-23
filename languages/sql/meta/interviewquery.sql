@@ -106,13 +106,24 @@ INSERT INTO employees (id, first_name, last_name, salary, department_id) VALUES
 (76, 'Willow', 'Walters', 105000, 5),
 (77, 'Xander', 'Xu', 98000, 5);
 
+WITH department_salaries AS (
 SELECT
-COUNT(CASE WHEN salary > 100000 THEN 1 ELSE NULL END) / COUNT(*) AS percentage_over_100k
-FROM
-employees
-GROUP BY
+department_id,
+COUNT(*) AS num_employees,
+COUNT(CASE WHEN salary > 100000 THEN 1 END) AS num_high_earners
+FROM employees
+GROUP BY department_id
+HAVING num_employees > 10
+),
+department_rank AS (
+SELECT
+department_id,
+(num_high_earners / num_employees) AS high_earner_percentage
+FROM department_salaries
+)
+
+SELECT
 department_id
-HAVING
-COUNT(*) > 5
-ORDER BY
-percentage_over_100k DESC;
+FROM department_rank
+ORDER BY high_earner_percentage DESC
+LIMIT 3;
