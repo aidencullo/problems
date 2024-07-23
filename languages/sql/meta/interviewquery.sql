@@ -49,7 +49,10 @@ INSERT INTO transactions (id, user_id, created_at, product_id, quantity) VALUES
 
 SELECT
     sex,
-    AVG(quantity * price) AS avg_transaction_amount
+    AVG(quantity * price) AS avg_transaction_amount,
+    COUNT(DISTINCT t.id) AS total_transactions,
+    COUNT(DISTINCT p.id) AS total_products_bought,
+    COUNT(DISTINCT u.id) AS total_users
 FROM
     transactions t
 JOIN
