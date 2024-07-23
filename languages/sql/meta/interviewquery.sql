@@ -2,57 +2,63 @@ DROP DATABASE IF EXISTS company;
 CREATE DATABASE company;
 USE company;
 
-
-
--- Create the friends table
-CREATE TABLE friends (
-    user_id INTEGER,
-    friend_id INTEGER
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY,
+    name VARCHAR(100),
+    sex VARCHAR(10)
 );
 
--- Create the page_likes table
-CREATE TABLE page_likes (
-    user_id INTEGER,
-    page_id INTEGER
+CREATE TABLE products (
+    id INTEGER PRIMARY KEY,
+    name VARCHAR(100),
+    price FLOAT
 );
 
--- Insert sample data into the friends table
-INSERT INTO friends (user_id, friend_id) VALUES
-(1, 2),
-(1, 3),
-(2, 3),
-(2, 4),
-(3, 4),
-(3, 5),
-(4, 5);
+CREATE TABLE transactions (
+    id INTEGER PRIMARY KEY,
+    user_id INTEGER,
+    created_at DATETIME,
+    product_id INTEGER,
+    quantity INTEGER,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
 
--- Insert sample data into the page_likes table
-INSERT INTO page_likes (user_id, page_id) VALUES
-(1, 101),
-(1, 102),
-(2, 101),
-(2, 103),
-(3, 101),
-(3, 103),
-(3, 104),
-(4, 105),
-(5, 106);
+-- Insert data into users table
+INSERT INTO users (id, name, sex) VALUES
+(1, 'Alice', 'Female'),
+(2, 'Bob', 'Male'),
+(3, 'Carol', 'Female'),
+(4, 'Dave', 'Male');
 
-SELECT DISTINCT
-page_likes.page_id
+-- Insert data into products table
+INSERT INTO products (id, name, price) VALUES
+(1, 'Product A', 10.0),
+(2, 'Product B', 20.0),
+(3, 'Product C', 30.0);
+
+-- Insert data into transactions table
+INSERT INTO transactions (id, user_id, created_at, product_id, quantity) VALUES
+(1, 1, '2023-01-01 10:00:00', 1, 2),  -- Alice bought 2 of Product A
+(2, 1, '2023-01-02 11:00:00', 2, 1),  -- Alice bought 1 of Product B
+(3, 2, '2023-01-03 12:00:00', 1, 1),  -- Bob bought 1 of Product A
+(4, 2, '2023-01-04 13:00:00', 3, 1),  -- Bob bought 1 of Product C
+(5, 3, '2023-01-05 14:00:00', 2, 2),  -- Carol bought 2 of Product B
+(6, 4, '2023-01-06 15:00:00', 1, 1),  -- Dave bought 1 of Product A
+(7, 4, '2023-01-07 16:00:00', 3, 1);  -- Dave bought 1 of Product C
+
+SELECT
+    sex,
+    AVG(quantity * price) AS avg_transaction_amount
 FROM
-friends
+    transactions t
 JOIN
-page_likes
+    products p
 ON
-friends.friend_id = page_likes.user_id
-LEFT JOIN
-page_likes user_likes
+    p.id = t.product_id
+JOIN
+    users u
 ON
-friends.user_id = user_likes.user_id
-AND
-page_likes.page_id = user_likes.page_id
-WHERE
-friends.user_id = 1
-AND
-user_likes.page_id IS NULL
+    u.id = t.user_id
+GROUP BY
+    sex;
