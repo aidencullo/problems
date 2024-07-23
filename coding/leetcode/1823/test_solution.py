@@ -9,3 +9,15 @@ def test_find_the_winner():
     result = sol.findTheWinner(n, k)
     expected = 3
     assert result == expected
+
+
+    
+def test_find_the_winner_alternative():
+    sol = Solution()
+
+    # Test case 1
+    n = 3
+    k = 1
+    result = sol.findTheWinner(n, k)
+    expected = 3
+    assert result == expected
