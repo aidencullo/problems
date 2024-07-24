@@ -26,7 +26,9 @@ INSERT INTO neighborhoods (id, name, city_id) VALUES
 (2, 'Uptown', 101),
 (3, 'Suburbia', 102),
 (4, 'Riverside', 103),
-(5, 'Lakeside', 104);
+(5, 'Lakeside', 104),
+(6, 'Mountainview', 104);
+
 
 -- Insert sample data into Users
 INSERT INTO users (id, name, neighborhood_id, created_at) VALUES
@@ -43,12 +45,9 @@ INSERT INTO users (id, name, neighborhood_id, created_at) VALUES
 
 
 SELECT
-    neighborhoods.name AS neighborhood_name,
-    COUNT(users.id) AS user_count
+    neighborhoods.name AS neighborhood_name
 FROM
     neighborhoods
 LEFT JOIN users ON neighborhoods.id = users.neighborhood_id
-GROUP BY
-    neighborhoods.name
-HAVING
-    COUNT(users.id) = 0
+WHERE
+    users.id IS NULL;
