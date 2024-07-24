@@ -140,25 +140,7 @@ VALUES
     (2, 1, 1006, 6, 1800.00, 1500.00, 100, '2023-06-20'),
     (3, 3, 1007, 7, 2500.00, 2200.00, 130, '2023-07-05');
 
-
-
-
-
-
--- code ----
-
-
-
-
 SELECT
-    media_type AS single_channel_media_type,
-    SUM(cost) AS total_cost
+media_type
 FROM
-    promotions
- WHERE
-   media_type NOT LIKE '%, %'
-GROUP BY
-    media_type
-ORDER BY
-    total_cost DESC
-LIMIT 5;
+promotions;
