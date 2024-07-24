@@ -6,8 +6,14 @@
 #         self.right = right
 class Solution:
     def bstFromPreorder(self, preorder: list[int]) -> Optional[TreeNode]:
+        if not preorder:
+            return None
         val = preorder.pop(0)
         root = TreeNode(val)
         i = 0
         n = len(preorder)
-        while i < n and preorder[i] < r
+        while i < n and preorder[i] < val:
+            i += 1
+        root.left = self.bstFromPreorder(preorder[:i])
+        root.right = self.bstFromPreorder(preorder[i:])
+        return root
