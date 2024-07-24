@@ -48,24 +48,90 @@
  -------------- PLEASE WRITE YOUR SQL SOLUTION BELOW THIS LINE ----------------
  */
 
+DROP DATABASE IF EXISTS testDb;
+CREATE DATABASE testDb;
+USE testDb;
+
+-- Create the tables
+CREATE TABLE products (
+    product_id INTEGER PRIMARY KEY,
+    product_class_id INTEGER,
+    brand_name VARCHAR(255),
+    product_name VARCHAR(255),
+    is_low_fat_flg TINYINT,
+    is_recyclable_flg TINYINT,
+    gross_weight DECIMAL,
+    net_weight DECIMAL
+);
+
+CREATE TABLE product_classes (
+    product_class_id INTEGER PRIMARY KEY,
+    product_subcategory VARCHAR(255),
+    product_category VARCHAR(255),
+    product_department VARCHAR(255),
+    product_family VARCHAR(255)
+);
+
+CREATE TABLE promotions (
+    promotion_id INTEGER PRIMARY KEY,
+    promotion_name VARCHAR(255),
+    media_type VARCHAR(255),
+    cost DECIMAL,
+    start_date DATE,
+    end_date DATE
+);
+
+CREATE TABLE sales (
+    product_id INTEGER,
+    store_id INTEGER,
+    customer_id INTEGER,
+    promotion_id INTEGER,
+    store_sales DECIMAL,
+    store_cost DECIMAL,
+    units_sold DECIMAL,
+    transaction_date DATE,
+    FOREIGN KEY (product_id) REFERENCES products(product_id),
+    FOREIGN KEY (promotion_id) REFERENCES promotions(promotion_id)
+);
+
+-- Insert sample data into product_classes
+INSERT INTO product_classes (product_class_id, product_subcategory, product_category, product_department, product_family)
+VALUES 
+(1, 'Dairy', 'Food', 'Grocery', 'Perishables'),
+(2, 'Beverages', 'Drinks', 'Grocery', 'Non-Perishables'),
+(3, 'Snacks', 'Food', 'Grocery', 'Non-Perishables');
+
+-- Insert sample data into products
+INSERT INTO products (product_id, product_class_id, brand_name, product_name, is_low_fat_flg, is_recyclable_flg, gross_weight, net_weight)
+VALUES 
+(1, 1, 'BrandA', 'Milk', 1, 1, 1.0, 0.9),
+(2, 2, 'BrandB', 'Juice', 0, 1, 1.5, 1.4),
+(3, 3, 'BrandC', 'Chips', 0, 0, 0.5, 0.4);
+
+-- Insert sample data into promotions
+INSERT INTO promotions (promotion_id, promotion_name, media_type, cost, start_date, end_date)
+VALUES 
+(1, 'PromoA', 'TV', 1000.0, '2024-01-01', '2024-01-10'),
+(2, 'PromoB', 'Online', 500.0, '2024-02-01', '2024-02-05'),
+(3, 'PromoC', 'Radio', 700.0, '2024-03-01', '2024-03-15');
+
+-- Insert sample data into sales
+INSERT INTO sales (product_id, store_id, customer_id, promotion_id, store_sales, store_cost, units_sold, transaction_date)
+VALUES 
+(1, 1, 1, 1, 10.0, 8.0, 1, '2024-01-01'), -- First day of PromoA
+(2, 1, 2, 1, 20.0, 16.0, 2, '2024-01-10'), -- Last day of PromoA
+(3, 2, 3, 1, 15.0, 12.0, 1.5, '2024-01-05'), -- During PromoA
+(1, 2, 4, 2, 12.0, 9.0, 1, '2024-02-01'), -- First day of PromoB
+(2, 2, 5, 2, 18.0, 14.0, 1.5, '2024-02-05'), -- Last day of PromoB
+(3, 1, 6, 2, 16.0, 13.0, 1.6, '2024-02-03');
 
 SELECT
-AVG(CASE WHEN transaction_date = end_date OR transaction_date = start_date THEN 100.00 ELSE 0 END) AS pct_of_transactions_on_first_or_last_day_of_valid_promotion
+100.0 * COUNT(CASE WHEN transaction_date = p.start_date OR transaction_date = p.end_date THEN 1 END) / COUNT(*) AS pct_of_transactions_on_first_or_last_day_of_valid_promotion
 FROM
 sales s
 JOIN
 promotions p
 ON
 s.promotion_id = p.promotion_id
-WHERE 
-transaction_date <= end_date
-AND
-transaction_date >= start_date;
-
-
-
-
-
-
-
-
+WHERE
+transaction_date >= start_date AND transaction_date <= end_date;
