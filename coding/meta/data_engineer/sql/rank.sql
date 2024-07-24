@@ -141,6 +141,15 @@ VALUES
     (3, 3, 1007, 7, 2500.00, 2200.00, 130, '2023-07-05');
 
 SELECT
-media_type
+media_type as single_channel_media_type,
+SUM(cost) as total_cost
 FROM
-promotions;
+promotions
+WHERE
+media_type NOT LIKE '%,%'
+GROUP BY
+media_type
+ORDER BY
+SUM(cost) DESC
+LIMIT
+5
