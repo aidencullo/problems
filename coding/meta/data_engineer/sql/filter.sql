@@ -131,4 +131,7 @@ VALUES
 
 
 
-
+SELECT
+	100 * AVG(CASE WHEN is_low_fat_flg AND is_recyclable_flg THEN 1 ELSE 0 END) AS pct_low_fat_and_recyclable
+FROM
+	products;
