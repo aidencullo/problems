@@ -11,9 +11,7 @@ class Solution:
         val = preorder.pop(0)
         root = TreeNode(val)
         i = 0
-        n = len(preorder)
-        while i < n and preorder[i] < val:
-            i += 1
+        i = bisect.bisect_right(preorder, val)
         root.left = self.bstFromPreorder(preorder[:i])
         root.right = self.bstFromPreorder(preorder[i:])
         return root
