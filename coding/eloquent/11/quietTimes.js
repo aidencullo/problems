@@ -438,12 +438,17 @@ var clipImages = [
 }))
 
 async function activityTable(day) {
-  let logFileList = await textFile("camera_logs.txt");
-  console.log(logFileList)
-  return Promise.resolve('testing')
+  const logFileList = await textFile("camera_logs.txt");
+  const dayLogFile = getDayLogFile(logFileList, day);
+  console.log(dayLogFile)
+}
+
+const getDayLogFile = (logFileList, day) => {
+  const exLogFile = logFileList.split('\n')[0]
+  const boolean = exLogFile.includes(`2023-09-`)
+  console.log(boolean)
+  // const logFile = logFileList.split('\n').filter(log => log.includes(`2021-09-${day}`));
+  // return logFile[0];
 }
 
 activityTable(1)
-  .then(table => console.log(table))
-  .then(table => console.log(table))
-  // .then(table => console.log(activityGraph(table)));
