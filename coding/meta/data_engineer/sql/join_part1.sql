@@ -53,41 +53,29 @@
  
  -------------- PLEASE WRITE YOUR SQL SOLUTION BELOW THIS LINE ----------------
  */
+
+
+
+
+
  
- 
-
-
-
-
-
-
-
  SELECT
  product_family,
  SUM(units_sold),
- SUM(CASE 
-     WHEN pr.promotion_id is NOT NULL THEN units_sold
-     ELSE 0.0
-     END) /
- SUM(CASE 
-     WHEN pr.promotion_id is NULL THEN units_sold
-     ELSE 0.0
-     END) AS ratio_units_sold_with_promo_to_sold_without_promo
+ SUM(CASE WHEN transaction_date BETWEEN start_date AND end_date THEN units_sold END)
  FROM
- products p
+ sales s
+ LEFT JOIN
+ promotions p
+ ON
+ s.promotion_id = p.promotion_id
+ JOIN
+ products pr
+ ON
+ s.product_id = pr.product_id
  JOIN
  product_classes pc
  ON
- p.product_class_id = pc.product_class_id
- JOIN
- sales s
- ON
- s.product_id = p.product_id
- LEFT JOIN
- promotions pr
- ON
- s.promotion_id = pr.promotion_id
- GROUP BY 
+ pr.product_class_id = pc.product_class_id
+ GROUP BY
  product_family
- ORDER BY
- SUM(units_sold);
