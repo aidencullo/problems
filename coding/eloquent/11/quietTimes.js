@@ -439,11 +439,11 @@ var clipImages = [
 
 async function activityTable(day) {
   let logFileList = await textFile("camera_logs.txt");
-  // Your code here
+  console.log(logFileList)
+  return Promise.resolve('testing')
 }
 
 activityTable(1)
-  .then(table => console.log(activityGraph(table)));
-
-
-
+  .then(table => console.log(table))
+  .then(table => console.log(table))
+  // .then(table => console.log(activityGraph(table)));
