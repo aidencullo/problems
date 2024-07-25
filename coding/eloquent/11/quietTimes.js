@@ -440,13 +440,24 @@ var clipImages = [
 async function activityTable(day) {
   const logFileList = await textFile("camera_logs.txt");
   const dayLogFile = getDayLogFile(logFileList, day);
-  console.log(dayLogFile)
+  const logFile = await textFile(dayLogFile);
+  const logData = logFile.split('\n')
+  const hours = {}
+  for (const data in logData) {
+    const date = new Date(data)
+    const hour = date.getHours()
+    hours[hour] = hours[hour] ? hours[hour] + 1 : 1
+  }
+  console.log(hours)
 }
 
 const getDayLogFile = (logFileList, day) => {
-  const exLogFile = logFileList.split('\n')[0]
-  const boolean = exLogFile.includes(`2023-09-`)
-  console.log(boolean)
+  for (const file of logFileList.split('\n')) {
+    cleanExLogFile = file.split('activity-')[1].split('.log')[0]
+    if (new Date(cleanExLogFile).getDay() === day) {
+      return file
+    }
+  }
   // const logFile = logFileList.split('\n').filter(log => log.includes(`2021-09-${day}`));
   // return logFile[0];
 }
