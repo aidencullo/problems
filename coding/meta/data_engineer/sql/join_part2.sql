@@ -47,38 +47,18 @@
 
  -------------- PLEASE WRITE YOUR SQL SOLUTION BELOW THIS LINE ----------------
  */
-
-
-
-
-
 SELECT
-AVG(CASE WHEN total_units_sold = 0 THEN 1 ELSE 0 END) * 100 AS pct_product_categories_never_sold
-FROM
-(SELECT
 product_category,
-COALESCE(SUM(units_sold), 0) AS total_units_sold
+COUNT(units_sold) AS total_units_sold
 FROM
 product_classes pc
 LEFT JOIN
 products p
 ON
-p.product_class_id = pc.product_class_id
+pc.product_class_id = p.product_class_id
 LEFT JOIN
 sales s
 ON
-s.product_id = p.product_id
-GROUP BY product_category)
-	 
-
-
-SELECT
-        (1.0 - COUNT(DISTINCT CASE WHEN s.product_id IS NOT NULL THEN pc.product_category END) * 1.0
-               / COUNT(DISTINCT pc.product_category)
-        ) * 100.0 AS pct_product_categories_never_sold
-FROM
-    product_classes pc
-LEFT JOIN
-    products p ON pc.product_class_id = p.product_class_id
-LEFT JOIN
-    sales s ON p.product_id = s.product_id;
+p.product_id = s.product_id
+GROUP BY
+product_category
