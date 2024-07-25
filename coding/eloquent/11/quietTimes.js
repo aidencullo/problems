@@ -443,12 +443,12 @@ async function activityTable(day) {
   const logFile = await textFile(dayLogFile);
   const logData = logFile.split('\n')
   const hours = {}
-  for (const data in logData) {
-    const date = new Date(data)
+  for (const data of logData) {
+    const date = new Date(parseInt(data))
     const hour = date.getHours()
     hours[hour] = hours[hour] ? hours[hour] + 1 : 1
   }
-  console.log(hours)
+  return hours
 }
 
 const getDayLogFile = (logFileList, day) => {
