@@ -55,31 +55,24 @@
  */
 
 
-
-
- SELECT
- product_family,
- SUM(units_sold),
- 1.0 * SUM(CASE
- WHEN transaction_date BETWEEN start_date AND end_date THEN units_sold
- END)/ SUM(CASE
- WHEN p.promotion_id IS NULL THEN units_sold
-  END) AS ratio_units_sold_with_promo_to_sold_without_promo
- FROM
- sales s
- LEFT JOIN
- promotions p
- ON
- s.promotion_id = p.promotion_id
- JOIN
- products pr
- ON
- s.product_id = pr.product_id
- JOIN
- product_classes pc
- ON
- pr.product_class_id = pc.product_class_id
- GROUP BY
- product_family
- ORDER BY
- SUM(units_sold) ASC
+SELECT
+    pc.product_family,
+    SUM(s.units_sold) AS total_units_sold,
+    SUM(CASE
+        WHEN s.transaction_date BETWEEN p.start_date AND p.end_date THEN s.units_sold
+    END),
+    SUM(CASE
+        WHEN s.promotion_id IS NULL THEN s.units_sold
+    END) AS ratio_units_sold_with_promo_to_sold_without_promo
+FROM
+    sales s
+LEFT JOIN
+    promotions p ON s.promotion_id = p.promotion_id
+JOIN
+    products pr ON s.product_id = pr.product_id
+JOIN
+    product_classes pc ON pr.product_class_id = pc.product_class_id
+GROUP BY
+    pc.product_family
+ORDER BY
+    total_units_sold ASC;
