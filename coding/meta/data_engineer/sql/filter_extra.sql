@@ -93,3 +93,13 @@ media_type,
 AVG(cost) AS avg_cost
 FROM promotions
 GROUP BY media_type
+
+-- Question: What percentage of products in each product category are low fat?
+SELECT
+product_category,
+AVG(CASE WHEN is_low_fat_flg = 1 THEN 1 ELSE 0 END) * 100 AS pct_low_fat
+FROM
+products p
+JOIN product_classes pc
+ON p.product_class_id = pc.product_class_id
+GROUP BY product_category
