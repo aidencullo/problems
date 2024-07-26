@@ -49,20 +49,9 @@
  */
 
 SELECT
-    100 * AVG(
-        CASE 
-            WHEN total_units_sold = 0 THEN 1
-            ELSE 0
-        END
-    ) AS percentage_zero_sales
-FROM
-    (
-        SELECT
-            COUNT(units_sold) AS total_units_sold
-        FROM
-            product_classes pc
-        LEFT JOIN products p ON p.product_class_id = pc.product_class_id
-        LEFT JOIN sales s ON p.product_id = s.product_id
-        GROUP BY
-            product_category
-    ) c;
+100.0 * (1 - 1.0 * COUNT(DISTINCT CASE WHEN units_sold IS NOT NULL THEN product_category END) / COUNT(DISTINCT product_category)) AS pct_product_categories_never_sold
+FROM product_classes pc
+LEFT JOIN products p
+ON p.product_class_id = pc.product_class_id
+LEFT JOIN sales s
+ON p.product_id = s.product_id
