@@ -47,18 +47,12 @@
 
  -------------- PLEASE WRITE YOUR SQL SOLUTION BELOW THIS LINE ----------------
  */
+
+
 SELECT
-product_category,
-COUNT(units_sold) AS total_units_sold
-FROM
-product_classes pc
-LEFT JOIN
-products p
-ON
-pc.product_class_id = p.product_class_id
-LEFT JOIN
-sales s
-ON
-p.product_id = s.product_id
-GROUP BY
-product_category
+1 - (1.0 * COUNT(DISTINCT p.product_class_id)/ (SELECT COUNT(DISTINCT product_class_id) FROM product_classes))
+FROM product_classes pc
+JOIN products p
+ON p.product_class_id = pc.product_class_id
+JOIN sales s
+ON p.product_id = s.product_id
