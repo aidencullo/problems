@@ -60,3 +60,24 @@ products p
 LEFT JOIN sales s
 ON p.product_id = s.product_id
 GROUP BY brand_name
+
+
+-- What is the average gross and net weight of products in each product category?
+
+
+
+SELECT
+AVG(net_weight) as avg_net_weight
+FROM
+products p
+LEFT JOIN product_classes pc
+GROUP BY product_category
+
+
+-- Which customers made the highest total purchase amount, and what are their total purchases?
+
+SELECT
+customer_id,
+SUM(store_sales) as total_purchases
+FROM sales
+GROUP BY customer_id
