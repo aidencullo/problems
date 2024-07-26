@@ -50,9 +50,9 @@
 
 
 SELECT
-1 - (1.0 * COUNT(DISTINCT p.product_class_id)/ (SELECT COUNT(DISTINCT product_class_id) FROM product_classes))
-FROM product_classes pc
+100 - (100.0 * COUNT(DISTINCT product_category) / (SELECT COUNT(DISTINCT product_category) FROM product_classes))
+FROM sales s
 JOIN products p
-ON p.product_class_id = pc.product_class_id
-JOIN sales s
 ON p.product_id = s.product_id
+JOIN product_classes pc
+ON p.product_class_id = pc.product_class_id
