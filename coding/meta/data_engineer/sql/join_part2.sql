@@ -48,11 +48,21 @@
  -------------- PLEASE WRITE YOUR SQL SOLUTION BELOW THIS LINE ----------------
  */
 
-
 SELECT
-100 - (100.0 * COUNT(DISTINCT product_category) / (SELECT COUNT(DISTINCT product_category) FROM product_classes))
-FROM sales s
-JOIN products p
-ON p.product_id = s.product_id
-JOIN product_classes pc
-ON p.product_class_id = pc.product_class_id
+    100 * AVG(
+        CASE 
+            WHEN total_units_sold = 0 THEN 1
+            ELSE 0
+        END
+    ) AS percentage_zero_sales
+FROM
+    (
+        SELECT
+            COUNT(units_sold) AS total_units_sold
+        FROM
+            product_classes pc
+        LEFT JOIN products p ON p.product_class_id = pc.product_class_id
+        LEFT JOIN sales s ON p.product_id = s.product_id
+        GROUP BY
+            product_category
+    ) c;
