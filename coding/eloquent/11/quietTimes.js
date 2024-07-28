@@ -442,11 +442,11 @@ async function activityTable(day) {
   const dayLogFile = getDayLogFile(logFileList, day);
   const logFile = await textFile(dayLogFile);
   const logData = logFile.split('\n')
-  const hours = {}
+  const hours = Array(24).fill(0)
   for (const data of logData) {
     const date = new Date(parseInt(data))
     const hour = date.getHours()
-    hours[hour] = hours[hour] ? hours[hour] + 1 : 1
+    hours[hour] += 1
   }
   return hours
 }
@@ -458,8 +458,7 @@ const getDayLogFile = (logFileList, day) => {
       return file
     }
   }
-  // const logFile = logFileList.split('\n').filter(log => log.includes(`2021-09-${day}`));
-  // return logFile[0];
 }
 
 activityTable(1)
+  .then(table => console.log(activityGraph(table)));
