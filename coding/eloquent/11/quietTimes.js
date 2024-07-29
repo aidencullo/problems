@@ -438,17 +438,19 @@ var clipImages = [
 }))
 
 async function activityTable(day) {
+  const table = Array(24).fill(0);
   const logFileList = await textFile("camera_logs.txt");
-  const dayLogFile = getDayLogFile(logFileList, day);
-  const logFile = await textFile(dayLogFile);
-  const logData = logFile.split('\n')
-  const hours = Array(24).fill(0)
-  for (const data of logData) {
-    const date = new Date(parseInt(data))
-    const hour = date.getHours()
-    hours[hour] += 1
+
+  for (const logFile of logFileList.split('\n')) {
+    let log = await textFile(logFile);
+    for (let timestamp of log.split("\n")) {
+      let date = new Date(Number(timestamp));
+      if (date.getDay() == day) {
+        table[date.getHours()]++;
+      }
+    }
   }
-  return hours
+  return table;
 }
 
 const getDayLogFile = (logFileList, day) => {
