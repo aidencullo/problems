@@ -437,18 +437,16 @@ var clipImages = [
   return result
 }))
 
-async function activityTable(day) {
+function activityTable(day) {
   return textFile("camera_logs.txt").then(logFileList => {
     const table = Array(24).fill(0);
-    return Promise.all(logFileList.split("\n").map(logFile => {
-      readLogFile(table, logFile, day);
-    }))
+    return Promise.all(logFileList.split("\n").map(logFile => readLogFile(table, logFile, day)))
       .then(() => table);
   });
 }
 
-const readLogFile = async (table, logFile, day) => {
-  textFile(logFile).then(log => {
+const readLogFile = (table, logFile, day) => {
+  return textFile(logFile).then(log => {
     for (let timestamp of log.split("\n")) {
       let date = new Date(Number(timestamp));
       if (date.getDay() == day) {
