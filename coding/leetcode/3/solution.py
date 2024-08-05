@@ -5,7 +5,11 @@ class Solution:
         left = 0
         for right, char in enumerate(s):
             if char in hash_set:
-                while char not in hash_set:
-                    hash_set.add(char)
+                while s[left] != char:
+                    hash_set.remove(s[left])
+                    left += 1
+                left += 1
+            hash_set.add(char)
+            longest = max(longest, len(hash_set))
         return longest
         
