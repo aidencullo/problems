@@ -438,23 +438,28 @@ var clipImages = [
 }))
 
 function activityTable(day) {
+  const table = Array(24).fill(0);
   return textFile("camera_logs.txt").then(logFileList => {
-    const table = Array(24).fill(0);
     return Promise.all(logFileList.split("\n").map(logFile => readLogFile(table, logFile, day)))
       .then(() => table);
   });
 }
 
 const readLogFile = (table, logFile, day) => {
-  return textFile(logFile).then(log => {
-    for (let timestamp of log.split("\n")) {
-      let date = new Date(Number(timestamp));
-      if (date.getDay() == day) {
-	table[date.getHours()]++;
-      }
-    }
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      textFile(logFile).then(log => {
+	for (let timestamp of log.split("\n")) {
+	  let date = new Date(Number(timestamp));
+	  if (date.getDay() == day) {
+	    table[date.getHours()]++;
+	  }
+	}
+	resolve();
+      });
+    }, 0);
   });
-}
+};
 
 activityTable(1)
   .then(table => console.log(activityGraph(table)));
