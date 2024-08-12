@@ -447,17 +447,15 @@ function activityTable(day) {
 
 const readLogFile = (table, logFile, day) => {
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      textFile(logFile).then(log => {
-	for (let timestamp of log.split("\n")) {
-	  let date = new Date(Number(timestamp));
-	  if (date.getDay() == day) {
-	    table[date.getHours()]++;
-	  }
+    textFile(logFile).then(log => {
+      for (const timestamp of log.split("\n")) {
+	const date = new Date(Number(timestamp));
+	if (date.getDay() == day) {
+	  table[date.getHours()]++;
 	}
-	resolve();
-      });
-    }, 0);
+      }
+      resolve();
+    });
   });
 };
 
