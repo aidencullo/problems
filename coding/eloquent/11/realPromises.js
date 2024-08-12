@@ -440,24 +440,19 @@ var clipImages = [
 function activityTable(day) {
   const table = Array(24).fill(0);
   return textFile("camera_logs.txt").then(logFileList => {
-    return Promise.all(logFileList.split("\n").map(logFile => readLogFile(table, logFile, day)))
-      .then(() => table);
-  });
-}
-
-const readLogFile = (table, logFile, day) => {
-  return new Promise((resolve, reject) => {
-    textFile(logFile).then(log => {
-      for (const timestamp of log.split("\n")) {
-	const date = new Date(Number(timestamp));
-	if (date.getDay() == day) {
-	  table[date.getHours()]++;
+    return Promise.all(logFileList.split("\n").map(logFile => {
+      return textFile(logFile).then(log => {
+	for (const timestamp of log.split("\n")) {
+	  const date = new Date(Number(timestamp));
+	  if (date.getDay() == day) {
+	    table[date.getHours()]++;
+	  }
 	}
-      }
-      resolve();
-    });
-  });
-};
+      })
+    }));
+  })
+    .then(() => table);
+}
 
 activityTable(1)
   .then(table => console.log(activityGraph(table)));
