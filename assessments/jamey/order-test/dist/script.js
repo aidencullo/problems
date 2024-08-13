@@ -19,19 +19,31 @@ angular
       }
     };
   })
-  .controller('ArticlesCtrl', function($scope, $http, Cart) {
+  .factory("ArticleService", function($http) {
+    var apiUrl = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
+    
+    return {
+      getArticles: function() {
+        return $http.get(apiUrl)
+          .then(function(response) {
+            return response.data.meals.map(function(meal) {
+              return {
+                id: meal.idIngredient,
+                name: meal.strIngredient,
+                description: meal.strDescription || "No description available",
+                price: Math.floor(Math.random() * 10) + 1
+              };
+            });
+          });
+      }
+    };
+  })
+  .controller('ArticlesCtrl', function($scope, ArticleService, Cart) {
     $scope.cart = Cart;
-    const apiUrl = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
-    $http.get(apiUrl)
-      .then(function(response) {
-	$scope.articles = response.data.meals.map((meal) => {
-	  return {
-	    id: meal.idIngredient,
-	    name: meal.strIngredient,
-	    description: meal.strDescription || "No description available",
-	    price: Math.floor(Math.random() * 10) + 1
-	  };
-	})
+
+    ArticleService.getArticles()
+      .then(function(articles) {
+        $scope.articles = articles;
       })
       .catch(function(error) {
         $scope.error = `Error fetching data: ${error.statusText}`;
