@@ -1,39 +1,94 @@
+/* General Styles */
 body {
-  background-color: #000000;
-  color: #ffffff;a
-  text-align: center;
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  font-family: "Helvetica", "Arial", "sans-serif";
-  header {
-    background-color: #0b0b0b;
-    margin: 0;
-    padding: 50px 0px 20px;
-    box-sizing: border-box;
-    -webkit-box-shadow: 0px 3px 4px 0px rgba(50, 50, 50, 0.34);
-    -moz-box-shadow: 0px 3px 4px 0px rgba(50, 50, 50, 0.34);
-    box-shadow: 0px 3px 4px 0px rgba(50, 50, 50, 0.34);
-    h1 {
-      font-weight: lighter;
-      margin: 0;
-      color: gray;
-    }
-  }
-
-  input {
-    border-radius: 5px;
-    border: 1px solid white;
-    -webkit-box-shadow: 0px 1px 4px 0px rgba(50, 50, 50, 0.34);
-    -moz-box-shadow: 0px 1px 4px 0px rgba(50, 50, 50, 0.34);
-    box-shadow: 0px 1px 4px 0px rgba(50, 50, 50, 0.34);
-    padding: 10px;
-    margin-top: 10px;
-    width: 300px;
-  }
-  form {
-    padding: 10px;
-  }
+  background-color: #f5f5f5;
 }
 
+header {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+}
+
+form {
+  margin: 10px;
+}
+
+input[type="text"] {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 300px;
+}
+
+p {
+  font-size: 16px;
+  color: #333;
+}
+
+/* Table Styles */
 table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* Button Styles */
+a.button {
+  display: inline-block;
+  padding: 10px 15px;
+  margin: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  text-align: center;
+}
+
+a.button:hover {
+  background-color: #45a049;
+}
+
+a.button.remove {
+  background-color: #f44336;
+}
+
+a.button.remove:hover {
+  background-color: #da190b;
+}
+
+/* Empty Basket Message */
+div[ng-hide] {
+  padding: 10px;
+  text-align: center;
+  color: #888;
 }

@@ -1,29 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>CodePen - Order Test</title>
-  <link rel="stylesheet" href="./style.css">
-
-</head>
-<body>
-<!-- partial:index.partial.html -->
-<!--
-Please fork and complete TODO list.
-TODO list:
-1. Add the ability to remove items from the basket after being added.
-2. Add better formatting to the item menu and basket menu. (e.g.: better table formatting, better add/remove clickables, add dollar sign, etc.) Feel free to generally make the page look better overall.
-3. Dynamically pull items to the purchase list. Pull via this api: www.themealdb.com/api/json/v1/1/list.php?i=list
--->
-
-<html ng-app="searchApp">
-
-<head>
-  <meta charset="UTF-8" />
   <title>Order</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
-<body>
+<body ng-app="searchApp">
   <header>
     <h1>Search and Filter</h1>
     <form>
@@ -32,34 +14,46 @@ TODO list:
     </form>
   </header>
   <table ng-controller="ArticlesCtrl">
-    <tr ng-repeat="article in articles | filter: search">
-      <td>{{article.name}}</td>
-      <td>{{article.price}}</td>
-      <td><a href ng-click="cart.addArticle(article);">Add</a></td>
-    </tr>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="article in articles | filter: search">
+        <td>{{article.name}}</td>
+        <td>{{article.price | currency}}</td>
+        <td><a href ng-click="cart.addArticle(article);" class="button">Add</a></td>
+      </tr>
+    </tbody>
   </table>
   <div ng-controller="CartCtrl">
     <div ng-hide="cart.getItems().length">Your basket is currently empty.</div>
     <table ng-show="cart.getItems().length">
-      <tr ng-repeat="item in cart.getItems() track by $index">
-        <td>{{item.name}}</td>
-        <td>{{item.price | currency}}</td>
-	<td><a href ng-click="cart.removeItem(item);">Remove</a></td>
-      </tr>
-      <tr>
-        <td>{{cart.getItems().length}}</td>
-        <td>{{cart.sum() | currency}}</td>
-      </tr>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in cart.getItems() track by $index">
+          <td>{{item.name}}</td>
+          <td>{{item.price | currency}}</td>
+          <td><a href ng-click="cart.removeItem(item);" class="button remove">Remove</a></td>
+        </tr>
+        <tr>
+          <td>Total Items</td>
+          <td>{{cart.getItems().length}}</td>
+          <td>Total Price: {{cart.sum() | currency}}</td>
+        </tr>
+      </tbody>
     </table>
   </div>
-
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.12/angular.js"></script>
   <script src="script.js"></script>
-</body>
-
-</html>
-<!-- partial -->
-  <script  src="./script.js"></script>
-
 </body>
 </html>
