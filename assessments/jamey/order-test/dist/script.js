@@ -19,14 +19,24 @@ angular
       }
     };
   })
-  .controller("ArticlesCtrl", function ($scope, Cart) {
+  .controller('ArticlesCtrl', function($scope, $http, Cart) {
     $scope.cart = Cart;
-    $scope.articles = [
-      { id: 1, name: "Hamburger", price: 5.9 },
-      { id: 2, name: "Burger", price: 7.9 },
-      { id: 3, name: "Salad", price: 9.9 },
-      { id: 4, name: "Bacon", price: 9.9 }
-    ];
+    const apiUrl = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list'; // Replace with your API URL
+
+    $http.get(apiUrl)
+      .then(function(response) {
+	$scope.articles = response.data.meals.map((meal) => {
+	  return {
+	    id: meal.idIngredient,
+	    name: meal.strIngredient,
+	    description: meal.strDescription,
+	    price: Math.floor(Math.random() * 10) + 1
+	  };
+	})
+      })
+      .catch(function(error) {
+        $scope.error = `Error fetching data: ${error.statusText}`;
+      });
   })
   .controller("CartCtrl", function ($scope, Cart) {
     $scope.cart = Cart;

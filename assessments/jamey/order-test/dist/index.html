@@ -25,6 +25,7 @@
       <tr ng-repeat="article in articles | filter: search">
         <td>{{article.name}}</td>
         <td>{{article.price | currency}}</td>
+        <td>{{article.description}}</td>
         <td><a href ng-click="cart.addArticle(article);" class="button">Add</a></td>
       </tr>
     </tbody>
