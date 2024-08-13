@@ -21,15 +21,14 @@ angular
   })
   .controller('ArticlesCtrl', function($scope, $http, Cart) {
     $scope.cart = Cart;
-    const apiUrl = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list'; // Replace with your API URL
-
+    const apiUrl = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
     $http.get(apiUrl)
       .then(function(response) {
 	$scope.articles = response.data.meals.map((meal) => {
 	  return {
 	    id: meal.idIngredient,
 	    name: meal.strIngredient,
-	    description: meal.strDescription,
+	    description: meal.strDescription || "No description available",
 	    price: Math.floor(Math.random() * 10) + 1
 	  };
 	})
