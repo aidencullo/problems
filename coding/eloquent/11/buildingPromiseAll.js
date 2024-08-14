@@ -6,7 +6,6 @@
 // Remember that after a promise has succeeded or failed, it can’t succeed or fail again, and further calls to the functions that resolve it are ignored. This can simplify the way you handle a failure of your promise.
 
 function Promise_all(promises) {
-  if (promises.length === 0) return Promise.resolve([]);
   let resolved = 0;
   const results = [];
   return new Promise((resolve, reject) => {
@@ -14,14 +13,12 @@ function Promise_all(promises) {
       promise
 	.then((value) => {
 	  results[i] = value;
-	  if (resolved === promises.length - 1) {
-	    resolve(results);
-	  } else {
-	    resolved++;
-	  }
+	  resolved++;
+	  if (resolved === promises.length) resolve(results);
 	})
-	.catch((err) => reject(err))
+	.catch(reject);
     })
+    if (promises.length === 0) resolve(results);
   });
 }
 
