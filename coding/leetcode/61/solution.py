@@ -23,13 +23,9 @@ class Solution:
         m = n - k
 
         runner = head
-        for _ in range(m):
+        for _ in range(m - 1):
             runner = runner.next
 
-        new_head = runner
-
-        while runner.next != new_head:
-            runner = runner.next
-
+        new_head = runner.next
         runner.next = None
         return new_head
