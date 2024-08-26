@@ -168,13 +168,20 @@ specialForms.fun = (args, scope) => {
 
 // Modify these definitions...
 
-topScope.array = (args) => {
-  
-}
+// topScope.array = (args) => {  
+// }
 
-topScope.length = "...";
+topScope.array = (...value) => {
+  return value;
+};
 
-topScope.element = "...";
+topScope.length = (value) => {
+  return value.length;
+};
+
+topScope.element = (array, index) => {
+  return array[index];
+};
 
 run(`
 do(define(sum, fun(array,
