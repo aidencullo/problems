@@ -7,25 +7,29 @@ class Solution:
                 node = node.next
             return cnt
 
+        def get_tail(node):
+            while node.next:
+                node = node.next
+            return node
+
         if not head:
             return None
+
         n = count(head)
+        tail = get_tail(head)
+        tail.next = head
+
         k %= n
         m = n - k
-        m %= n
 
         runner = head
-        for _ in range(m - 1):
+        for _ in range(m):
             runner = runner.next
 
-        new_head = runner.next
+        new_head = runner
+
+        while runner.next != new_head:
+            runner = runner.next
+
         runner.next = None
-
-        runner = new_head
-
-        while runner.next:
-            runner = runner.next
-
-        runner.next = head
-
         return new_head
