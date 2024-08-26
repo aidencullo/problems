@@ -1,3 +1,10 @@
 class Solution:
     def sumIndicesWithKSetBits(self, nums: list[int], k: int) -> int:
-        return sum(num for i, num in enumerate(nums) if bin(i).count('1') == k)
+        def count(n: int) -> int:
+            cnt = 0
+            while n > 0:
+                cnt += n & 1
+                n //= 2
+            return cnt
+        
+        return sum(num for i, num in enumerate(nums) if count(i) == k)
