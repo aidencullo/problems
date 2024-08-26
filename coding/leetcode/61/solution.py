@@ -1,31 +1,28 @@
 class Solution:
     def rotateRight(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
-        def count(node):
-            cnt = 0
+        def next_node(node):
             while node:
-                cnt += 1
+                yield node
                 node = node.next
-            return cnt
-
-        def get_tail(node):
-            while node.next:
-                node = node.next
-            return node
+        
+        def count(node):
+            return sum(1 for x in next_node(node))
 
         if not head:
             return None
 
         n = count(head)
-        tail = get_tail(head)
-        tail.next = head
-
         k %= n
-        m = n - k
 
-        runner = head
-        for _ in range(m - 1):
-            runner = runner.next
+        leader = head
+        for i in range(k):
+            leader = leader.next
+        follower = head
 
-        new_head = runner.next
-        runner.next = None
+        while leader.next:
+            leader = leader.next
+            follower = follower.next
+        leader.next = head
+        new_head = follower.next
+        follower.next = None
         return new_head
