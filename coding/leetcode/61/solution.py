@@ -8,21 +8,24 @@ class Solution:
         def count(node):
             return sum(1 for x in next_node(node))
 
-        if not head:
-            return None
+        if not head or head.next is None:
+            return head
 
         n = count(head)
         k %= n
 
-        leader = head
-        for i in range(k):
-            leader = leader.next
-        follower = head
+        if k == 0:
+            return head
 
-        while leader.next:
-            leader = leader.next
-            follower = follower.next
-        leader.next = head
-        new_head = follower.next
-        follower.next = None
+        fast = slow = head
+
+        for _ in range(k):
+            fast = fast.next
+
+        while fast.next:
+            fast, slow = fast.next, slow.next
+
+        new_head = slow.next
+        slow.next = None
+        fast.next = head
         return new_head
