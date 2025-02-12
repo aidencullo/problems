@@ -9,6 +9,8 @@ from solution import Solution
         ([1], 1),
         ([5,4,-1,7,8], 23),
         ([1,2], 3),
+        ([0], 0),
+        ([-2, -1], -1),
     ],
 )
 def testSolution(test_input, expected):
