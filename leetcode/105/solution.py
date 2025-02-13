@@ -60,3 +60,28 @@ class Solution:
             return root
         hashmap = {val: i for i, val in enumerate(inorder)}
         return buildTreeHelper(0, len(preorder) - 1, 0, len(inorder) - 1)
+
+
+
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        if not inorder:
+            return None
+        el = preorder.pop(0)
+        i = inorder.index(el)
+        left_inorder = inorder[:i]
+        right_inoder = inorder[i+1:]
+        left_tree_len = len(left_inorder)
+        left_preorder = preorder[:left_tree_len]
+        right_preorder = preorder[left_tree_len:]
+        return TreeNode(el, self.buildTree(left_preorder, left_inorder), self.buildTree(right_preorder, right_inoder))
+
+
