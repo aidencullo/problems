@@ -82,6 +82,11 @@ class Solution:
         left_tree_len = len(left_inorder)
         left_preorder = preorder[:left_tree_len]
         right_preorder = preorder[left_tree_len:]
-        return TreeNode(el, self.buildTree(left_preorder, left_inorder), self.buildTree(right_preorder, right_inoder))
+        return TreeNode(
+            el, 
+            self.buildTree(left_preorder, left_inorder), 
+            self.buildTree(right_preorder, right_inoder)
+        )
+            
 
 
