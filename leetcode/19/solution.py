@@ -1,22 +1,26 @@
 from typing import Optional
 
 
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
 
-
+def getLength(node):
+    n = 0
+    while node:
+        n += 1
+        node = node.next
+    return n
 class Solution:
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
-        new_head = ListNode(0, head)
-        l = new_head
-        r = new_head
-        while n >= 0:
-            r = r.next
-            n -= 1
-        while r:
-            l = l.next
-            r = r.next
-        l.next = l.next.next
-        return new_head.next
+        length_of_list = getLength(head)
+        k = length_of_list - n
+        pre_head = ListNode(next=head)
+        runner = pre_head
+        for x in range(k):
+            runner = runner.next
+        
+        if runner.next is None:
+            pre_head = pre_head.next
+        else:
+            runner.next = runner.next.next
+
+        return pre_head.next
+    
