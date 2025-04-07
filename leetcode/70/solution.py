@@ -1,12 +1,14 @@
 class Solution:
-    def __init__(self):
-        self.cache = {}
-        
     def climbStairs(self, n: int) -> int:
         if n == 1:
             return 1
-        if n == 0:
-            return 1
-        if n not in self.cache:
-            self.cache[n] = self.climbStairs(n - 1) + self.climbStairs(n - 2)
-        return self.cache[n]
+        if n == 2:
+            return 2
+        first = 1
+        second = 2
+        ways = 0
+        for _ in range(2, n):
+            ways = first + second
+            first = second
+            second = ways
+        return ways
