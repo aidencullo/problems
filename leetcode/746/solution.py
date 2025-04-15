@@ -1,19 +1,10 @@
 class Solution:
-    def minCostClimbingStairs(self, cost: list[int]) -> int:
-
-        def minCostClimbingStairsHelper(index: int) -> int:
-            if index > len(cost) - 1:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        def climb(i):
+            if i > len(cost):
                 return 0
-
-            if not index in self.mem:
-                self.mem[index] = cost[index] + min(
-                    minCostClimbingStairsHelper(index + 1),
-                    minCostClimbingStairsHelper(index + 2)
+            return min(
+                cost[i] + climb(i + 1)
+                cost[i] + climb(i + 2)
                 )
-            return self.mem[index]
-
-        self.mem = {}
-        return min(
-            minCostClimbingStairsHelper(0),
-            minCostClimbingStairsHelper(1)
-        )
+        return climb(-1)
