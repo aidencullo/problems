@@ -1,12 +1,7 @@
 class Solution:
     def maxProfit(self, prices: list[int]) -> int:
-        if not prices:
-            return 0
-        stack = prices.pop(0)
         profit = 0
-        for price in prices:
-            if price < stack:
-                stack = price
-            else:
-                profit = max(profit, price - stack)
+        for i, price in enumerate(prices):
+            for later_price in prices[i + 1:]:
+                profit = max(profit, later_price - price)
         return profit
