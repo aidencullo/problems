@@ -1,9 +1,22 @@
 class Solution:
     def maxRepeating(self, sequence: str, word: str) -> int:
-        maximum = 0
-        for i, start in enumerate(sequence):
-            for j, current in enumerate(sequence[i:]):
-                if current != word[j % len(word)]:
-                    break
-                maximum = max(maximum, j + 1)
-        return maximum // len(word)
+        def beginsWord(i):
+            if i + m > n:
+                return False
+            for j in range(m):
+                if sequence[i + j] != word[j]:
+                    return False
+            return True
+
+        n = len(sequence)
+        m = len(word)
+        startsWord = [0] * n
+        dp = list(startsWord)
+        for i, letter in enumerate(sequence):
+            if beginsWord(i):
+                startsWord[i] = 1
+        for i, letter in enumerate(sequence):
+            dp[i] = startsWord[i]
+            if i >= m and dp[i]:
+                dp[i] += dp[i - m]
+        return max(dp)
