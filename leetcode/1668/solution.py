@@ -1,11 +1,16 @@
 class Solution:
     def maxRepeating(self, sequence: str, word: str) -> int:
+        def check(i):
+            total = 0
+            for j in range(i, len(sequence)):
+                if word[(j - i) % len(word)] != sequence[j]:
+                    return total
+                total += 1
+            return total
+
         n = len(sequence)
         m = len(word)
-        k = n // m
         repeating = 0
-        for i in range(k + 1):
-            current = i * word
-            if current in sequence:
-                repeating = i
-        return repeating 
+        for i in range(n):
+            repeating = max(check(i), repeating)
+        return repeating // len(word)
