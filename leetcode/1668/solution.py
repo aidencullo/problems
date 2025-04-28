@@ -17,12 +17,11 @@ class Solution:
     def create_prefix_table(self, pattern: str) -> list:
         m = len(pattern)
         prefix = [0] * m
-        for i in range(m):
-            if i > 0:
-                last = pattern[prefix[i - 1]]
-                if pattern[i] == last:
-                    prefix[i] = prefix[i - 1] + 1
-                else:
-                    if prefix[prefix[i - 1]] > 0:
-                        prefix[i] = prefix[prefix[i - 1]] - 1
+        j = 0
+        for i in range(1, m):
+            while j > 0 and pattern[i] != pattern[j]:
+                j = prefix[j - 1]
+            if pattern[i] == pattern[j]:
+                j += 1
+                prefix[i] = j
         return prefix
