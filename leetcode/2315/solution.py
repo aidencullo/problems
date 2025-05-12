@@ -1,10 +1,10 @@
 class Solution:
     def countAsterisks(self, s: str) -> int:
-        on = True
+        bars = 0
         total = 0
         for c in s:
-            if on and c == "*":
+            if bars % 2 == 0 and c == "*":
                 total += 1
             if c == "|":
-                on = not on
+                bars += 1
         return total
