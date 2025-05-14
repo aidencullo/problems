@@ -1,9 +1,17 @@
 class Solution:
     def decodeMessage(self, key: str, message: str) -> str:
-        cipher = {}
-        key_without_spaces = key.replace(' ', '')
-        key_without_duplicates = ''.join(dict.fromkeys(key_without_spaces))
-        alphabet = 'abcdefghijklmnopqrstuvwxyz'
-        cipher = dict(zip(key_without_duplicates, alphabet))
-        encrypted_map = map(lambda letter: cipher.get(letter, letter), message)
-        return ''.join(encrypted_map)
+        d = {}
+        letter = 0
+        for c in key:  
+            if c not in d and c != " ":        
+                new_char = chr(97 + letter)
+                letter += 1
+                d[c] = new_char
+            
+        res = ""
+        for c in message:
+            if c == " ":
+                res += c
+            else:
+                res += d[c]
+        return res
