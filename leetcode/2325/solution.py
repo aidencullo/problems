@@ -1,10 +1,8 @@
 class Solution:
     def decodeMessage(self, key: str, message: str) -> str:
         unique = []
-        letter = 0
-        key = "".join(key.split())
         for c in key:  
-            if c not in unique:
+            if c not in unique and c != " ":
                 unique.append(c)
             
         res = ""
