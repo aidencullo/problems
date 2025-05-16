@@ -1,21 +1,17 @@
-from typing import List
-
-import itertools
-
+from itertools import zip_longest
 
 class Solution:
     def longestCommonPrefix(self, strs: List[str]) -> str:
-        strs = list(set(strs))
-        strs.sort()
-        if len(strs) == 0:
+        shortest = min(strs, key=len)
+        if len(strs) == 1:
+            return shortest
+        if shortest == "":
             return ""
-        elif len(strs) == 1:
-            return strs[0]
-        else:
-            first = strs[0]
-            last = strs[-1]
-            if not first:
-                return ""
-            for i, (x, y) in enumerate(itertools.zip_longest(first, last)):
-                if x != y:
-                    return first[:i]
+        prefix = ""
+        for i in range(len(shortest)):
+            letter = shortest[i]
+            for word in strs:
+                if letter != word[i]:
+                    return prefix
+            prefix += letter
+        return prefix
