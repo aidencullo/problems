@@ -1,6 +1,15 @@
 class Solution:
     def areOccurrencesEqual(self, s: str) -> bool:
-        from collections import Counter
-        counter = Counter(s)
-        return len(Counter(counter.values())) == 1
+        appear = [0] * 26
+        for c in s:
+            appear[ord(c) - 97] += 1
+        same = 0
+        for value in appear:
+            if value > 0:
+                if same == 0:
+                    same = value
+                else:
+                    if value != same:
+                        return False
+        return True
         
