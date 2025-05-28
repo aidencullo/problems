@@ -21,13 +21,9 @@ class Solution:
         i = 0
         n = len(s)
         while i < n:
-            if i + 1 < n:
-                if s[i: i + 2] in ROMAN_NUMERALS:
-                    total += ROMAN_NUMERALS[s[i: i + 2]]
-                    i += 2
-                else:
-                    total += ROMAN_NUMERALS[s[i]]
-                    i += 1
+            if i + 1 < n and s[i: i + 2] in ROMAN_NUMERALS:
+                total += ROMAN_NUMERALS[s[i: i + 2]]
+                i += 2
             else:
                 total += ROMAN_NUMERALS[s[i]]
                 i += 1
