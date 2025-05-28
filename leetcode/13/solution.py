@@ -18,13 +18,12 @@ class Solution:
         }
         
         total = 0
-        i = 0
-        n = len(s)
-        while i < n:
-            if i + 1 < n and s[i: i + 2] in ROMAN_NUMERALS:
-                total += ROMAN_NUMERALS[s[i: i + 2]]
-                i += 2
+        last = ''
+        for c in s:
+            if ROMAN_NUMERALS[c] > ROMAN_NUMERALS[last] and last != '':
+                total += ROMAN_NUMERALS[c] - 2 * ROMAN_NUMERALS[last]
             else:
-                total += ROMAN_NUMERALS[s[i]]
-                i += 1
+                total += ROMAN_NUMERALS[c]
+            last = c
         return total
+                
