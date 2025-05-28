@@ -1,29 +1,34 @@
-import itertools
-
 class Solution:
     def romanToInt(self, s: str) -> int:
-        values = {
+        ROMAN_NUMERALS = {
+            '': 0,
             'I': 1,
+            'IV': 4,
             'V': 5,
+            'IX': 9,
             'X': 10,
+            'XL': 40,
             'L': 50,
+            'XC': 90,
             'C': 100,
+            'CD': 400,
             'D': 500,
-            'M': 1000,
+            'CM': 900,
+            'M': 1000
         }
-        subtraction = {
-            'IV': -1,
-            'IX': -1,
-            'XL': -10,
-            'XC': -10,
-            'CD': -100,
-            'CM': -100,
-        }
-        result = 0
-
-        for x, y in itertools.zip_longest(s, s[1:] + 'I'):
-            if x + y in subtraction:
-                result += subtraction[x + y]
+        
+        total = 0
+        i = 0
+        n = len(s)
+        while i < n:
+            if i + 1 < n:
+                if s[i: i + 2] in ROMAN_NUMERALS:
+                    total += ROMAN_NUMERALS[s[i: i + 2]]
+                    i += 2
+                else:
+                    total += ROMAN_NUMERALS[s[i]]
+                    i += 1
             else:
-                result += values[x]        
-        return result
+                total += ROMAN_NUMERALS[s[i]]
+                i += 1
+        return total
