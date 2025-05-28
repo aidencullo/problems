@@ -12,10 +12,10 @@ class Solution:
         
         total = 0
         last = 0
-        for c in s:
+        for c in reversed(s):
             val = ROMAN_NUMERALS[c]
-            if val > last:
-                total += val - 2 * last
+            if val < last:
+                total -= val
             else:
                 total += val
             last = val
